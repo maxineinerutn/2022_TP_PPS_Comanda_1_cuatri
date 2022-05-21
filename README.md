@@ -1,7 +1,7 @@
 # 2022_TP_PPS_Comanda_1_cuatri
 Trabajo práctico grupal - PPS - segundo parcial
 
-[ROAD MAP TENTATIVO](https://github.com/gonzalosinnott/2022_TP_PPS_Comanda_1_cuatri/blob/main/Documentos/LOOK%20AND%20FEEL%20CINCO%20TENEDORES%20APP%20.pdf)
+[ROAD MAP TENTATIVO](https://github.com/gonzalosinnott/2022_TP_PPS_Comanda_1_cuatri/blob/main/Documentos/ROAD%20MAP%20CINCO%20TENEDORES%20APP%20.pdf)
 
 [LOOK AND FEEL](https://github.com/gonzalosinnott/2022_TP_PPS_Comanda_1_cuatri/blob/main/Documentos/LOOK%20AND%20FEEL%20CINCO%20TENEDORES%20APP%20.pdf)
 
