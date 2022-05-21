@@ -1,0 +1,7 @@
+{
+  "name": "2022_TP_PPS_Comanda_1_cuatri",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
