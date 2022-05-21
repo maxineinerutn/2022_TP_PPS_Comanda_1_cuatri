@@ -17,8 +17,8 @@ D- Alta de Mesa (Branch: altaMesa) PEDRO
 E- Alta de productos (Branch: altaProducto) CECILIA / PEDRO
 
 #### Códigos QR 
-E- Qr de ingreso al local: (Branch: qrIngreso) PEDRO
+E- QR de ingreso al local: (Branch: qrIngreso) PEDRO
 
-F- Qr de la mesa (Branch: qrMesa) GONZALO
+F- QR de la mesa (Branch: qrMesa) GONZALO
 
-G- Qr de propina (Branch: qrPropina) CECILIA
+G- QR de propina (Branch: qrPropina) CECILIA
