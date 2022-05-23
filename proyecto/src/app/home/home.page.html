@@ -1,0 +1,65 @@
+<form [formGroup]="userForm" (ngSubmit)="signIn(userForm.value)" class="login-form">
+  <p class="login-text">
+    <span style="font-weight: bold;">
+      Inicio de sesión
+    </span>
+  </p>
+  <input formControlName="email" type="email" class="login-username" autofocus="true" required="true" placeholder="Mail"
+    name="x" />
+  <ng-container *ngFor="let error of error_msg.email">
+    <div class="infoLoginValidation"
+      *ngIf="userForm.get('email').hasError(error.type) && (userForm.get('email').dirty || userForm.get('email').touched)">
+      {{ error.message }}
+    </div>
+  </ng-container>
+  <input formControlName="password" type="password" class="login-password" required="true" placeholder="Contraseña"
+    name="d" />
+  <ng-container *ngFor="let error of error_msg.password">
+    <div class="infoLoginValidation"
+      *ngIf="userForm.get('password').hasError(error.type) && (userForm.get('password').dirty || userForm.get('password').touched)">
+      {{ error.message }}
+    </div>
+  </ng-container>
+  <input [disabled]="!userForm.valid" type="submit" expand="block" name="Login" value="Entrar" class="login-submit" />
+  <ng-container *ngIf="cargando">
+    <ion-spinner name="crescent" style="width: 100%;
+    margin-top: 2rem; --color: white" duration="1000"></ion-spinner>
+  </ng-container>
+
+  <div class="divAccesoRapido">
+    <ion-list>
+      <ion-radio-group value="a">
+        <ion-list-header>
+          <ion-label style="font-size: 1.2rem;">Acceso rapido</ion-label>
+        </ion-list-header>
+  
+        <ion-item (click)="this.userForm.setValue({email:'', password:''});">
+          <ion-label>Nadie</ion-label>
+          <ion-radio value="a" color="primary"></ion-radio>
+        </ion-item>
+  
+        <ion-item (click)="loginAdmin()">
+          <ion-label>Admin</ion-label>
+          <ion-radio value="b" color="danger"></ion-radio>
+        </ion-item>
+  
+        <ion-item (click)="loginTester()">
+          <ion-label>Tester</ion-label>
+          <ion-radio value="c" color="warning"></ion-radio>
+        </ion-item>
+  
+        <ion-item (click)="loginMartin()">
+          <ion-label>Martín</ion-label>
+          <ion-radio value="d" color="success"></ion-radio>
+        </ion-item>
+      </ion-radio-group>
+    </ion-list>
+  </div>
+</form>
+
+
+
+
+
+<div class="underlay-photo"></div>
+<div class="underlay-black"></div>
