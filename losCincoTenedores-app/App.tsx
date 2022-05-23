@@ -1,20 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from './components/loginScreen/LoginScreen';
+import React, { useEffect } from 'react';
+import Splash from './components/splashScreen/SplashScreen';
+import * as SplashScreen from 'expo-splash-screen';
+import { useFonts, Oswald_200ExtraLight, Oswald_300Light, Oswald_400Regular, Oswald_500Medium, Oswald_600SemiBold, Oswald_700Bold } from '@expo-google-fonts/oswald';
+import AppLoading from 'expo-app-loading';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+const Stack = createNativeStackNavigator();
+
+SplashScreen.preventAutoHideAsync()
+  .catch(console.warn);
+
+export default () => { 
+
+  let [fontsLoaded] = useFonts({
+    Oswald_200ExtraLight,
+    Oswald_300Light,
+    Oswald_400Regular,
+    Oswald_500Medium,
+    Oswald_600SemiBold,
+    Oswald_700Bold,
+  });
+
+  useEffect(() => {
+    setTimeout(async () => {
+      await SplashScreen.hideAsync();
+    }, 500);
+  }, [])
+
+  if (!fontsLoaded) {
+    return (
+      <AppLoading />
+    )
+  } else {
+  return  (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen options =  {{ headerShown: false }}  name="SplashScreen" component={Splash} />
+        <Stack.Screen options =  {{ headerShown: false }}  name="Login" component={LoginScreen} />
+      </Stack.Navigator>
+    </NavigationContainer> );
+  }      
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
