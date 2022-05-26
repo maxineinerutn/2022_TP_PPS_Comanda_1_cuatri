@@ -7,3 +7,9 @@ Grupos:
 
 Máximo: 3 integrantes
 Mínimo: 2 integrantes
+
+# Integrantes
+
+### Alpha Lucas Barbosa
+
+### Beta Guido Clas
