@@ -94,8 +94,8 @@ export default StyleSheet.create({
     quickStartIcon: {
       padding: 5,
       margin: 5,
-      height: 90,
-      width: 90,
+      height: 85,
+      width: 85,
       resizeMode: 'contain',
     },
 });
