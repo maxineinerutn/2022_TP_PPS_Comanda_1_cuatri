@@ -6,17 +6,17 @@ GAMMA: Aguilera Kevin
 
 PROGRESO:
 --------------------------
-SEMANA 1 21/05 - 27/05
-  TAREAS DE ALFA: 
-     - Forkea repositorio - hecho
-     - Diseño de icono/splash - pendiente
-     - Alta de dueño/supervisor - pendiente
-   TAREAS DE BETA:
-     - Crea base de datos - pendiente
-     - Diseña registro - pendiente
-     - Alta de empleados - pendiente
-   TAREAS DE GAMMA
-     - Diseña login - pendiente
-     - Diseña pagina principal - pendiente
-     - Alta de clientes - pendiente
+SEMANA 1 21/05 - 27/05<br>
+  TAREAS DE ALFA: <br>
+     - Forkea repositorio - hecho<br>
+     - Diseño de icono/splash - pendiente<br>
+     - Alta de dueño/supervisor - pendiente<br>
+   TAREAS DE BETA:<br>
+     - Crea base de datos - pendiente<br>
+     - Diseña registro - pendiente<br>
+     - Alta de empleados - pendiente<br>
+   TAREAS DE GAMMA<br>
+     - Diseña login - pendiente<br>
+     - Diseña pagina principal - pendiente<br>
+     - Alta de clientes - pendiente<br>
 
