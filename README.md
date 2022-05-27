@@ -1,9 +1,22 @@
-# 2022_TP_PPS_Comanda_1_cuatri
-Trabajo práctico grupal - PPS - segundo parcial
+INTEGRANTES:
 
-Para registrar el grupo completo con todos sus integrantes: https://forms.gle/PK9qneSc2hWzUxMs6
+ALFA: Sagnella Franco
+BETA: Rodriguez Ossa Alexis
+GAMMA: Aguilera Kevin
 
-Grupos:
+PROGRESO:
+--------------------------
+SEMANA 1 21/05 - 27/05
+  TAREAS DE ALFA: 
+     - Forkea repositorio - hecho
+     - Diseño de icono/splash - pendiente
+     - Alta de dueño/supervisor - pendiente
+   TAREAS DE BETA:
+     - Crea base de datos - pendiente
+     - Diseña registro - pendiente
+     - Alta de empleados - pendiente
+   TAREAS DE GAMMA
+     - Diseña login - pendiente
+     - Diseña pagina principal - pendiente
+     - Alta de clientes - pendiente
 
-Máximo: 3 integrantes
-Mínimo: 2 integrantes
