@@ -40,7 +40,6 @@ const LoginScreen = () => {
 
     //SETEOS INICIOS RAPIDOS
     const onPressAdminHandler = () => {
-        console.log("Works");
         setEmail("cincotenedorespropietario@gmail.com");
         setPassword("administrador123");
     };
@@ -70,6 +69,7 @@ const LoginScreen = () => {
         setPassword("cliente123");
     };
 
+    /*
     //INICIO DE SESION
     useEffect(() => {
         const unsuscribe = auth.onAuthStateChanged((user) => {
@@ -79,6 +79,7 @@ const LoginScreen = () => {
         });
         return unsuscribe;
     }, []);
+    */
 
     //MANEJO LOGIN Y REGISTRO
 
@@ -94,6 +95,10 @@ const LoginScreen = () => {
             toggleErrorAlert(errorMsg);                
           });
     };
+
+    const handleClientRegister = () => {
+        navigation.replace("ClientRegistration")
+      } 
     
     const handleLogin = async () => {
         await signInWithEmailAndPassword(auth,email, password)
@@ -211,7 +216,7 @@ const LoginScreen = () => {
                         
                     </View>
 
-                    <TouchableOpacity onPress={handelSignUp} style={styles.buttonRegister} >
+                    <TouchableOpacity onPress={handleClientRegister} style={styles.buttonRegister} >
                             <Text style={styles.buttonText}>REGISTRARSE</Text>
                     </TouchableOpacity> 
 

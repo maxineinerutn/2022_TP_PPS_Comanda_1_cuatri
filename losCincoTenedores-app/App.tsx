@@ -20,6 +20,8 @@ import MetrePanel from './components/controlPanels/metrePanel/MetrePanelScreen';
 import ChefPanel from './components/controlPanels/chefPanel/ChefPanelScreen';
 import ClientPanel from './components/controlPanels/clientPanel/ClientPanelScreen';
 import WaiterPanel from './components/controlPanels/waiterPanel/WaiterPanelScreen';
+import AdminRegistration from './components/userRegistration/adminRegistration/AdminRegistrationScreen';
+import ClientRegistration from './components/userRegistration/clientRegistration/ClientRegistrationScreen';
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -62,6 +64,9 @@ export default () => {
         <Stack.Screen options =  {{ headerShown: true }}  name="ControlPanelMozo" component={WaiterPanel} />
         <Stack.Screen options =  {{ headerShown: true }}  name="ControlPanelCocina" component={ChefPanel} />
         <Stack.Screen options =  {{ headerShown: true }}  name="ControlPanelCliente" component={ClientPanel} />
+        <Stack.Screen options =  {{ headerShown: true }}  name="AdminRegistration" component={AdminRegistration} />
+        <Stack.Screen options =  {{ headerShown: true }}  name="ClientRegistration" component={ClientRegistration} />
+
       </Stack.Navigator>
     </NavigationContainer> );
       }      

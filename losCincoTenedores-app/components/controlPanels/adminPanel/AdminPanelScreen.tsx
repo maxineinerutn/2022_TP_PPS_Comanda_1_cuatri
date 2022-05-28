@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import styles from "../adminPanel/StyleAdminPanelScreen";
 import { ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
-import { userIcon, backgroundImage, logoutIcon } from "../adminPanel/AssetsAdminPanelScreen";
+import { userIcon, backgroundImage, logoutIcon, adminIcon, employeeIcon } from "../adminPanel/AssetsAdminPanelScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { auth } from "../../../App";
@@ -21,7 +21,15 @@ const AdminPanel = () => {
           })
           .catch(error => alert(error.message))
     }
+
+    //NAVIGATION
+     const handleAdminRegister = () => {
+      navigation.replace("AdminRegistration")
+    }  
     
+    const handleEmployeeRegister = () => {
+      navigation.replace("EmployeeRegistration")
+    } 
     
     //HEADER
     useLayoutEffect(() => {
@@ -44,16 +52,26 @@ const AdminPanel = () => {
          )
         });
       }, []);
-
     
     return (
         <View style={styles.container}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
                 <View style={styles.body}>
 
-                    <Text>HOLA</Text>
+                  <TouchableOpacity onPress = { handleAdminRegister } style={styles.buttonLayout}>
+                    <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}>
+                      <Image source={adminIcon} style={styles.buttonImage} />
+                      <Text style={styles.buttonText}>ALTA DE DUEÑO / SUPERVISOR</Text>              
+                    </View>
+                  </TouchableOpacity> 
 
-                
+                  <TouchableOpacity onPress = { handleEmployeeRegister } style={styles.buttonLayout}>
+                    <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}>
+                      <Image source={employeeIcon} style={styles.buttonImage} />
+                      <Text style={styles.buttonText}>ALTA DE EMPLEADO</Text>              
+                    </View>
+                  </TouchableOpacity>    
+
                 </View>                
             </ImageBackground>           
         </View>

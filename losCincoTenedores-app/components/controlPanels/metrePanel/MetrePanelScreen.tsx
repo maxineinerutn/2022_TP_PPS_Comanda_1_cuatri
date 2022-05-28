@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import styles from "../metrePanel/StyleMetrePanelScreen";
 import { ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
-import { userIcon, backgroundImage, logoutIcon } from "../metrePanel/AssetsMetrePanelScreen";
+import { userIcon, backgroundImage, logoutIcon, clientIcon } from "../metrePanel/AssetsMetrePanelScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { auth } from "../../../App";
@@ -21,7 +21,11 @@ const MetrePanel = () => {
           })
           .catch(error => alert(error.message))
     }
-    
+
+    //NAVIGATION
+    const handleClientRegister = () => {
+      navigation.replace("ClientRegistration")
+    }      
     
     //HEADER
     useLayoutEffect(() => {
@@ -51,8 +55,12 @@ const MetrePanel = () => {
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
                 <View style={styles.body}>
 
-                    <Text>HOLA</Text>
-
+                <TouchableOpacity onPress = { handleClientRegister } style={styles.buttonLayout}>
+                    <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}>
+                      <Image source={clientIcon} style={styles.buttonImage} />
+                      <Text style={styles.buttonText}>ALTA DE CLIENTE</Text>              
+                    </View>
+                  </TouchableOpacity>
                 
                 </View>                
             </ImageBackground>           
