@@ -9,11 +9,3 @@ Si el módulo cuena con más de una palabra, se separará con un guión bajo. ("
 Ejemplo: feature/login | feature/create_user
 
 
-Distribucion de tareas: 
-
-Altas
-A- Alta de dueño / supervisor (Branch: altaDueño - DB: ) Luciano
-B- Alta de empleados (Branch: altaEmpleado - DB: ) Luciano
-C- Alta de clientes (Branch: altaCliente - DB: ) Ezequiel
-D- Alta de Mesa (Branch: altaMesa - DB: ) Alan
-E- Alta de productos (Branch: altaProducto - DB: ) Alan
