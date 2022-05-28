@@ -23,16 +23,19 @@ const LoginScreen = () => {
     const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
     
     //SPINNER ERROR
-    const toggleErrorAlert = (error) => {
+    const toggleErrorAlert = async (error) => {
         setModalSpinnerVisible(true);
         
         setTimeout(() => {
-          setModalSpinnerVisible(false);
-          Toast.showWithGravity(
-            error,
-            Toast.LONG, 
-            Toast.CENTER);
-        }, 1000); 
+          setModalSpinnerVisible(false);          
+        }, 1000);
+
+        setTimeout(() => {
+            Toast.showWithGravity(
+                error,
+                Toast.LONG, 
+                Toast.CENTER);
+        }, 2000);
     };
 
     //SETEOS INICIOS RAPIDOS
@@ -162,50 +165,55 @@ const LoginScreen = () => {
                         </View>
                     </View>
 
-                    <TouchableOpacity onPress={handleLogin} style={styles.buttonLogin}>
-                        <Text style={styles.buttonText}>INICIAR SESIÓN</Text>
-                    </TouchableOpacity>
+                        <TouchableOpacity onPress={handleLogin} style={styles.buttonLogin}>
+                            <Text style={styles.buttonText}>INICIAR SESIÓN</Text>
+                        </TouchableOpacity>
+                            
+
+                       
+                 <View style={styles.actionButton}>
+
+                        <ActionButton
+                            renderIcon={(active) => active ? ( <Image source={profilesLogo} style={styles.quickStartIcon} /> )
+                                                        : ( <Image source={profilesLogo} style={styles.quickStartIcon} /> )}
+                            verticalOrientation="up"
+                            position="left"
+                            buttonColor="rgba(0,0,0,1)"
+                            spacing={20}
+                            size={90}
+                            >
+
+                            <ActionButton.Item onPress={onPressAdminHandler} >
+                                <Image source={adminLogo} style={styles.quickStartIcon} />
+                            </ActionButton.Item>
+
+                            <ActionButton.Item onPress={onPressMetreHandler} >
+                                <Image source={metreLogo} style={styles.quickStartIcon} />
+                            </ActionButton.Item>
+
+                            <ActionButton.Item onPress={onPressMozoHandler} >
+                                <Image source={waiterLogo} style={styles.quickStartIcon} />
+                            </ActionButton.Item>
+
+                            <ActionButton.Item onPress={onPressCocinaHandler} >
+                                <Image source={chefLogo} style={styles.quickStartIcon} />
+                            </ActionButton.Item>
+
+                            <ActionButton.Item onPress={onPressBarHandler} >
+                                <Image source={barmanLogo} style={styles.quickStartIcon} />
+                            </ActionButton.Item>
+
+                            <ActionButton.Item onPress={onPressClienteHandler} >
+                                <Image source={clientLogo} style={styles.quickStartIcon} />
+                            </ActionButton.Item>                    
+                        </ActionButton>
+
                         
+                    </View>
+
                     <TouchableOpacity onPress={handelSignUp} style={styles.buttonRegister} >
-                        <Text style={styles.buttonText}>REGISTRARSE</Text>
-                    </TouchableOpacity>
-
-                    <ActionButton
-                        renderIcon={(active) => active ? ( <Image source={profilesLogo} style={styles.quickStartIcon} /> )
-                                                    : ( <Image source={profilesLogo} style={styles.quickStartIcon} /> )}
-                        verticalOrientation="up"
-                        position="left"
-                        bgColor="rgba(0, 0, 0, 0.4);"
-                        buttonColor="rgba(0,0,0,0)"
-                        spacing={45}
-                        offsetX={80}
-                        offsetY={40}
-                        >
-
-                        <ActionButton.Item onPress={onPressAdminHandler} >
-                            <Image source={adminLogo} style={styles.quickStartIcon} />
-                        </ActionButton.Item>
-
-                        <ActionButton.Item onPress={onPressMetreHandler} >
-                            <Image source={metreLogo} style={styles.quickStartIcon} />
-                        </ActionButton.Item>
-
-                        <ActionButton.Item onPress={onPressMozoHandler} >
-                            <Image source={waiterLogo} style={styles.quickStartIcon} />
-                        </ActionButton.Item>
-
-                        <ActionButton.Item onPress={onPressCocinaHandler} >
-                            <Image source={chefLogo} style={styles.quickStartIcon} />
-                        </ActionButton.Item>
-
-                        <ActionButton.Item onPress={onPressBarHandler} >
-                            <Image source={barmanLogo} style={styles.quickStartIcon} />
-                        </ActionButton.Item>
-
-                        <ActionButton.Item onPress={onPressClienteHandler} >
-                            <Image source={clientLogo} style={styles.quickStartIcon} />
-                        </ActionButton.Item>                    
-                    </ActionButton> 
+                            <Text style={styles.buttonText}>REGISTRARSE</Text>
+                    </TouchableOpacity> 
 
                 </View>
 

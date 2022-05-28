@@ -98,4 +98,12 @@ export default StyleSheet.create({
       width: 85,
       resizeMode: 'contain',
     },
+    actionButton: {
+        position:'relative', 
+        width:50,
+        Height:50,
+        left: -150,
+        bottom: -15,
+        alignItems: 'center'
+    },
 });
