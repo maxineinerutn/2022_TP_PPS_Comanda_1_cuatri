@@ -19,17 +19,20 @@ Trabajo práctico grupal - PPS - segundo parcial
 #### SCREENSHOTS
 
 #### SPLASH
+
 <img src="Documentos/splash.gif" width="300"/>
+
 #### PANTALLA DE INICIO E INICIO RAPIDO
 
 <img src="Documentos/login.jpeg" width="300"/> <img src="Documentos/inicioRapido.jpeg" width="300"/>
 
 #### EJEMPLO DE PANEL DE USUARIO
+
 <img src="Documentos/ejemploPanelDeControl.jpeg" width="300"/>
 
-## CINCO TENEDORES APP ( ACTUALIZADO AL 27/05)
+## CINCO TENEDORES APP - TAREAS ( ACTUALIZADO AL 27/05):
 
-### SEMANA 1: 21/05 AL 27/05:
+### SPLASH E INICIO (INCLUYE INICIO RAPIDO): TERMINADO
 
 #### Altas 
 A- Alta de dueño / supervisor  (Branch: altaDueño) GONZALO - EN PROCESO
