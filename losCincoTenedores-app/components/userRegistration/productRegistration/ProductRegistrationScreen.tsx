@@ -30,7 +30,7 @@ const ProductRegistration = () => {
             </TouchableOpacity>
          ),
           headerTitle: () => (
-            <Text style={styles.headerText}>ALTA DE CLIENTE</Text>
+            <Text style={styles.headerText}>ALTA DE PRODUCTO</Text>
           ),
           headerTintColor: "transparent",
           headerBackButtonMenuEnabled: false,
