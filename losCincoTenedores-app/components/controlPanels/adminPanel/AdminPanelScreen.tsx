@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import styles from "../adminPanel/StyleAdminPanelScreen";
 import { ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
-import { userIcon, backgroundImage, logoutIcon, adminIcon, employeeIcon } from "../adminPanel/AssetsAdminPanelScreen";
+import { userIcon, backgroundImage, logoutIcon, adminIcon, employeeIcon, tableIcon } from "../adminPanel/AssetsAdminPanelScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { auth } from "../../../App";
@@ -29,6 +29,10 @@ const AdminPanel = () => {
     
     const handleEmployeeRegister = () => {
       navigation.replace("EmployeeRegistration")
+    } 
+
+    const handleTableRegister = () => {
+      navigation.replace("TableRegistration")
     } 
     
     //HEADER
@@ -59,16 +63,23 @@ const AdminPanel = () => {
                 <View style={styles.body}>
 
                   <TouchableOpacity onPress = { handleAdminRegister } style={styles.buttonLayout}>
-                    <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}>
+                    <View style={styles.registerButtonLayout}>
                       <Image source={adminIcon} style={styles.buttonImage} />
                       <Text style={styles.buttonText}>ALTA DE DUEÑO / SUPERVISOR</Text>              
                     </View>
                   </TouchableOpacity> 
 
                   <TouchableOpacity onPress = { handleEmployeeRegister } style={styles.buttonLayout}>
-                    <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}>
+                  <View style={styles.registerButtonLayout}>
                       <Image source={employeeIcon} style={styles.buttonImage} />
                       <Text style={styles.buttonText}>ALTA DE EMPLEADO</Text>              
+                    </View>
+                  </TouchableOpacity> 
+
+                  <TouchableOpacity onPress = { handleTableRegister } style={styles.buttonLayout}>
+                  <View style={styles.registerButtonLayout}>
+                      <Image source={tableIcon} style={styles.buttonImage} />
+                      <Text style={styles.buttonText}>ALTA DE MESA</Text>              
                     </View>
                   </TouchableOpacity>    
 

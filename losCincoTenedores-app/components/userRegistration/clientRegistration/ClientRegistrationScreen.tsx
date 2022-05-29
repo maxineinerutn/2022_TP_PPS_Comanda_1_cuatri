@@ -38,10 +38,6 @@ const ClientRegistration = () => {
           },         
         });
       }, []);
-
-    const checkLoggedUser = () => {
-      console.log(auth.currentUser)
-    }
         
     return (
         <View style={styles.container}>
@@ -49,10 +45,7 @@ const ClientRegistration = () => {
                 <View style={styles.body}>
 
                     <Text>ALTA CLIENTE</Text>
-                    <TouchableOpacity onPress={checkLoggedUser}>
-                      <Text>Check logged user</Text>
-                    </TouchableOpacity>
-
+                    
                 </View>                
             </ImageBackground>           
         </View>

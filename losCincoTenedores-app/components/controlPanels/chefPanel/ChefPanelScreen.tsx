@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import styles from "../chefPanel/StyleChefPanelScreen";
 import { ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
-import { userIcon, backgroundImage, logoutIcon } from "../chefPanel/AssetsChefPanelScreen";
+import { userIcon, backgroundImage, logoutIcon, productIcon } from "../chefPanel/AssetsChefPanelScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { auth } from "../../../App";
@@ -21,7 +21,11 @@ const ChefPanel = () => {
           })
           .catch(error => alert(error.message))
     }
-    
+
+    //NAVIGATION
+    const handleProductRegister = () => {
+      navigation.replace("ProductRegistration")
+    }      
     
     //HEADER
     useLayoutEffect(() => {
@@ -51,8 +55,12 @@ const ChefPanel = () => {
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
                 <View style={styles.body}>
 
-                    <Text>HOLA</Text>
-
+                <TouchableOpacity onPress = { handleProductRegister } style={styles.buttonLayout}>
+                  <View style={styles.registerButtonLayout}>
+                      <Image source={productIcon} style={styles.buttonImage} />
+                      <Text style={styles.buttonText}>ALTA DE PRODUCTO</Text>              
+                    </View>
+                  </TouchableOpacity>
                 
                 </View>                
             </ImageBackground>           

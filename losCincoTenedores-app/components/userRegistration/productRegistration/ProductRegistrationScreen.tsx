@@ -1,18 +1,24 @@
 import React, { useLayoutEffect } from "react";
-import styles from "../employeeRegistration/StyleEmployeeRegistrationScreen";
+import styles from "../productRegistration/StyleProductRegistrationScreen";
 import { ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
-import { returnIcon, backgroundImage,  } from "../employeeRegistration/AssetsEmployeeRegistrationScreen";
+import { returnIcon, backgroundImage,  } from "../productRegistration/AssetsProductRegistrationScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
+import { auth } from "../../../App";
 
-const EmployeeRegistration = () => {
+const ProductRegistration = () => {
 
     //CONSTANTES
     const navigation = useNavigation<NativeStackNavigationProp<any>>();
 
     //RETURN
     const handleReturn = () => {
-      navigation.replace("ControlPanelPropietario")
+      if(auth.currentUser?.email == "cincotenedorescocina@gmail.com"){
+        navigation.replace("ControlPanelCocina")
+      }
+      if(auth.currentUser?.email == "cincotenedoresbar@gmail.com"){
+        navigation.replace("ControlPanelBar")
+      }
     }
 
     //HEADER
@@ -24,7 +30,7 @@ const EmployeeRegistration = () => {
             </TouchableOpacity>
          ),
           headerTitle: () => (
-            <Text style={styles.headerText}>ALTA DE EMPLEADO</Text>
+            <Text style={styles.headerText}>ALTA DE CLIENTE</Text>
           ),
           headerTintColor: "transparent",
           headerBackButtonMenuEnabled: false,
@@ -34,18 +40,17 @@ const EmployeeRegistration = () => {
         });
       }, []);
 
-    
     return (
         <View style={styles.container}>
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
                 <View style={styles.body}>
 
-                    <Text>ALTA EMPLEADO</Text>
-                
+                    <Text>ALTA PRODUCTO</Text>
+                    
                 </View>                
             </ImageBackground>           
         </View>
     );
 };
 
-export default EmployeeRegistration;
+export default ProductRegistration;
