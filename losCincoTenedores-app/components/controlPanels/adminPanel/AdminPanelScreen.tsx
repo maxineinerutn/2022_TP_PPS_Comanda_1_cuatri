@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import styles from "../adminPanel/StyleAdminPanelScreen";
 import { ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
-import { userIcon, backgroundImage, logoutIcon, adminIcon, employeeIcon, tableIcon } from "../adminPanel/AssetsAdminPanelScreen";
+import { userIcon, backgroundImage, logoutIcon, adminIcon, employeeIcon, tableIcon, clientManagmentIcon } from "../adminPanel/AssetsAdminPanelScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { auth } from "../../../App";
@@ -33,6 +33,10 @@ const AdminPanel = () => {
 
     const handleTableRegister = () => {
       navigation.replace("TableRegistration")
+    } 
+
+    const handleClientManagment = () => {
+      navigation.replace("ClientManagment")
     } 
     
     //HEADER
@@ -81,7 +85,14 @@ const AdminPanel = () => {
                       <Image source={tableIcon} style={styles.buttonImage} />
                       <Text style={styles.buttonText}>ALTA DE MESA</Text>              
                     </View>
-                  </TouchableOpacity>    
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress = { handleClientManagment } style={styles.buttonLayout}>
+                  <View style={styles.registerButtonLayout}>
+                      <Image source={clientManagmentIcon} style={styles.buttonImage} />
+                      <Text style={styles.buttonText}>APROBACIÓN DE NUEVOS CLIENTES</Text>              
+                    </View>
+                  </TouchableOpacity>     
 
                 </View>                
             </ImageBackground>           
