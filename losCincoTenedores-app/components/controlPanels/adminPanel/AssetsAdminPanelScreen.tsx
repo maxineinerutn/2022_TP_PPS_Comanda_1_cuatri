@@ -4,3 +4,4 @@ export const userIcon = require("../../../assets/profiles/administrator.png");
 export const adminIcon = require("../../../assets/profiles/administrator.png");
 export const employeeIcon = require("../../../assets/profiles/metre.png");
 export const tableIcon = require("../../../assets/common/table.png");
+export const clientManagmentIcon = require("../../../assets/common/clientManagment.png");

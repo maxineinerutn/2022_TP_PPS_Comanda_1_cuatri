@@ -402,7 +402,7 @@ const ClientRegistration = () => {
           </View> 
 
           <View>
-            <Modal backdropOpacity={0} animationIn="rotate" animationOut="rotate" isVisible={isModalSpinnerVisible}>
+            <Modal backdropOpacity={0.5} animationIn="rotate" animationOut="rotate" isVisible={isModalSpinnerVisible}>
               <RotatingLogo></RotatingLogo>
             </Modal>
           </View> 
