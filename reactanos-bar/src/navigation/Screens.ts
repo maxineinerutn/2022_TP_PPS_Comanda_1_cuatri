@@ -1,4 +1,5 @@
 export enum Screens{
     LOGIN='Login',
-    HOME='Home'
+    HOME='Home',
+    ADD_PRODUCTS='Agregar producto'
 }
