@@ -1,6 +1,6 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useLayoutEffect, useEffect, useState  } from "react";
+import React, { useLayoutEffect, useEffect, useState, useCallback  } from "react";
 import styles from "../adminRegistration/StyleAdminRegistrationScreen";
 import { Image, ImageBackground, Text, TextInput, TouchableOpacity, View, StyleSheet } from "react-native";
 import { returnIcon, backgroundImage, cameraIcon, qrIcon,  } from "../adminRegistration/AssetsAdminRegistrationScreen";
@@ -232,18 +232,24 @@ const AdminRegistration = () => {
     //MANEJADORES RADIOBUTTONS
 
     const pressDueño = () => {
-      console.log(checked);
       setChecked('Dueño');
-      setValue("rol",checked);
-      console.log(checked);
     }
 
     const pressSupervisor = () => {
-      console.log(checked);
       setChecked('Supervisor');
-      setValue("rol",checked);
-      console.log(checked);
     }
+
+    //CARGA CAMPOS SEGUN SELECCION RADIO BUTTON
+    useFocusEffect(
+      useCallback(() => {
+        console.log(checked);
+        if(checked=='Supervisor'){
+          setValue("rol",checked);
+        }
+        if(checked=='Dueño'){
+          setValue("rol",checked);
+        }
+    }, [checked]))
 
     return (
       !openQR ?
