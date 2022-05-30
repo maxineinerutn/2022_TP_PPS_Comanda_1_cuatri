@@ -165,6 +165,7 @@ const AdminRegistration = () => {
           Toast.CENTER);      
       reset();
       setImage("");
+      //VUELTA AL CONTROL PANEL ( VER DE PONER EL QUE CORRESPONDE EN CADA CASO)
       navigation.replace('ControlPanelPropietario');
       } catch (error:any) {
         Toast.showWithGravity(
