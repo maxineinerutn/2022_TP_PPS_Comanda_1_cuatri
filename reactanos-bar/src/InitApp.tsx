@@ -8,15 +8,25 @@ import { firebaseConfig } from '../firebase';
 import LoginStack from './navigation/stacks/LoginStack';
 import { IStore } from './redux/store';
 import { AuthTypes } from './redux/authReducer';
+import Spinner from './components/atoms/Spinner/Spinner.component';
+import DrawerStack from './navigation/Drawer';
+import {getFirestore} from 'firebase/firestore';
+import { getStorage } from 'firebase/storage';
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+export const storage = getStorage(app);
+export const db = getFirestore(app);
 
 const InitApp = ()=> {
   const data:AuthTypes = useSelector<IStore, any>(store=>store.auth);
   return (
     <NavigationContainer>
-      <LoginStack />
+      {data.loading && <Spinner />}
+      {data.success ?
+        <DrawerStack /> :
+        <LoginStack />
+      }
     </NavigationContainer>
   );
 }

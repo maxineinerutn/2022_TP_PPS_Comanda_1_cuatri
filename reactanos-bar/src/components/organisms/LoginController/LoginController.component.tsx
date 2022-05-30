@@ -16,12 +16,12 @@ const LoginController:FC<LoginControllerProps> = ({control, onSubmit}) => {
         <InputGroup>
           <Controller control={control} name="email"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input onChangeText={onChange} onBlur={onBlur} value={value} placeholder="Correo electrónico" />
+              <Input autoCapitalize='none' keyboardType='email-address' returnKeyType='next' onChangeText={onChange} onBlur={onBlur} value={value} placeholder="Correo electrónico" />
             )}
           />
           <Controller control={control} name="password"
             render={({ field: { onChange, onBlur, value } }) => (
-              <Input onChangeText={onChange} onBlur={onBlur} value={value} placeholder="Contraseña" />
+              <Input secureTextEntry onChangeText={onChange} onBlur={onBlur} returnKeyType='send' value={value} placeholder="Contraseña" />
             )}
           />
         </InputGroup>
