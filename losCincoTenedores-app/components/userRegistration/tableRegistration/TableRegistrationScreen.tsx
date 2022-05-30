@@ -1,11 +1,11 @@
 import React, { useLayoutEffect } from "react";
-import styles from "../employeeRegistration/StyleEmployeeRegistrationScreen";
+import styles from "../tableRegistration/StyleTableRegistrationScreen";
 import { ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
-import { returnIcon, backgroundImage,  } from "../employeeRegistration/AssetsEmployeeRegistrationScreen";
+import { returnIcon, backgroundImage,  } from "../tableRegistration/AssetsTableRegistrationScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 
-const EmployeeRegistration = () => {
+const TableRegistration = () => {
 
     //CONSTANTES
     const navigation = useNavigation<NativeStackNavigationProp<any>>();
@@ -24,7 +24,7 @@ const EmployeeRegistration = () => {
             </TouchableOpacity>
          ),
           headerTitle: () => (
-            <Text style={styles.headerText}>ALTA DE EMPLEADO</Text>
+            <Text style={styles.headerText}>ALTA DE MESA</Text>
           ),
           headerTintColor: "transparent",
           headerBackButtonMenuEnabled: false,
@@ -40,7 +40,7 @@ const EmployeeRegistration = () => {
             <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
                 <View style={styles.body}>
 
-                    <Text>ALTA EMPLEADO</Text>
+                    <Text>ALTA MESA</Text>
                 
                 </View>                
             </ImageBackground>           
@@ -48,4 +48,4 @@ const EmployeeRegistration = () => {
     );
 };
 
-export default EmployeeRegistration;
+export default TableRegistration;

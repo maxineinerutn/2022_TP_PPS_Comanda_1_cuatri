@@ -22,6 +22,9 @@ import ClientPanel from './components/controlPanels/clientPanel/ClientPanelScree
 import WaiterPanel from './components/controlPanels/waiterPanel/WaiterPanelScreen';
 import AdminRegistration from './components/userRegistration/adminRegistration/AdminRegistrationScreen';
 import ClientRegistration from './components/userRegistration/clientRegistration/ClientRegistrationScreen';
+import EmployeeRegistration from './components/userRegistration/employeeRegistration/EmployeeRegistrationScreen';
+import TableRegistration from './components/userRegistration/tableRegistration/TableRegistrationScreen';
+import ProductRegistration from './components/userRegistration/productRegistration/ProductRegistrationScreen';
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -66,7 +69,9 @@ export default () => {
         <Stack.Screen options =  {{ headerShown: true }}  name="ControlPanelCliente" component={ClientPanel} />
         <Stack.Screen options =  {{ headerShown: true }}  name="AdminRegistration" component={AdminRegistration} />
         <Stack.Screen options =  {{ headerShown: true }}  name="ClientRegistration" component={ClientRegistration} />
-
+        <Stack.Screen options =  {{ headerShown: true }}  name="EmployeeRegistration" component={EmployeeRegistration} />
+        <Stack.Screen options =  {{ headerShown: true }}  name="TableRegistration" component={TableRegistration} />
+        <Stack.Screen options =  {{ headerShown: true }}  name="ProductRegistration" component={ProductRegistration} />
       </Stack.Navigator>
     </NavigationContainer> );
       }      
