@@ -40,6 +40,7 @@
     "react-native-gesture-handler": "~2.1.0",
     "react-native-image-slider-box": "^1.1.23",
     "react-native-loading-spinner-overlay": "^3.0.0",
+    "react-native-mask-input": "^1.2.0",
     "react-native-modal": "^13.0.1",
     "react-native-really-awesome-button": "^1.6.0",
     "react-native-reanimated": "~2.8.0",

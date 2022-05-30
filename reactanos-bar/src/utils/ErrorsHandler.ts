@@ -14,6 +14,9 @@ export const errorHandler = (error:any) => {
         case 'auth/user-not-found':
             showMessage({type:"danger", message:"Error", description:"Correo electrónico y/o contraseña inválido"});
         break;
+        case 'auth/wrong-password':
+            showMessage({type:"danger", message:"Error", description:"Correo electrónico y/o contraseña inválido"});
+        break;
         case 'pass-diff':
             showMessage({type:"danger", message:"Error", description:"Las contraseñas no coinciden"});
         break;

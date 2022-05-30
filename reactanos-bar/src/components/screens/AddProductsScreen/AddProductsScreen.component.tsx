@@ -9,7 +9,7 @@ import Modal from "../../atoms/Modal/Modal.component";
 import Carousel from "../../molecules/Carousel/Carousel.component";
 import { useForm } from "react-hook-form";
 import AddProductsController from "../../organisms/AddProductsController/AddProductsController.component";
-import { getBlob } from "../../../utils/utils";
+import { getBlob, uploadImages } from "../../../utils/utils";
 import { errorHandler } from "../../../utils/ErrorsHandler";
 import { showMessage } from "react-native-flash-message";
 import { ref, uploadBytes } from "firebase/storage";
@@ -39,15 +39,7 @@ const AddProductsScreen = () => {
                 showMessage({type:"danger", message:"Error", description:"Todos los campos son requeridos"});
                 return
             }
-            let imagesRef:any = [];
-            for await (const image of images) {
-                const blob:any = await getBlob(image);
-                const fileName = image.substring(image.lastIndexOf("/") + 1);
-                const fileRef = ref(storage, "products/" + fileName);
-                await uploadBytes(fileRef, blob);
-                imagesRef.push(fileRef.fullPath);
-                await blob.close();
-            };
+            const imagesRef = await uploadImages(images);
             await addDoc(collection(db, "products"), {
                 user: data.user.email,
                 creationDate: new Date(),
@@ -81,6 +73,11 @@ const AddProductsScreen = () => {
         }
     };
 
+    const handleCancel = () => {
+        setImages([]);
+        setModalVisible(false);
+    }
+
     return (
         <StyledView>
             <StyledLinearGradient colors={["#6190E8", "#A7BFE8"]}>
@@ -91,7 +88,7 @@ const AddProductsScreen = () => {
                     onPrimaryText="Siguiente foto"
                     onPrimary={handleCamera}
                     onSecondaryText="Cancelar"
-                    onSecondary={() => setModalVisible(false)}
+                    onSecondary={handleCancel}
                 />
                 {images.length<1 ? 
                     <ImageButton source={require('../../../../assets/add-photo.png')} onPress={handleCamera} /> :

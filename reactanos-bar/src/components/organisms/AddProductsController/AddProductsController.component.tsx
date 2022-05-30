@@ -1,10 +1,10 @@
-import { View } from "react-native";
-import React, { FC } from "react";
+import React, { FC, useRef, MutableRefObject, useState } from "react";
 import { StyledMargin, StyledView } from "./AddProductsController.styled";
-import Input from "../../atoms/Input/Input.component";
 import Button from "../../atoms/Button/Button.component";
 import ControlledInput from "../../molecules/ControlledInput/ControlledInput.component";
 import { Control } from "react-hook-form";
+import MaskInput, { createNumberMask, Masks } from 'react-native-mask-input';
+import ControlledCurrency from "../../molecules/ControlledCurrency/ControlledCurrency.component";
 
 interface AddProductsControllerProps{
   control: Control<any,any>
@@ -12,19 +12,23 @@ interface AddProductsControllerProps{
 }
 
 const AddProductsController:FC<AddProductsControllerProps> = ({onPress, control}) => {
+    const descInput:MutableRefObject<any> = useRef();
+    const timeInput:MutableRefObject<any> = useRef();
+    const priceInput:MutableRefObject<any> = useRef();
+
     return (
         <StyledView>
             <StyledMargin>
-                <ControlledInput placeholder="Nombre" variant="rounded" control={control} name="name" />
+                <ControlledInput onSubmitEditing={()=>descInput.current.focus()} placeholder="Nombre" variant="rounded" control={control} name="name" />
             </StyledMargin>
             <StyledMargin>
-                <ControlledInput placeholder="Descripción" variant="rounded" control={control} name="description" />
+                <ControlledInput ref={descInput} onSubmitEditing={()=>timeInput.current.focus()} placeholder="Descripción" variant="rounded" control={control} name="description" />
             </StyledMargin>
             <StyledMargin>
-                <ControlledInput placeholder="Tiempo de elaboración" variant="rounded" control={control} name="elaborationTime" />
+                <ControlledInput ref={timeInput} onSubmitEditing={()=>priceInput.current.focus()}  type="numeric" placeholder="Tiempo de elaboración" variant="rounded" control={control} name="elaborationTime" />
             </StyledMargin>
             <StyledMargin>
-                <ControlledInput placeholder="Precio" variant="rounded" control={control} name="price" />
+                <ControlledCurrency placeholder="Precio" control={control} name="price" />
             </StyledMargin>
             <StyledMargin>
                 <Button onPress={onPress}>Agregar</Button>
