@@ -49,6 +49,8 @@ const AdminRegistration = () => {
     const [placeholderColor, setPlaceholderColor] = useState("white");
     const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
     const [checked, setChecked] = React.useState('DUEÑO');
+    //VARIABLE PARA GUARDAR EL USUARIO ORIGINAL
+    let originalUser = auth.currentUser;
 
     //RETURN
     const handleReturn = () => {
@@ -132,15 +134,15 @@ const AdminRegistration = () => {
       setLoading(true)
       toggleSpinnerAlert();
       try {
+        console.log(auth.currentUser?.email);
         //CREACION DE USUARIO
         await createUserWithEmailAndPassword(auth,values.email,values.email);
         console.log(auth.currentUser?.email);
-        auth.signOut();
 
-        //FORMA CROTA DE VOLVER AL USUARIO ORIGINAL
-        await signInWithEmailAndPassword(auth,"cincotenedorespropietario@gmail.com","administrador123");
-        console.log(auth.currentUser?.email);
-        
+        //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
+        await auth.signOut();
+        await auth.updateCurrentUser(originalUser);
+
         //UPLOAD IMAGEN
         const blob:any = await getBlob(image);
         const fileName = image.substring(image.lastIndexOf("/") + 1);
@@ -156,8 +158,7 @@ const AdminRegistration = () => {
           rol:checked,
           image:fileRef.fullPath,
           creationDate:new Date()          
-        });
-        
+        });        
         Toast.showWithGravity(
           "Usuario creado exitosamente",
           Toast.LONG, 
@@ -172,7 +173,8 @@ const AdminRegistration = () => {
           Toast.CENTER); 
       }finally{
         setLoading(false);
-        resetForm();
+        resetForm();  
+        console.log(auth.currentUser?.email);
       }
     }
 
@@ -202,7 +204,7 @@ const AdminRegistration = () => {
       setModalSpinnerVisible(true);
       setTimeout(() => {
         setModalSpinnerVisible(false);
-      }, 1500);
+      }, 3000);
     };
 
     //HEADER

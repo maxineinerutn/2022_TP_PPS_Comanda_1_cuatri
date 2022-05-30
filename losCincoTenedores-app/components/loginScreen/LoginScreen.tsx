@@ -182,8 +182,8 @@ const LoginScreen = () => {
                             renderIcon={(active) => active ? ( <Image source={profilesLogo} style={styles.quickStartIcon} /> )
                                                         : ( <Image source={profilesLogo} style={styles.quickStartIcon} /> )}
                             verticalOrientation="up"
-                            position="left"
-                            buttonColor="rgba(0,0,0,1)"
+                            position="left"          
+                            buttonColor="rgba(0,0,0,0.8)"
                             spacing={20}
                             size={90}
                             >
