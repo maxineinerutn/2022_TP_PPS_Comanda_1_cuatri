@@ -36,6 +36,13 @@ export default StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
     },
+    imageIconContainer: {
+        flexDirection: 'row', 
+        alignContent: 'center', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 5
+    },
     cardImage: {
         flex: 1, 
         borderRadius: 10,
@@ -43,6 +50,13 @@ export default StyleSheet.create({
         width:120,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+    cardIcon: {
+        padding: 10,
+        margin: 5,
+        height: 100,
+        width: 100,
+        resizeMode: 'contain',
     },
     tableHeaderText: {
         color: '#3D4544',
