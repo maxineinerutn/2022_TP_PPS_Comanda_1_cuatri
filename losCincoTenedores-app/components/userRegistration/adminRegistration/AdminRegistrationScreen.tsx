@@ -10,7 +10,7 @@ import { Camera } from 'expo-camera';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useForm } from 'react-hook-form';
 import Toast from 'react-native-simple-toast';
-import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { ref, uploadBytes } from 'firebase/storage';
 import { addDoc, collection } from "firebase/firestore";
 import { auth, db, storage } from "../../../App";
@@ -48,7 +48,7 @@ const AdminRegistration = () => {
     const [loading, setLoading] = useState(false);
     const [placeholderColor, setPlaceholderColor] = useState("white");
     const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
-    const [checked, setChecked] = React.useState('DUEÑO');
+    const [checked, setChecked] = React.useState('Dueño');
     //VARIABLE PARA GUARDAR EL USUARIO ORIGINAL
     let originalUser = auth.currentUser;
 
@@ -104,6 +104,8 @@ const AdminRegistration = () => {
       const values=getValues();
       console.log(values);
       let error=false;
+
+      //VALIDACION CAMPOS
       Object.values(values).map(value=>{
         if(!value){
           error=true;
@@ -146,10 +148,10 @@ const AdminRegistration = () => {
         //UPLOAD IMAGEN
         const blob:any = await getBlob(image);
         const fileName = image.substring(image.lastIndexOf("/") + 1);
-        const fileRef = ref(storage, "infoDueñoSupervisor/" + fileName);
+        const fileRef = ref(storage, "userInfo/" + fileName);
         await uploadBytes(fileRef, blob);
         //UPLOAD DATA
-        await addDoc(collection(db, "infoDueñoSupervisor"), {
+        await addDoc(collection(db, "userInfo"), {
           lastName:values.apellido,
           name:values.nombre,
           dni:values.dni,
@@ -166,7 +168,7 @@ const AdminRegistration = () => {
       reset();
       setImage("");
       //VUELTA AL CONTROL PANEL ( VER DE PONER EL QUE CORRESPONDE EN CADA CASO)
-      navigation.replace('ControlPanelPropietario');
+      handleReturn;
       } catch (error:any) {
         Toast.showWithGravity(
           error.code,
@@ -181,7 +183,7 @@ const AdminRegistration = () => {
 
     //RESET DEL FORM
     const resetForm = () => {
-      setPlaceholderColor("grey");
+      setPlaceholderColor("white");
       setApellido("Apellido");
       setNombre("Nombre");
       setDni("DNI");
@@ -230,13 +232,15 @@ const AdminRegistration = () => {
     //MANEJADORES RADIOBUTTONS
 
     const pressDueño = () => {
-      setChecked('DUEÑO');
+      console.log(checked);
+      setChecked('Dueño');
       setValue("rol",checked);
       console.log(checked);
     }
 
     const pressSupervisor = () => {
-      setChecked('SUPERVISOR');
+      console.log(checked);
+      setChecked('Supervisor');
       setValue("rol",checked);
       console.log(checked);
     }
@@ -340,8 +344,8 @@ const AdminRegistration = () => {
               <View style={styles.inputFieldRadioLayout}>
                 <View style={styles.inputFieldRadio}>
                   <RadioButton
-                    value="DUEÑO"
-                    status={ checked === 'DUEÑO' ? 'checked' : 'unchecked' }
+                    value="Dueño"
+                    status={ checked === 'Dueño' ? 'checked' : 'unchecked' }
                     onPress={ pressDueño }
                   />
                   <Text style={styles.inputText}>DUEÑO</Text>               
@@ -349,8 +353,8 @@ const AdminRegistration = () => {
 
                 <View style={styles.inputFieldRadio}>
                   <RadioButton
-                    value="SUPERVISOR"
-                    status={ checked === 'SUPERVISOR' ? 'checked' : 'unchecked' }
+                    value="Supervisor"
+                    status={ checked === 'Supervisor' ? 'checked' : 'unchecked' }
                     onPress={ pressSupervisor }
                   />
                   <Text style={styles.inputText}>SUPERVISOR</Text>
