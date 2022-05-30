@@ -1,58 +1,51 @@
-# 2022_TP_PPS_Comanda_1_cuatri
-Trabajo práctico grupal - PPS - segundo parcial
+# Lo que se te antoje
 
-COMPONENTES
------------
+<p  align="center">
+<img src="https://firebasestorage.googleapis.com/v0/b/labpp-2b6b2.appspot.com/o/fotos%2FlogoTransp.png?alt=media&token=449ad5c3-744d-4085-88a1-6df14d313dbb" width="300"/>
+</p>
 
-Denu: 
-		Primer semana:
-			* Alta supervisor
-			* QR ingreso
-			* Encuesta supervisor
-		Segunda semana: 
-			* Ingresar al local (gestion)
-			* Ingreso local (push n)
-			* Confirmar pedido (push n)
-		Tecer semana:
-			* Juego (opcional?)
+## Karen Villarreal (Alfa)
+#### Primer semana
+* Icono + Splash ✔ 
+* Alta empleados
+* QR mesa
+* Encuesta empleados
 
-Karen:
-		Primer semana:
-			* Icono + Splash
-			* Alta empleados
-			* QR mesa
-			* Encuesta empleados
-		Segunda semana:
-			* Realizar pedidos (gestion)
-			* Confirmar pedidos (gestion)
-			* Consultar mozo (push n)
-			* Confirmar realizacion pedido (push n)
-		Tercer semana:
-			* Juego (opcional?)
+#### Segunda semana
+* Realizar pedidos (gestion)
+* Confirmar pedidos (gestion)
+* Consultar mozo (push n)
+* Confirmar realizacion pedido (push n)
 
-Mati:
-		Primer semana:
-			* Alta clientes
-			* Alta mesa
-			* QR propina
-		Segunda semana:
-			* Encuesta clientes
-			* Agregar clente registrado (gestion)
-			* Agregar cliente (push n)
-		Tercer semana:
-			* Juego (opcional?)
+#### Tercer semana
+* Juego (opcional?)
 
+## Daniela Moreno (Beta)
+#### Primer semana
+* Alta supervisor
+* QR ingreso
+* Encuesta supervisor
 
+#### Segunda semana
+* Ingresar al local (gestion)
+* Ingreso local (push n)
+* Confirmar pedido (push n)
 
+#### Tecer semana
+* Juego (opcional?)
 
-SERVICIOS
----------
-general:
-	* push notifications
-	* juegos
+## Matias Gravante (Gamma)
+#### Primer semana
+* Alta clientes
+* Alta mesa
+* QR propina
+
+#### Segunda semana
+* Encuesta cliente
+* Agregar clente registrado (gestion)
+* Agregar cliente (push n)
+
+#### Tercer semana
+* Juego (opcional?)
 
 
-
-
-CLASES
-------
