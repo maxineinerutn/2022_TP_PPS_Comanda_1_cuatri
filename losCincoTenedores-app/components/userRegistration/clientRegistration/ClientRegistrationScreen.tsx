@@ -167,7 +167,7 @@ const ClientRegistration = () => {
       try {
         console.log(auth.currentUser?.email);
         //CREACION DE USUARIO
-        await createUserWithEmailAndPassword(auth,values.email,values.email);
+        await createUserWithEmailAndPassword(auth,values.email,values.password);
         console.log(auth.currentUser?.email);
 
         //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL

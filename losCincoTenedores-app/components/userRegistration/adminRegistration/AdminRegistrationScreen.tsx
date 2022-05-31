@@ -168,7 +168,7 @@ const AdminRegistration = () => {
       reset();
       setImage("");
       //VUELTA AL CONTROL PANEL ( VER DE PONER EL QUE CORRESPONDE EN CADA CASO)
-      handleReturn;
+      handleReturn();
       } catch (error:any) {
         Toast.showWithGravity(
           error.code,

@@ -7,7 +7,7 @@ import Modal from "react-native-modal";
 import React, { useCallback, useLayoutEffect, useState } from 'react'
 import RotatingLogo from "../../rotatingLogo/RotatingLogo";
 import { db, storage } from "../../../App";
-import { collection, query, where, getDocs, updateDoc, doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { getDownloadURL, ref } from 'firebase/storage'
 import { format } from 'date-fns'
 import Toast from 'react-native-simple-toast';
