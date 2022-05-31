@@ -113,7 +113,7 @@ const ClientRegistration = () => {
       }
     };
 
-    //CARGA CAMPOS SEGUNSELECCION RADIO BUTTON
+    //CARGA CAMPOS SEGUN SELECCION RADIO BUTTON
     useFocusEffect(
       useCallback(() => {
         console.log(checked);
