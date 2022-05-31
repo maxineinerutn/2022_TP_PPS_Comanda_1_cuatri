@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { SplashComponent } from './splash/splash.component';
+import { UsuariosModule } from './paginas/usuarios/usuarios.module';
 
 @NgModule({
   declarations: [AppComponent, SplashComponent],
@@ -19,7 +20,8 @@ import { SplashComponent } from './splash/splash.component';
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
             FormsModule,
             AngularFireModule.initializeApp(environment.firebaseConfig),
-            AngularFirestoreModule],
+            AngularFirestoreModule,
+            UsuariosModule],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],
 })

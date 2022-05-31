@@ -4,7 +4,11 @@ import { AppComponent } from './app.component';
 
 const routes: Routes = [
   {path:'bienvenida', component:AppComponent},
-  {path:'**', redirectTo:'bienvenida', pathMatch:'full'}
+  {
+    path: 'usuarios',
+    loadChildren: () => import('./paginas/usuarios/usuarios.module').then(m => m.UsuariosModule),
+  },
+  {path:'**', redirectTo:'bienvenida', pathMatch:'full'},
 ];
 @NgModule({
   imports: [
