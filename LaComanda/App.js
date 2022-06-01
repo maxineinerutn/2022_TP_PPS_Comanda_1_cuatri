@@ -1,12 +1,27 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { useState, useEffect } from "react";
+import AnimatedSplash from 'react-native-animated-splash-screen';
+import SplashScreen from './src/components/SplashScreen/SplashScreen';
+import Main from './src/components/Main/Main';
 
 export default function App() {
+  const [isLoaded, setIsloaded] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setIsloaded(true);
+    }, 3000);
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <AnimatedSplash
+      translucent={true}
+      isLoaded={isLoaded}
+      backgroundColor={"black"}
+      customComponent={<SplashScreen/>}
+    >
+      <Main></Main>
+    </AnimatedSplash>
   );
 }
 
