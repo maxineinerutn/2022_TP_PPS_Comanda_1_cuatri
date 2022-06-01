@@ -3,9 +3,12 @@ import { useState, useEffect } from "react";
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import SplashScreen from './src/components/SplashScreen/SplashScreen';
 import Main from './src/components/Main/Main';
+import GlobalContext from './src/context/GlobalContext';
 
 export default function App() {
   const [isLoaded, setIsloaded] = useState(false);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   useEffect(() => {
     setTimeout(() => {
@@ -20,7 +23,9 @@ export default function App() {
       backgroundColor={"black"}
       customComponent={<SplashScreen/>}
     >
-      <Main></Main>
+      <GlobalContext.Provider value={{ email, setEmail, password, setPassword }}>
+        <Main></Main>
+      </GlobalContext.Provider>
     </AnimatedSplash>
   );
 }
