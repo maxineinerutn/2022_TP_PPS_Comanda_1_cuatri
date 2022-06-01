@@ -1,13 +1,14 @@
 const theme = {
   colors: {
-    primary: "#9B9D9F",
-    textPrimary: "#464646",
-    background: "#e06f29",
-    textGeneral: "black",
+    primary: "#C1292E",
+    secondary: "#FDFFFC",
     details: "#ed9e6d",
+    icons: "#235789",
+    text: "#235789",
     error: "red",
     warning: "yellow",
     success: "green",
+    neutral: "black",
   },
   fontSizes: {
     heading: 40,
