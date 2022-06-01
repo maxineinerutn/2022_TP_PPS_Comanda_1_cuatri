@@ -20,7 +20,7 @@ export const saveItemInCollection = async (collection, docName, item) => {
  * @param {*} onError Callback que se va a ejecutar si ocurre un error
  * @returns
  */
-export const getAllItemByEmail = async (
+export const getUserByEmail = async (
   collection,
   email,
   onResult,

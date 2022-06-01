@@ -1,4 +1,6 @@
-const handleLoginErrorMessage = (code) => {
+import { getUserByMail } from '../../../services/FirestoreServices';
+
+export const handleLoginErrorMessage = (code) => {
     switch (code) {
       case 'auth/user-disabled': {
           return 'Usuario deshabilitado';
@@ -18,4 +20,12 @@ const handleLoginErrorMessage = (code) => {
     }
 };
 
-export default handleLoginErrorMessage;
+export const verifyUserIsApproved = (email) => {
+  getUserByMail("users", email,
+  (querySnapshot) => {
+    let user = querySnapshot.docs.map(doc => doc.data());
+    return user.approved;
+  }, () => {
+    console.log(err);
+  });
+}
