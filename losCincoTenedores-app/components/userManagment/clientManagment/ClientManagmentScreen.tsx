@@ -1,7 +1,7 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import styles from "./StyleClientManagmentScreen";
-import { Image, ImageBackground, Text, TouchableOpacity, View, ScrollView, TextInput } from "react-native";
+import { Image, ImageBackground, Text, TouchableOpacity, View, ScrollView, TextInput, Alert } from "react-native";
 import { returnIcon, backgroundImage, confirmIcon, cancelIcon } from "./AssetsClientManagmentScreen";
 import Modal from "react-native-modal";
 import React, { useCallback, useLayoutEffect, useState } from 'react'
@@ -11,7 +11,7 @@ import { collection, query, where, getDocs, updateDoc, doc } from "firebase/fire
 import { getDownloadURL, ref } from 'firebase/storage'
 import { format } from 'date-fns'
 import Toast from 'react-native-simple-toast';
-
+import emailjs from '@emailjs/browser';
 
 const ClientManagment = () => {
 
@@ -69,11 +69,12 @@ const ClientManagment = () => {
   }
 
   //MANEJADORES DE ACEPTAR / RECHAZAR USUARIO
-  const handleConfirm = async (id) => {
+  const handleConfirm = async (id, mail) => {
     try {
       const ref = doc(db, "userInfo", id);
       const data =  'Accepted';
       await updateDoc(ref, {clientStatus:data});
+      handleAcceptEmail(mail);
       getDocuments();
       toggleSpinnerAlert();
       setTimeout(() => {
@@ -93,14 +94,15 @@ const ClientManagment = () => {
     setRejectId(id);
     toggleModalCancel();      
   }
-
-  const completeReject = async () => {
+  
+  const completeReject = async (mail) => {
     try {
       const ref = doc(db, "userInfo", rejectId);
       const data =  'Rejected';
       await updateDoc(ref, {clientStatus:data});
       await updateDoc(ref, {rejectedReason:rejectMotive});
-      toggleModalCancel();      
+      toggleModalCancel();
+      handleRejectEmail(mail,rejectMotive);      
       getDocuments();
       toggleSpinnerAlert();
       setTimeout(() => {
@@ -114,6 +116,20 @@ const ClientManagment = () => {
     } finally{
         setLoading(false);        
     }
+  }
+
+  //MANEJADORES DE ENVIAR CORREO
+  const handleAcceptEmail = (mail) => {
+    emailjs.send("service_wbgf2dw","template_9qz5f9l",{
+      to_name: mail,
+      }, 'Dl1ezcTCNqNpQPibY');
+  }
+
+  const handleRejectEmail = (mail, reason) => {
+    emailjs.send("service_wbgf2dw","template_98tr2kk",{
+      to_name: mail,
+      motive: reason,
+      }, 'Dl1ezcTCNqNpQPibY');
   }
 
   //HEADER
@@ -152,7 +168,7 @@ const ClientManagment = () => {
               <View style={styles.cardStyle}>
                 <View style={styles.imageIconContainer}>
                   <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl }} />
-                  <TouchableOpacity onPress={() => handleConfirm(item.id)}>
+                  <TouchableOpacity onPress={() => handleConfirm(item.id, item.email)}>
                       <Image source={confirmIcon} style={styles.cardIcon} />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => handleCancel(item.id)}>
@@ -184,7 +200,7 @@ const ClientManagment = () => {
                           />
                         </View>
                         <View style={styles.modalIconContainer}>
-                          <TouchableOpacity onPress={() => completeReject()} >
+                          <TouchableOpacity onPress={() => completeReject(item.email)} >
                           <Image source={confirmIcon} style={styles.cardIcon} />
                           </TouchableOpacity>
                           <TouchableOpacity  onPress={toggleModalCancel} >
@@ -194,8 +210,7 @@ const ClientManagment = () => {
                       </View>
                   </View>
                 </Modal>
-                        
-
+                
               </View>              
             ))}
           </ScrollView> 
@@ -207,11 +222,6 @@ const ClientManagment = () => {
           </Modal>
         </View>
         
-         
-
-
-
-
         </ImageBackground>           
     </View> 
   );

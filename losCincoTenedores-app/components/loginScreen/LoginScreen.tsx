@@ -12,7 +12,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faKey, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import ActionButton from "react-native-action-button";
 import { adminLogo, backgroundImage, barmanLogo, chefLogo, clientLogo, logoImage, metreLogo, profilesLogo, waiterLogo } from "./AssetsLoginScreen";
-import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDocs } from "firebase/firestore";
+
 
 const LoginScreen = () => {
 
@@ -274,5 +275,8 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
+
+
+
 
 
