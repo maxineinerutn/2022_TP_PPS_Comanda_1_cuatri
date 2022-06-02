@@ -225,22 +225,6 @@ const EmployeeRegistration = () => {
     } finally {
       setLoading(false);
       resetForm();
-      console.log(auth.currentUser?.email);
-
-      switch (values.employeeType) {
-        case "Metre":
-          navigation.replace("ControlPanelMetre");
-          break;
-        case "Mozo":
-          navigation.replace("ControlPanelMozo");
-          break;
-        case "Cocinero":
-          navigation.replace("ControlPanelCocina");
-          break;
-        case "Bartender":
-          navigation.replace("ControlPanelBar");
-          break;
-      }
     }
   };
 
