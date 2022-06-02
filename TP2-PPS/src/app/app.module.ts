@@ -15,10 +15,14 @@ import { Camera } from '@awesome-cordova-plugins/camera/ngx';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { SplashComponent } from './splash/splash.component';
 import { UsuariosModule } from './paginas/usuarios/usuarios.module';
+import { HomeComponent } from './paginas/home/home.component';
+import { SpinnerComponent } from './paginas/spinner/spinner.component';
 
 @NgModule({
   declarations: [AppComponent,
-    SplashComponent
+    SplashComponent,
+    HomeComponent,
+    SpinnerComponent
   ],
 
   entryComponents: [],
