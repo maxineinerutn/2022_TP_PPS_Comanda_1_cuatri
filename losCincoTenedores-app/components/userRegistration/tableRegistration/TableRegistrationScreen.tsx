@@ -20,25 +20,27 @@ import { RadioButton } from 'react-native-paper';
 import RotatingLogo from "../../rotatingLogo/RotatingLogo";
 
 type NewUser = {
-  apellido:string;
-  nombre:string;
-  dni:string;
-  cuil:string;
-  email:string;
-  // password:string;
-  // confirmPassword:string
-  rol:string;
-  mesa:string;
+  // apellido:string;
+  // nombre:string;
+  // dni:string;
+  // cuil:string;
+  // email:string;
+  // // password:string;
+  // // confirmPassword:string
+  // rol:string;
+  number:string;
+  capacity:string;
+  type:string;
 }
 
 const TableRegistration = () => {
 
     //CONSTANTES
     const navigation = useNavigation<NativeStackNavigationProp<any>>();
-    const [apellidoForm, setApellido] = useState("Apellido");
-    const [nombreForm, setNombre] = useState("Nombre");
-    const [mesaForm, setMesa] = useState("Numero de Mesa");
-    const [dniForm, setDni] = useState("Cantidad de Comensales");
+    // const [apellidoForm, setApellido] = useState("Apellido");
+    // const [nombreForm, setNombre] = useState("Nombre");
+    const [numberForm, setNumber] = useState("Numero de Mesa");
+    const [capacityForm, setCapacity] = useState("Cantidad de Comensales");
     // const [cuilForm, setCuil] = useState("CUIL");
     // const [emailForm, setEmail] = useState("Correro Electrónico");
     // const [passwordForm, setPassword] = useState("Contraseña");
@@ -74,18 +76,18 @@ const TableRegistration = () => {
       setScanned(true);
       setOpenQR(false);
       const dataSplit = data.split('@');
-      const dni = dataSplit[4].trim();
-      const nombre = dataSplit[2].trim();
-      const apellido = dataSplit[1].trim();
-      const mesa = dataSplit[5].trim();
-      setValue("dni",dni);
-      setValue("nombre",nombre);
-      setValue("apellido",apellido);
-      setValue("mesa",mesa);
-      setApellido(apellido);
-      setNombre(nombre);
-      setDni(dni);
-      setMesa(mesa);
+      const capacity = dataSplit[2].trim();
+      // const nombre = dataSplit[2].trim();
+      // const apellido = dataSplit[1].trim();
+      const number = dataSplit[1].trim();
+      setValue("capacity",capacity);
+      // setValue("nombre",nombre);
+      // setValue("apellido",apellido);
+      setValue("number",number);
+      // setApellido(apellido);
+      // setNombre(nombre);
+      setCapacity(capacity);
+      setNumber(number);
       setPlaceholderColor("black");
     };
 
@@ -144,33 +146,39 @@ const TableRegistration = () => {
       toggleSpinnerAlert();
       try {
         console.log(auth.currentUser?.email);
-        //CREACION DE USUARIO
-        await createUserWithEmailAndPassword(auth,values.email,values.email);
-        console.log(auth.currentUser?.email);
+        // //CREACION DE USUARIO
+        // await createUserWithEmailAndPassword(auth,values.email,values.email);
+        // console.log(auth.currentUser?.email);
 
-        //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
-        await auth.signOut();
-        await auth.updateCurrentUser(originalUser);
+        // //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
+        // await auth.signOut();
+        // await auth.updateCurrentUser(originalUser);
 
         //UPLOAD IMAGEN
         const blob:any = await getBlob(image);
         const fileName = image.substring(image.lastIndexOf("/") + 1);
-        const fileRef = ref(storage, "userInfo/" + fileName);
+        const fileRef = ref(storage, "tableInfo/" + fileName);
         await uploadBytes(fileRef, blob);
         //UPLOAD DATA
-        await addDoc(collection(db, "userInfo"), {
-          lastName:values.apellido,
-          name:values.nombre,
-          dni:values.dni,
-          mesa:values.mesa,
-          cuil:values.cuil,
-          email:values.email,
-          rol:checked,
+        await addDoc(collection(db, "tableInfo"), {
+          // lastName:values.apellido,
+          // name:values.nombre,
+          // dni:values.dni, 
+          // mesa:values.mesa,
+          // cuil:values.cuil,
+          // email:values.email,
+          // rol:checked,
+          // image:fileRef.fullPath,
+
+          number:values.number,
+          capacity:values.capacity,
+          type:checked,
           image:fileRef.fullPath,
+
           creationDate:new Date()          
         });        
         Toast.showWithGravity(
-          "Usuario creado exitosamente",
+          "Mesa creada exitosamente",
           Toast.LONG, 
           Toast.CENTER);      
       reset();
@@ -192,23 +200,23 @@ const TableRegistration = () => {
     //RESET DEL FORM
     const resetForm = () => {
       setPlaceholderColor("white");
-      setApellido("Apellido");
-      setNombre("Nombre");
-      setDni("DNI");
-      setMesa("Mesa");
+      // setApellido("Apellido");
+      // setNombre("Nombre");
+      setCapacity("Numero de Comensales");
+      setNumber("Number");
       // setCuil("CUIL");
       // setEmail('Correo Electrónico');
       // setPassword('Contraseña');
       // setConfirmPassword('Confirmar Contraseña');
-      setValue("mesa","");
-      setValue("dni",'');
-      setValue("nombre",'');
-      setValue("apellido",'');
+      setValue("number","");
+      setValue("capacity",'');
+      // setValue("nombre",'');
+      // setValue("apellido",'');
       // setValue("email",'');
       // setValue("password",'');
       // setValue("confirmPassword",'');
-      setValue("cuil",'');
-      setValue("rol",'');
+      // setValue("cuil",'');
+      setValue("type",'');
       setImage("");
     }
 
@@ -253,9 +261,9 @@ const TableRegistration = () => {
       setChecked('Estandar');
     }
 
-    const pressEtc = () => {
-      setChecked('Etc');
-    }
+    // const pressEtc = () => {
+    //   setChecked('Etc');
+    // }
 
 
 
@@ -264,17 +272,17 @@ const TableRegistration = () => {
       useCallback(() => {
         console.log(checked);
         if(checked=='Supervisor'){
-          setValue("rol",checked);
+          setValue("type",checked);
         }
         if(checked=='Dueño'){
-          setValue("rol",checked);
+          setValue("type",checked);
         }
         if(checked=='Estandar'){
-          setValue("rol",checked);
+          setValue("type",checked);
         }
-        if(checked=='Etc'){
-          setValue("rol",checked);
-        }
+        // if(checked=='Etc'){
+        //   setValue("rol",checked);
+        // }
     }, [checked]))
     
 //     return (
@@ -305,11 +313,11 @@ return (
             </View>
           }
 
-          <TouchableOpacity onPress={handleOpenQR}>
+          {/* <TouchableOpacity onPress={handleOpenQR}>
             <Image 
                 style={styles.qrIcon} resizeMode="cover" source={qrIcon}
             />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         <View style={styles.inputContainer}>
@@ -333,21 +341,21 @@ return (
 
           <View style={styles.inputField}>
             <TextInput
-              placeholder={mesaForm}
+              placeholder={numberForm}
               placeholderTextColor= {placeholderColor}
               style={styles.inputText}
               keyboardType={'numeric'}
-              onChangeText={(text) => setValue("mesa",text)}
+              onChangeText={(text) => setValue("number",text)}
             />
           </View>
 
           <View style={styles.inputField}>
             <TextInput
-              placeholder={dniForm}
+              placeholder={capacityForm}
               placeholderTextColor= {placeholderColor}
               style={styles.inputText}
               keyboardType={'numeric'}
-              onChangeText={(text) => setValue("dni",text)}
+              onChangeText={(text) => setValue("capacity",text)}
             />
           </View>
 
@@ -423,14 +431,14 @@ return (
               <Text style={styles.inputText}>ESTÁNDAR</Text>
             </View>
 
-            <View style={styles.inputFieldRadio}>
+            {/* <View style={styles.inputFieldRadio}>
               <RadioButton
                 value="Etc"
                 status={ checked === 'Etc' ? 'checked' : 'unchecked' }
                 onPress={ pressEtc }
               />
               <Text style={styles.inputText}>ETC</Text>
-            </View>
+            </View> */}
           </View>
 
 

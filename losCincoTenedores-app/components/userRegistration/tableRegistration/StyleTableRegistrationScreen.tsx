@@ -86,7 +86,7 @@ export default StyleSheet.create({
         textAlign: 'center',
     },
     inputFieldRadioLayout: {
-        flexDirection: 'row',
+        flexDirection: 'column',
         flexWrap: "wrap",
         alignItems: 'center',
         justifyContent: 'space-between',
@@ -96,7 +96,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         backgroundColor: ' rgba(220, 220, 225, 0.5);',
         borderBottomColor: '#F7AD3B',
-        width: '48%',
+        width: '100%',
         borderBottomWidth: 0,
         paddingHorizontal: 15,
         paddingVertical: 10,
