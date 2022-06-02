@@ -10,10 +10,10 @@ export default function CreateOwnerOfSupervisor() {
   };
   return (
     <View style={Styles.container}>
-      <UserForm
+      {/* <UserForm
         userType={UserTypes.Anonymous}
         onSubmit={handleSubmit}
-      ></UserForm>
+      ></UserForm> */}
     </View>
   );
 }

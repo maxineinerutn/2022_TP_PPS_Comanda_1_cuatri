@@ -8,7 +8,6 @@ import RegisterTab from "./RegisterTab/RegisterTab";
 const Tab = createBottomTabNavigator();
 
 const Credentials = () => {
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -25,47 +24,55 @@ const Credentials = () => {
               iconName = "account-plus";
               break;
           }
-          return <MaterialCommunityIcons name={iconName} size={size} color={iconColor} />;
+          return (
+            <MaterialCommunityIcons
+              name={iconName}
+              size={size}
+              color={iconColor}
+            />
+          );
         },
         headerStyle: {
-            backgroundColor: theme.colors.primary,
-            borderBottomWidth: 2,
+          backgroundColor: theme.colors.primary,
+          borderBottomWidth: 2,
         },
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.neutral,
       })}
     >
-      <Tab.Screen name="Ingresar" component={LoginTab} options={
-        { 
+      <Tab.Screen
+        name="Ingresar"
+        component={LoginTab}
+        options={{
           headerStyle: {
             backgroundColor: theme.colors.primary,
             borderBottomWidth: 2,
-            borderBottomColor: theme.colors.neutral 
+            borderBottomColor: theme.colors.neutral,
           },
           headerShown: false,
           tabBarActiveTintColor: theme.colors.text,
           tabBarInactiveTintColor: theme.colors.neutral,
-        }
-      }
+        }}
       />
-       <Tab.Screen name="Registrarse" component={RegisterTab} options={
-        { 
+      <Tab.Screen
+        name="Registrarse"
+        component={RegisterTab}
+        options={{
           headerStyle: {
             backgroundColor: theme.colors.primary,
             borderBottomWidth: 2,
-            borderBottomColor: theme.colors.neutral, 
+            borderBottomColor: theme.colors.neutral,
           },
           tabBarActiveTintColor: theme.colors.text,
           tabBarInactiveTintColor: theme.colors.neutral,
-          headerTitleAlign: 'center',
+          headerTitleAlign: "center",
           headerTitleStyle: {
-            color: theme.colors.secondary
-          }
-        }
-      }
+            color: theme.colors.secondary,
+          },
+        }}
       />
     </Tab.Navigator>
   );
-}
+};
 
 export default Credentials;

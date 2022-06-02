@@ -5,6 +5,7 @@ import {
   Button,
   Keyboard,
   TouchableWithoutFeedback,
+  Image,
 } from "react-native";
 import React, { useState } from "react";
 import Styles from "./Styles";
@@ -83,7 +84,7 @@ export default function UserForm(props) {
           </>
         );
       case UserTypes.Employee:
-        const employeeOptions = ["Metra", "Mozo", "Cocinero", "Bartender"];
+        const employeeOptions = ["Metre", "Mozo", "Cocinero", "Bartender"];
         return (
           <>
             <View style={Styles.formControl}>
@@ -158,8 +159,8 @@ export default function UserForm(props) {
             </View>
           </>
         );
-      case UserTypes.Anonymous:
-        return;
+      default:
+        break;
     }
   };
   function renderOption(option, selected, onSelect, index) {
@@ -267,12 +268,20 @@ export default function UserForm(props) {
 
   return (
     <View style={Styles.container}>
-      <View style={Styles.formControl}>
-        <TextInput
-          placeholder="Foto"
-          value={photo}
-          onChangeText={(text) => setPhoto(text)}
-        />
+      <View style={Styles.formControlPhoto}>
+        {photo === "" ? (
+          <Image
+            style={Styles.formControlPhotoWithoutPhoto}
+            source={require("./../../../assets/user.png")}
+            resizeMode="center"
+          ></Image>
+        ) : (
+          <Image
+            style={Styles.formControlPhotoWithoutPhoto}
+            source={photo}
+            resizeMode="center"
+          ></Image>
+        )}
         {errorPhoto.error && (
           <Text style={Styles.textError}>{errorPhoto.message}</Text>
         )}
