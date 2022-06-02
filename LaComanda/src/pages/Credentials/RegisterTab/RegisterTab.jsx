@@ -1,11 +1,10 @@
-import { View } from 'react-native'
-import React from 'react'
+import { View } from 'react-native';
+import React from 'react';
 
-const RegisterTab = () => {
+function RegisterTab() {
   return (
-    <View>
-    </View>
-  )
-};
+    <View />
+  );
+}
 
 export default RegisterTab;
