@@ -1,25 +1,28 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import styles from "./StyleClientManagmentScreen";
-import { Image, ImageBackground, Text, TouchableOpacity, View, ScrollView } from "react-native";
+import { Image, ImageBackground, Text, TouchableOpacity, View, ScrollView, TextInput, Alert } from "react-native";
 import { returnIcon, backgroundImage, confirmIcon, cancelIcon } from "./AssetsClientManagmentScreen";
 import Modal from "react-native-modal";
 import React, { useCallback, useLayoutEffect, useState } from 'react'
 import RotatingLogo from "../../rotatingLogo/RotatingLogo";
 import { db, storage } from "../../../App";
-import { collection, query, where, getDocs, updateDoc, doc, getDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
 import { getDownloadURL, ref } from 'firebase/storage'
 import { format } from 'date-fns'
 import Toast from 'react-native-simple-toast';
-
+import emailjs from '@emailjs/browser';
 
 const ClientManagment = () => {
 
   //CONSTANTES
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
+  const [isModalCancelVisible, setModalCancelVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any>([]);
+  const [rejectMotive, setRejectMotive] = useState('');
+  const [rejectId, setRejectId] = useState('');
 
   //RETURN
   const handleReturn = () => {
@@ -33,12 +36,17 @@ const ClientManagment = () => {
         toggleSpinnerAlert();
   }, []))
 
-  //SPINNER
+  //TOOGLE SPINNER
   const toggleSpinnerAlert = () => {
     setModalSpinnerVisible(true);
     setTimeout(() => {
       setModalSpinnerVisible(false);
     }, 3000);
+  };
+
+  //TOOGLE CANCEL USER
+  const toggleModalCancel = () => {
+    setModalCancelVisible(!isModalCancelVisible);
   };
 
   //GET DATA
@@ -61,11 +69,12 @@ const ClientManagment = () => {
   }
 
   //MANEJADORES DE ACEPTAR / RECHAZAR USUARIO
-  const handleConfirm = async (id) => {
+  const handleConfirm = async (id, mail) => {
     try {
       const ref = doc(db, "userInfo", id);
       const data =  'Accepted';
       await updateDoc(ref, {clientStatus:data});
+      handleAcceptEmail(mail);
       getDocuments();
       toggleSpinnerAlert();
       setTimeout(() => {
@@ -82,7 +91,45 @@ const ClientManagment = () => {
   } 
 
   const handleCancel = async (id) => {
+    setRejectId(id);
+    toggleModalCancel();      
+  }
+  
+  const completeReject = async (mail) => {
+    try {
+      const ref = doc(db, "userInfo", rejectId);
+      const data =  'Rejected';
+      await updateDoc(ref, {clientStatus:data});
+      await updateDoc(ref, {rejectedReason:rejectMotive});
+      toggleModalCancel();
+      handleRejectEmail(mail,rejectMotive);      
+      getDocuments();
+      toggleSpinnerAlert();
+      setTimeout(() => {
+        Toast.showWithGravity(
+          "CLIENTE RECHAZADO",
+          Toast.LONG, 
+          Toast.CENTER);
+      }, 4000);      
+    } catch (error) {
+      console.log(error)
+    } finally{
+        setLoading(false);        
+    }
+  }
 
+  //MANEJADORES DE ENVIAR CORREO
+  const handleAcceptEmail = (mail) => {
+    emailjs.send("service_wbgf2dw","template_9qz5f9l",{
+      to_name: mail,
+      }, 'Dl1ezcTCNqNpQPibY');
+  }
+
+  const handleRejectEmail = (mail, reason) => {
+    emailjs.send("service_wbgf2dw","template_98tr2kk",{
+      to_name: mail,
+      motive: reason,
+      }, 'Dl1ezcTCNqNpQPibY');
   }
 
   //HEADER
@@ -121,7 +168,7 @@ const ClientManagment = () => {
               <View style={styles.cardStyle}>
                 <View style={styles.imageIconContainer}>
                   <Image style={styles.cardImage} resizeMode="cover" source={{ uri: item.imageUrl }} />
-                  <TouchableOpacity onPress={() => handleConfirm(item.id)}>
+                  <TouchableOpacity onPress={() => handleConfirm(item.id, item.email)}>
                       <Image source={confirmIcon} style={styles.cardIcon} />
                   </TouchableOpacity>
                   <TouchableOpacity onPress={() => handleCancel(item.id)}>
@@ -137,7 +184,34 @@ const ClientManagment = () => {
                   <Text style={styles.tableCellText}> CREACIÓN: {format(item.creationDate.toDate(), 'dd/MM/yyyy HH:mm:ss')} hs</Text>
                   <Text style={styles.tableHeaderText}>-----------------------------------------------------</Text>                      
                 </View>
-              </View>
+
+                <Modal backdropOpacity={0.5} isVisible={isModalCancelVisible}>
+                  <View style={styles.modalContainer}>              
+                      <View style={styles.modalBody}>
+                        <View style={styles.inputField}>
+                          <TextInput
+                            placeholder= "Motivo de Rechazo"
+                            placeholderTextColor="white"
+                            multiline
+                            numberOfLines={4}
+                            style={styles.inputText}
+                            onChangeText={(text) => setRejectMotive(text)}
+                            secureTextEntry = {true}
+                          />
+                        </View>
+                        <View style={styles.modalIconContainer}>
+                          <TouchableOpacity onPress={() => completeReject(item.email)} >
+                          <Image source={confirmIcon} style={styles.cardIcon} />
+                          </TouchableOpacity>
+                          <TouchableOpacity  onPress={toggleModalCancel} >
+                          <Image source={cancelIcon} style={styles.cardIcon} />
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                  </View>
+                </Modal>
+                
+              </View>              
             ))}
           </ScrollView> 
         </View> 
@@ -146,8 +220,8 @@ const ClientManagment = () => {
           <Modal backdropOpacity={0.5} animationIn="rotate" animationOut="rotate" isVisible={isModalSpinnerVisible}>
             <RotatingLogo></RotatingLogo>
           </Modal>
-        </View> 
-
+        </View>
+        
         </ImageBackground>           
     </View> 
   );

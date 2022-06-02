@@ -68,4 +68,43 @@ export default StyleSheet.create({
     fontSize: 15,
     fontFamily: 'Oswald_500Medium',
     },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+    },
+    modalBody: {
+        borderColor: 'white',
+        backgroundColor: '#3D4544',
+        borderWidth: 2,
+        width: '100%',
+        padding: 15,
+        borderRadius: 25,
+        alignItems: 'center',
+    },
+    modalIconContainer: {
+        flexDirection: 'row', 
+        alignContent: 'center', 
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+        marginTop: 10
+    },
+    inputField: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'rgba(220, 220, 225, 0.5);',
+        borderBottomColor: '#F7AD3B',
+        borderBottomWidth: 0,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        marginTop: 5,
+        borderRadius: 10,
+    },
+    inputText: {
+        color: 'black',
+        fontFamily: 'Oswald_300Light',
+        fontSize: 16,
+        width: '100%',
+    },
 });

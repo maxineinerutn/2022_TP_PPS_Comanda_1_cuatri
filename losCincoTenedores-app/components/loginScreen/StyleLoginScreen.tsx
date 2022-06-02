@@ -7,6 +7,8 @@ export default StyleSheet.create({
         flex: 1,
         backgroundColor: '#3D4544',
         justifyContent: 'space-around',
+        height: win.height,
+        width: win.width,
     },
     backgroundImage: {
         flex: 1,
@@ -94,8 +96,8 @@ export default StyleSheet.create({
     quickStartIcon: {
       padding: 5,
       margin: 5,
-      height: 85,
-      width: 85,
+      height: '100%',
+      width: '100%',
       resizeMode: 'contain',
     },
     actionButton: {

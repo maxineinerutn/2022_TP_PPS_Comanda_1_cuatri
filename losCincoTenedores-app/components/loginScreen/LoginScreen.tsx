@@ -1,9 +1,9 @@
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { ImageBackground, Text, View, Image, TextInput, TouchableOpacity } from "react-native";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../App";
+import { auth, db } from "../../App";
 import Toast from 'react-native-simple-toast';
 import styles from "../loginScreen/StyleLoginScreen";
 import Modal from "react-native-modal";
@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faKey, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import ActionButton from "react-native-action-button";
 import { adminLogo, backgroundImage, barmanLogo, chefLogo, clientLogo, logoImage, metreLogo, profilesLogo, waiterLogo } from "./AssetsLoginScreen";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 
 const LoginScreen = () => {
@@ -21,7 +22,11 @@ const LoginScreen = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");    
     const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
-    
+    const [data, setData] = useState<any>([]);
+    const [rol, setRol] = useState("");
+    const [clientStatus, setClientStatus] = useState("");
+    const [clientRejectedReason, setClientRejectedReason] = useState("");
+
     //SPINNER ERROR
     const toggleErrorAlert = async (error) => {
         setModalSpinnerVisible(true);
@@ -36,6 +41,15 @@ const LoginScreen = () => {
                 Toast.LONG, 
                 Toast.CENTER);
         }, 2000);
+    };
+
+    //SPINNER LOGIN
+    const toggleSpinner = async () => {
+        setModalSpinnerVisible(true);
+        
+        setTimeout(() => {
+          setModalSpinnerVisible(false);          
+        }, 2000);       
     };
 
     //SETEOS INICIOS RAPIDOS
@@ -69,60 +83,18 @@ const LoginScreen = () => {
         setPassword("cliente123");
     };
 
-    /*
-    //INICIO DE SESION
-    useEffect(() => {
-        const unsuscribe = auth.onAuthStateChanged((user) => {
-          if(user) {
-            navigation.replace("MockScreen");
-          }
-        });
-        return unsuscribe;
-    }, []);
-    */
-
     //MANEJO LOGIN Y REGISTRO
-
-    const handelSignUp = async () => {
-        await createUserWithEmailAndPassword(auth,email, password)
-          .then((userCredentials: { user: any }) => {
-            const user = userCredentials.user;
-            console.log("Registro de usuario como: ", user?.email);
-          })
-          .catch((error) => {
-            let errorMsg = error.code;
-            // Armar switch de mensajes de error
-            toggleErrorAlert(errorMsg);                
-          });
-    };
-
+    
     const handleClientRegister = () => {
         navigation.replace("ClientRegistration")
-      } 
+    };
     
     const handleLogin = async () => {
         await signInWithEmailAndPassword(auth,email, password)
           .then((userCredentials: { user: any }) => {
             const user = userCredentials.user;
-            console.log("Inicio de sesion como: ", user?.email);
-            if (user?.email == "cincotenedorespropietario@gmail.com") {
-              navigation.replace("ControlPanelPropietario");
-            }
-            if (user?.email == "cincotenedoresmetre@gmail.com") {
-                navigation.replace("ControlPanelMetre");
-            }
-            if (user?.email == "cincotenedoresmozo@gmail.com") {
-                navigation.replace("ControlPanelMozo");
-            }
-            if (user?.email == "cincotenedorescocina@gmail.com") {
-                navigation.replace("ControlPanelCocina");
-            }
-            if (user?.email == "cincotenedoresbar@gmail.com") {
-                navigation.replace("ControlPanelBar");
-            }
-            if (user?.email == "cincotenedorescliente@gmail.com") {
-                navigation.replace("ControlPanelCliente");
-            }            
+            loginManager(user?.email);
+            toggleSpinner();                  
           })
           .catch((error) => {
             let errorMsg = error.code;
@@ -130,6 +102,75 @@ const LoginScreen = () => {
             toggleErrorAlert(errorMsg); 
         });
     };
+
+    const loginManager = async (userMail) => {
+
+        const q = query(collection(db, "userInfo"), where("email", "==", userMail));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            setRol(doc.data().rol);
+            setClientStatus(doc.data().clientStatus);
+            setClientRejectedReason(doc.data().rejectedReason);
+        });
+                
+        if(querySnapshot.size  == 0){
+            Toast.showWithGravity(
+                "USUARIO NO ENCONTRADO",
+                Toast.LONG, 
+                Toast.CENTER);
+        }           
+    };
+      
+    useFocusEffect(
+        useCallback(() => {
+            console.log(rol);
+            console.log(clientStatus);
+            console.log(clientRejectedReason);
+            RedirectionManager(rol, clientStatus, clientRejectedReason);
+    }, [rol, clientStatus, clientRejectedReason]));
+        
+
+    const RedirectionManager = (rol, clientSatus, clientRejectedReason) => {
+
+        switch(rol){
+            case 'Dueño':
+                navigation.replace("ControlPanelPropietario");
+                break;
+            case 'Supervisor':
+                navigation.replace("ControlPanelPropietario");
+                break;
+            case 'Metre':
+                navigation.replace("ControlPanelMetre");
+                break;
+            case 'Mozo':
+                navigation.replace("ControlPanelMozo");
+                break;
+            case 'Cocina':
+                navigation.replace("ControlPanelCocina");
+                break;
+            case 'Bar':
+                navigation.replace("ControlPanelBar");
+                break;
+            case 'Cliente':
+                switch(clientSatus){
+                    case 'Pending':
+                        Toast.showWithGravity(
+                            "SU USUARIO SE ENCUENTRA EN PROCESO DE REVISION",
+                            Toast.LONG, 
+                            Toast.CENTER);
+                        break;
+                    case 'Rejected':
+                        Toast.showWithGravity(
+                            "Cliente Rechazado: " + clientRejectedReason,
+                            Toast.LONG,
+                            Toast.CENTER);
+                        break;
+                    case 'Approved':
+                        navigation.replace("ControlPanelCliente");
+                }
+                break;              
+        }
+    }
     
     return (
         <View style={styles.container}>
@@ -234,3 +275,8 @@ const LoginScreen = () => {
 };
 
 export default LoginScreen;
+
+
+
+
+
