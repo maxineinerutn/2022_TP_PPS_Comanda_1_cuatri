@@ -1,0 +1,25 @@
+.container-cards {
+  ion-card {
+    display: -webkit-inline-box;
+    width: 95%;
+    height: 40%;
+    margin: 2%;
+
+    img {
+      padding: 2.4%;
+      // width: max-content;
+      // height: max-content;
+      width: 95%;
+      height: 40%;
+    }
+  }
+}
+
+.text-img{
+  position: absolute;
+  bottom: 5%;
+  right: 5%;
+  background-color: #ffffff85;
+  padding: 0.5%;
+  border-radius: 3% 30%;
+}
