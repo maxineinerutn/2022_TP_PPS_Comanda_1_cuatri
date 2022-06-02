@@ -1,4 +1,5 @@
-import { app } from "../../firebase";
+/* eslint-disable no-return-await */
+import { app } from '../../firebase';
 
 const firestore = app.firestore();
 /**
@@ -8,9 +9,7 @@ const firestore = app.firestore();
  * @param {*} item El item en ceustion a guardar
  * @returns
  */
-export const saveItemInCollection = async (collection, docName, item) => {
-  return await firestore.collection(collection).doc(docName).set(item);
-};
+export const saveItemInCollection = async ( collection, docName, item ) => await firestore.collection( collection ).doc( docName ).set( item );
 
 /**
  *
@@ -25,12 +24,10 @@ export const getUserByEmail = async (
   email,
   onResult,
   onError
-) => {
-  return await firestore
-    .collection(collection)
-    .where("email", "==", email)
-    .onSnapshot(onResult, onError);
-};
+) => await firestore
+  .collection( collection )
+  .where( 'email', '==', email )
+  .onSnapshot( onResult, onError );
 /**
  *
  * @param {*} collection Nombre de la coleccion
@@ -38,9 +35,7 @@ export const getUserByEmail = async (
  * @param {*} onError Callback que se va a ejecutar si ocurre un error
  * @returns
  */
-export const getAllCollection = async (collection, onResult, onError) => {
-  return await firestore.collection(collection).onSnapshot(onResult, onError);
-};
+export const getAllCollection = async ( collection, onResult, onError ) => await firestore.collection( collection ).onSnapshot( onResult, onError );
 /**
  *
  * @param {*} collection Nombre de la coleccion
@@ -48,9 +43,7 @@ export const getAllCollection = async (collection, onResult, onError) => {
  * @param {*} updatedItem Item actualizado
  * @returns
  */
-export const updateItem = async (collection, docName, updatedItem) => {
-  return await firestore
-    .collection(collection)
-    .doc(docName)
-    .update(updatedItem);
-};
+export const updateItem = async ( collection, docName, updatedItem ) => await firestore
+  .collection( collection )
+  .doc( docName )
+  .update( updatedItem );
