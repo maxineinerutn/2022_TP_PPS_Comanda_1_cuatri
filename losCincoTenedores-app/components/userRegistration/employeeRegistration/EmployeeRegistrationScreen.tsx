@@ -43,9 +43,7 @@ type NewUser = {
   password: string;
   confirmPassword: string;
   rol: string;
-  clientType: string;
-  clientStatus: string;
-  rejectedReason: string;
+  employeeType: string;
 };
 
 const EmployeeRegistration = () => {
@@ -56,6 +54,7 @@ const EmployeeRegistration = () => {
   const [dniForm, setDni] = useState("DNI");
   const [cuilForm, setCuil] = useState("CUIL");
   const [emailForm, setEmail] = useState("Correro Electrónico");
+  const [tipoEmpleado, setTipoEmpleado] = useState("Tipo Empleado");
   const [passwordForm, setPassword] = useState("Contraseña");
   const [confirmPasswordForm, setConfirmPassword] = useState(
     "Confirmar Contraseña"
@@ -81,13 +80,13 @@ const EmployeeRegistration = () => {
   let originalUser = auth.currentUser;
   //SETEO CAMPOS QUE TIENEN UN VALOR DEFAULT
   setValue("rol", "Empleado");
-  setValue("rejectedReason", "-");
+
   //RETURN
   const handleReturn = () => {
     if (auth.currentUser == null) {
       navigation.replace("Login");
     } else {
-      navigation.replace("ControlPanelMetre");
+      navigation.replace("ControlPanelPropietario");
     }
   };
 
@@ -104,18 +103,22 @@ const EmployeeRegistration = () => {
     setScanned(true);
     setOpenQR(false);
     const dataSplit = data.split("@");
-    const dni = dataSplit[4].trim();
-    const cuil = dataSplit[5].trim();
-    const nombre = dataSplit[2].trim();
-    const apellido = dataSplit[1].trim();
+    const dni = dataSplit[5].trim();
+    const cuil = dataSplit[4].trim();
+    const nombre = dataSplit[3].trim();
+    const apellido = dataSplit[2].trim();
+    const tipoEmpleado = dataSplit[1].trim();
     setValue("dni", dni);
     setValue("cuil", cuil);
     setValue("nombre", nombre);
     setValue("apellido", apellido);
+    setValue("employeeType", tipoEmpleado);
     setApellido(apellido);
     setNombre(nombre);
     setDni(dni);
     setCuil(cuil);
+    setTipoEmpleado(tipoEmpleado);
+
     setPlaceholderColor("black");
     setPlaceholderColorEditable("black");
   };
@@ -141,14 +144,7 @@ const EmployeeRegistration = () => {
   useFocusEffect(
     useCallback(() => {
       console.log(checked);
-      if (checked == "Anonimo") {
-        setValue("clientType", "Anónimo");
-        setValue("clientStatus", "Approved");
-      }
-      if (checked == "Registrado") {
-        setValue("clientType", "Registrado");
-        setValue("clientStatus", "Pending");
-      }
+      setValue("employeeType", checked);
     }, [checked])
   );
 
@@ -211,9 +207,7 @@ const EmployeeRegistration = () => {
         cuil: values.cuil,
         email: values.email,
         rol: values.rol,
-        clientType: values.clientType,
-        clientStatus: values.clientStatus,
-        rejectedReason: values.rejectedReason,
+        employeeType: values.employeeType,
         image: fileRef.fullPath,
         creationDate: new Date(),
       });
@@ -254,29 +248,16 @@ const EmployeeRegistration = () => {
     setValue("password", "");
     setValue("confirmPassword", "");
     setValue("rol", "");
-    setValue("clientType", "");
-    setValue("clientStatus", "");
-    setValue("rejectedReason", "");
+    setValue("employeeType", "");
+
     setImage("");
   };
   //MANEJADORES RADIOBUTTONS
 
-  const pressRegistrado = () => {
-    setChecked("Registrado");
+  const pressRadio = (opcion: React.SetStateAction<string>) => {
+    setChecked(opcion);
     setPlaceholderColorEditable("white");
     setEditableField(true);
-  };
-
-  const pressAnonimo = () => {
-    setChecked("Anonimo");
-    setApellido("Apellido");
-    setDni("DNI");
-    setCuil("CUIL");
-    setValue("apellido", "-");
-    setValue("dni", "-");
-    setValue("cuil", "-");
-    setPlaceholderColorEditable("grey");
-    setEditableField(false);
   };
 
   //SPINNER
@@ -339,54 +320,54 @@ const EmployeeRegistration = () => {
               <Image style={styles.qrIcon} resizeMode="cover" source={qrIcon} />
             </TouchableOpacity>
           </View>
-
           <View style={styles.inputContainer}>
-            <View style={styles.inputField}>
-              <TextInput
-                placeholder={apellidoForm}
-                placeholderTextColor={placeholderColorEditable}
-                style={styles.inputText}
-                onChangeText={(text) => setValue("apellido", text)}
-                //SE DESHABILITA EN CASO DE ANONIMO
-                editable={editableField}
-                selectTextOnFocus={editableField}
-              />
+            <View style={{ flexDirection: "row" }}>
+              <View style={styles.inputFieldDoc}>
+                <TextInput
+                  placeholder={nombreForm}
+                  placeholderTextColor={placeholderColor}
+                  style={styles.inputText}
+                  onChangeText={(text) => setValue("nombre", text)}
+                />
+              </View>
+              <View style={styles.inputFieldDoc}>
+                <TextInput
+                  placeholder={apellidoForm}
+                  placeholderTextColor={placeholderColorEditable}
+                  style={styles.inputText}
+                  onChangeText={(text) => setValue("apellido", text)}
+                  //SE DESHABILITA EN CASO DE ANONIMO
+                  editable={editableField}
+                  selectTextOnFocus={editableField}
+                />
+              </View>
             </View>
-
-            <View style={styles.inputField}>
-              <TextInput
-                placeholder={nombreForm}
-                placeholderTextColor={placeholderColor}
-                style={styles.inputText}
-                onChangeText={(text) => setValue("nombre", text)}
-              />
+            <View style={{ flexDirection: "row" }}>
+              <View style={styles.inputFieldDoc}>
+                <TextInput
+                  placeholder={dniForm}
+                  placeholderTextColor={placeholderColorEditable}
+                  style={styles.inputText}
+                  keyboardType={"numeric"}
+                  onChangeText={(text) => setValue("dni", text)}
+                  //SE DESHABILITA EN CASO DE ANONIMO
+                  editable={editableField}
+                  selectTextOnFocus={editableField}
+                />
+              </View>
+              <View style={styles.inputFieldDoc}>
+                <TextInput
+                  placeholder={cuilForm}
+                  placeholderTextColor={placeholderColorEditable}
+                  style={styles.inputText}
+                  keyboardType={"numeric"}
+                  onChangeText={(text) => setValue("cuil", text)}
+                  //SE DESHABILITA EN CASO DE ANONIMO
+                  editable={editableField}
+                  selectTextOnFocus={editableField}
+                />
+              </View>
             </View>
-
-            <View style={styles.inputField}>
-              <TextInput
-                placeholder={dniForm}
-                placeholderTextColor={placeholderColorEditable}
-                style={styles.inputText}
-                keyboardType={"numeric"}
-                onChangeText={(text) => setValue("dni", text)}
-                //SE DESHABILITA EN CASO DE ANONIMO
-                editable={editableField}
-                selectTextOnFocus={editableField}
-              />
-            </View>
-            <View style={styles.inputField}>
-              <TextInput
-                placeholder={cuilForm}
-                placeholderTextColor={placeholderColorEditable}
-                style={styles.inputText}
-                keyboardType={"numeric"}
-                onChangeText={(text) => setValue("cuil", text)}
-                //SE DESHABILITA EN CASO DE ANONIMO
-                editable={editableField}
-                selectTextOnFocus={editableField}
-              />
-            </View>
-
             <View style={styles.inputField}>
               <TextInput
                 placeholder={emailForm}
@@ -417,32 +398,50 @@ const EmployeeRegistration = () => {
             </View>
 
             <View style={styles.inputField}>
-              <Text style={styles.tagText}>TIPO DE CLIENTE</Text>
+              <Text style={styles.tagText}>TIPO DE EMPLEADO</Text>
             </View>
 
             <View style={styles.inputFieldRadioLayout}>
               <View style={styles.inputFieldRadio}>
                 <RadioButton
-                  value="Registrado"
-                  status={checked === "Registrado" ? "checked" : "unchecked"}
-                  onPress={pressRegistrado}
+                  value="Metre"
+                  onPress={() => pressRadio("Metre")}
+                  status={checked === "Metre" ? "checked" : "unchecked"}
                 />
-                <Text style={styles.inputText}>REGISTRADO</Text>
+                <Text style={styles.inputText}>METRE</Text>
               </View>
 
               <View style={styles.inputFieldRadio}>
                 <RadioButton
-                  value="Anonimo"
-                  status={checked === "Anonimo" ? "checked" : "unchecked"}
-                  onPress={pressAnonimo}
+                  value="Mozo"
+                  onPress={() => pressRadio("Mozo")}
+                  status={checked === "Mozo" ? "checked" : "unchecked"}
                 />
-                <Text style={styles.inputText}>ANÓNIMO</Text>
+                <Text style={styles.inputText}>MOZO</Text>
+              </View>
+            </View>
+            <View style={styles.inputFieldRadioLayout}>
+              <View style={styles.inputFieldRadio}>
+                <RadioButton
+                  value="Cocinero"
+                  onPress={() => pressRadio("Cocinero")}
+                  status={checked === "Cocinero" ? "checked" : "unchecked"}
+                />
+                <Text style={styles.inputText}>COCINERO</Text>
+              </View>
+              <View style={styles.inputFieldRadio}>
+                <RadioButton
+                  value="Bartender"
+                  onPress={() => pressRadio("Bartender")}
+                  status={checked === "Bartender" ? "checked" : "unchecked"}
+                />
+                <Text style={styles.inputText}>BARTENDER</Text>
               </View>
             </View>
 
             <View style={styles.submitContainer}>
               <TouchableOpacity onPress={onSubmit} style={styles.buttonLayout}>
-                <Text style={styles.buttonText}>CARGAR CLIENTE </Text>
+                <Text style={styles.buttonText}>CARGAR EMPLEADO </Text>
               </TouchableOpacity>
             </View>
           </View>
