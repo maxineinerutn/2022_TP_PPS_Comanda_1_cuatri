@@ -25,7 +25,7 @@
 
 #### EJEMPLO DE PANEL DE USUARIO
 
-<img src="Documentos/ejemploPanelDeControl.jpeg" width="300"/>
+<img src="Documentos/ejemploPanelControl.jpeg" width="300"/>
 
 #### EJEMPLO DE ALTA
 
