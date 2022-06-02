@@ -1,9 +1,6 @@
-# 2022_TP_PPS_Comanda_1_cuatri
-Trabajo práctico grupal - PPS - segundo parcial
+# Trabajo práctico grupal - PPS - segundo parcial
 
-[ROAD MAP TENTATIVO](https://github.com/gonzalosinnott/2022_TP_PPS_Comanda_1_cuatri/blob/main/Documentos/ROAD%20MAP%20CINCO%20TENEDORES%20APP%20.pdf)
-
-[LOOK AND FEEL](https://github.com/gonzalosinnott/2022_TP_PPS_Comanda_1_cuatri/blob/main/Documentos/LOOK%20AND%20FEEL%20CINCO%20TENEDORES%20APP%20.pdf)
+#### LOOK AND FEEL
 
 <table>
   <tr>
@@ -11,7 +8,7 @@ Trabajo práctico grupal - PPS - segundo parcial
      <td>PALETA DE COLORES</td>
   </tr>
   <tr>
-    <td><img src="Documentos/icon.png" width="80"/></td>
+    <td><img src="Documentos/icon.png" width="120"/></td>
      <td><img src="Documentos/paletaDeColores.png" width="300"/></td>
   </tr>
 </table>
@@ -28,26 +25,83 @@ Trabajo práctico grupal - PPS - segundo parcial
 
 #### EJEMPLO DE PANEL DE USUARIO
 
-<img src="Documentos/ejemploPanelDeControl.jpeg" width="300"/>
+<img src="Documentos/ejemploPanelControl.jpeg" width="300"/>
 
-## CINCO TENEDORES APP - TAREAS ( ACTUALIZADO AL 27/05):
+#### EJEMPLO DE ALTA
 
-### SPLASH E INICIO (INCLUYE INICIO RAPIDO): TERMINADO
+<img src="Documentos/ejemploAlta.jpeg" width="300"/>
 
-#### Altas 
-A- Alta de dueño / supervisor  (Branch: altaDueño) GONZALO - EN PROCESO
+## CINCO TENEDORES APP - SEMANA 1 (21/05 AL 27/05):
+| # | Tarea | Responsable | Estado | Rama |
+| :------: | :------: | :------: | :------: | :------: |
+| - | Generacion de proyeto | GONZALO |  Terminado | Rama main |
+| - | Iconos + Splash | CECILIA | Terminado | Rama main |
+| - | Login | PEDRO | Terminado | Rama main |
+| - | Registro | GONZALO | Terminado | Rama main |
 
-B- Alta de empleados (Branch: altaEmpleado) GONZALO - EN PROCESO
+## CINCO TENEDORES APP - SEMANA 1 (28/05 AL 03/06):
+| # | Tarea | Responsable | Estado | Rama |
+| :------: | :------: | :------: | :------: | :------: |
+| 01 | Alta de dueño / supervisor | GONZALO  | Terminado | Rama altaDueño |
+| 02 | Alta de empleados | CECILIA  | En proceso | Rama altaEmpleado |
+| 03 | Alta de clientes | GONZALO | Terminado | Rama altaCliente |
+| 04 | Alta de Mesa | PEDRO | En Proceso | Rama altaMesa |
+| 05 | Alta de Productos | PEDRO | En Proceso | Rama altaProducto |
+| 12 | Agregar un nuevo cliente registrado  | GONZALO | Terminado | Rama altaCliente |
+| 17 | Agregar cliente nuevo | GONZALO | En Proceso | Rama altaClientePush |
 
-C- Alta de clientes (Branch: altaCliente) CECILIA - EN PROCESO
+## CINCO TENEDORES APP - SEMANA 1 (04/06 AL 10/06):
+| # | Tarea | Responsable | Estado | Rama |
+| :------: | :------: | :------: | :------: | :------: |
 
-D- Alta de Mesa (Branch: altaMesa) PEDRO - EN PROCESO
+## CINCO TENEDORES APP - SEMANA 1 (11/06 AL 17/06):
+| # | Tarea | Responsable | Estado | Rama |
+| :------: | :------: | :------: | :------: | :------: |
 
-E- Alta de productos (Branch: altaProducto) CECILIA / PEDRO - EN PROCESO
+## CINCO TENEDORES APP - SEMANA 1 (18/06 AL 24/06):
+| # | Tarea | Responsable | Estado | Rama |
+| :------: | :------: | :------: | :------: | :------: |
 
-#### Códigos QR 
-E- QR de ingreso al local: (Branch: qrIngreso) PEDRO - EN PROCESO
 
-F- QR de la mesa (Branch: qrMesa) GONZALO - EN PROCESO
+## CINCO TENEDORES APP - DISTRIBUCION DE TAREAS:
 
-G- QR de propina (Branch: qrPropina) CECILIA - EN PROCESO
+| # | Tarea | Responsable | Estado | Rama |
+| :------: | :------: | :------: | :------: | :------: |
+| - | Generacion de proyeto | GONZALO |  Terminado | Rama main |
+| - | Iconos + Splash | CECILIA | Terminado | Rama main |
+| - | Login | PEDRO | Terminado | Rama main |
+| - | Registro | GONZALO | Terminado | Rama main |
+| ALTAS                      
+| 01 | Alta de dueño / supervisor | GONZALO  | Terminado | Rama altaDueño |
+| 02 | Alta de empleados | CECILIA  | En proceso | Rama altaEmpleado |
+| 03 | Alta de clientes | GONZALO | Terminado | Rama altaCliente |
+| 04 | Alta de Mesa | PEDRO | En Proceso | Rama altaMesa |
+| 05 | Alta de Productos | PEDRO | En Proceso | Rama altaProducto |
+| CODIGOS QR                      
+| 06 | Qr ingreso al local | PEDRO | - | Rama qrIngreso | 
+| 07 | Qr de la mesa | GONZALO | - | Rama qrMesa |
+| 08 | Qr de propina  | CECILIA | - | Rama qrPropina |
+| ENCUESTAS                     
+| 09 | Encuesta cliente | CECILIA | - | Rama encuestaClientes |
+| 10 | Encuesta Empleado | PEDRO | - | Rama encuestaEmpleado |
+| 11 | Encuesta supervisor | GONZALO | - | Rama encuestaSupervisor |
+| GESTION 
+| 12 | Agregar un nuevo cliente registrado  | GONZALO | Terminado | Rama altaCliente |
+| 13 | Ingresar al local | GONZALO | - | Rama ingresoLocal |
+| 14 | Realizar pedidos | PEDRO | - | Rama altaPedido | 
+| 15 | Confirmar pedidos | CECILIA | - | Rama confirmacionPedido | 
+| 16 | Generar reservas agendadas | PEDRO | - | Rama reservas |
+| PUSH NOTIFICATION
+| 17 | Agregar cliente nuevo | GONZALO | En Proceso | Rama altaClientePush |
+| 18 | Ingresó al local | CECILIA | - | Rama ingresoLocalPush |
+| 19 | Consultar al mozo | CECILIA | - | Rama consultaMozoPush |
+| 20 | Confirmar pedido (mozo) | PEDRO | - | Rama confirmacionPedidoPush |
+| 21 | Confirmar pedido (bar/cocina) | PEDRO | - | Rama confirmacionPedidoPush |
+| 22 | Generar reservas agendadas / Delivery | GONZALO | - | Rama reservaPush |
+| DELIVERY
+| 23 | Realizar pedido con GPS o dirección | CECILIA / PEDRO | - | Rama altaPedido |
+| 24 | Mapa de ruta hasta el domicilio de entrega | GONZALO | - | Rama rutaPedido |
+| JUEGOS
+| 25 | Juego para un 10% de descuento | GONZALO | - | Rama juego10 |
+| 26 | Juego para un 15% de descuento | CECILIA | - | Rama juego15 |
+| 27 | Juego para un 20% de descuento | PEDRO | - | Rama juego20 |

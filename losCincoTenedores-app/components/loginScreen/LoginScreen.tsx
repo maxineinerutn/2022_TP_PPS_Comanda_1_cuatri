@@ -24,6 +24,7 @@ const LoginScreen = () => {
     const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
     const [data, setData] = useState<any>([]);
     const [rol, setRol] = useState("");
+    const [employeeType, setEmployeeType] = useState("");
     const [clientStatus, setClientStatus] = useState("");
     const [clientRejectedReason, setClientRejectedReason] = useState("");
 
@@ -109,6 +110,7 @@ const LoginScreen = () => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
             setRol(doc.data().rol);
+            setEmployeeType(doc.data().employeeType);
             setClientStatus(doc.data().clientStatus);
             setClientRejectedReason(doc.data().rejectedReason);
         });
@@ -126,11 +128,11 @@ const LoginScreen = () => {
             console.log(rol);
             console.log(clientStatus);
             console.log(clientRejectedReason);
-            RedirectionManager(rol, clientStatus, clientRejectedReason);
-    }, [rol, clientStatus, clientRejectedReason]));
+            RedirectionManager(rol, employeeType, clientStatus, clientRejectedReason);
+    }, [rol, employeeType, clientStatus, clientRejectedReason]));
         
 
-    const RedirectionManager = (rol, clientSatus, clientRejectedReason) => {
+    const RedirectionManager = (rol, employeeType, clientSatus, clientRejectedReason) => {
 
         switch(rol){
             case 'Dueño':
@@ -139,18 +141,21 @@ const LoginScreen = () => {
             case 'Supervisor':
                 navigation.replace("ControlPanelPropietario");
                 break;
-            case 'Metre':
-                navigation.replace("ControlPanelMetre");
-                break;
-            case 'Mozo':
-                navigation.replace("ControlPanelMozo");
-                break;
-            case 'Cocina':
-                navigation.replace("ControlPanelCocina");
-                break;
-            case 'Bar':
-                navigation.replace("ControlPanelBar");
-                break;
+            case 'Empleado':
+                switch(employeeType){
+                    case 'Metre':
+                        navigation.replace("ControlPanelMetre");
+                        break;
+                    case 'Mozo':
+                        navigation.replace("ControlPanelMozo");
+                        break;
+                    case 'Cocinero':
+                        navigation.replace("ControlPanelCocina");
+                        break;
+                    case 'Bartender':
+                        navigation.replace("ControlPanelBar");
+                        break;
+                }
             case 'Cliente':
                 switch(clientSatus){
                     case 'Pending':
