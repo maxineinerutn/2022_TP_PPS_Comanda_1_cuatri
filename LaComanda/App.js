@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import SplashScreen from './src/components/SplashScreen/SplashScreen';
 import Main from './src/components/Main/Main';
