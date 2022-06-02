@@ -1,14 +1,17 @@
-import { Text, View, Image, ImageBackground } from "react-native";
-import { useState, useEffect } from "react";
-import React from "react";
+import {
+  Text, View, Image, ImageBackground
+} from 'react-native';
+import React, { useState, useEffect } from 'react';
 import { styles } from './styles';
+import SplashS from '../../../assets/SplashS.png';
+import Gifplay from '../../../assets/gifplay.gif';
 
 export default function SplashScreen() {
-  const [showSpinner, setShowSpinner] = useState(false);
+  const [showSpinner, setShowSpinner] = useState( false );
   useEffect(() => {
     setTimeout(() => {
-        setShowSpinner(true);
-    }, 1500);
+      setShowSpinner( true );
+    }, 1500 );
   }, []);
 
   return (
@@ -20,9 +23,9 @@ export default function SplashScreen() {
       >
         <ImageBackground
           style={styles.image}
-          source={require("../../../assets/SplashS.png")}
+          source={SplashS}
           resizeMode='stretch'
-        ></ImageBackground>
+        />
 
       </View>
 
@@ -38,11 +41,11 @@ export default function SplashScreen() {
         <View style={styles.gifContainer}>
           <Image
             style={styles.gif}
-            source={require("../../../assets/gifplay.gif")}
-          ></Image>
+            source={Gifplay}
+          />
         </View>
       )}
-      
+
     </View>
   );
 }
