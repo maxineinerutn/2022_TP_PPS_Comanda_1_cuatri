@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import styles from "./StyleWaitingListManagmentScreen";
+import styles from "../waitingListManagment/StyleWaitingListManagmentScreen";
 import { Image, ImageBackground, Text, TouchableOpacity, View, ScrollView, TextInput, Alert } from "react-native";
 import { returnIcon, backgroundImage, confirmIcon, cancelIcon } from "./AssetsWaitingListManagmentScreen";
 import Modal from "react-native-modal";
