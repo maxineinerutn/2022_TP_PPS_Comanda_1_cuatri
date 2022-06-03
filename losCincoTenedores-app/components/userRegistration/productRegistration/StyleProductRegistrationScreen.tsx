@@ -36,20 +36,14 @@ export default StyleSheet.create({
         marginBottom: 5
     },
     cameraIcon: {
-        height:120, 
-        width:120, 
+        height:100, 
+        width:100, 
         borderRadius:20, 
         margin:10
     },
     cameraImage: {
-        height:120, 
-        width:120, 
-        borderRadius:20, 
-        margin:10
-    },
-    qrIcon: {
-        height:120, 
-        width:120, 
+        height:110, 
+        width:110, 
         borderRadius:20, 
         margin:10
     },
