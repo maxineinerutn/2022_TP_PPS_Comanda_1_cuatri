@@ -44,25 +44,31 @@ const ProductRegistration = () => {
     const [checked, setChecked] = React.useState('Comida');
     const [employeeType, setEmployeeType] = React.useState('');
 
-    //RETURN
-    useEffect (() => {
-      (async () => {
+  //RETURN
+  ///VER PORQUE NO FUNCIONA EL RETURN POR CUALQUIER mail
+
+  useFocusEffect(
+    useCallback(() => {
+      async () => {
         const q = query(collection(db, "userInfo"), where("email", "==", auth.currentUser?.email));
         const querySnapshot = await getDocs(q);
+        console.log(querySnapshot.size);
         querySnapshot.forEach((doc) => {
-          setEmployeeType(doc.data().employeeType);           
-        });
-      })();
-    }, []);
+          setEmployeeType(doc.data().employeeType); 
+          console.log(doc.data().employeeType);          
+        });        
+      };
+  }, [checked]))
 
-    const handleReturn = () => {
-      if(employeeType == "Cocinero"){
-        navigation.replace("ControlPanelCocina")
-      }
-      if(employeeType == "Bartender"){
-        navigation.replace("ControlPanelBar")
-      }
+  const handleReturn = () => {
+    
+    if(auth.currentUser?.email == "cincotenedorescocina@gmail.com"){
+      navigation.replace("ControlPanelCocina")
     }
+    if(auth.currentUser?.email == "cincotenedoresbar@gmail.com"){
+      navigation.replace("ControlPanelBar")
+    }
+  }
 
   //PERMISOS CAMARA
   useEffect(() => {
