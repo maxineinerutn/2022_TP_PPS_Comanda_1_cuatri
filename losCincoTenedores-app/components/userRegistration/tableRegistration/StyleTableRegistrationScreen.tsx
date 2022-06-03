@@ -29,4 +29,100 @@ export default StyleSheet.create({
         textAlign: 'center',
         alignContent: 'center',
     },
+
+    //  STYLE DE ADMIN
+    cameraQrContainer: {
+        flexDirection: 'row', 
+        alignContent: 'center', 
+        justifyContent: 'center', 
+        marginBottom: 5
+    },
+    cameraIcon: {
+        height:120, 
+        width:120, 
+        borderRadius:20, 
+        margin:10
+    },
+    cameraImage: {
+        height:120, 
+        width:120, 
+        borderRadius:20, 
+        margin:10
+    },
+    qrIcon: {
+        height:120, 
+        width:120, 
+        borderRadius:20, 
+        margin:10
+    },
+    inputContainer: {
+        width: '80%',              
+    },
+    inputField: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: ' rgba(220, 220, 225, 0.5);',
+        borderBottomColor: '#F7AD3B',
+        borderBottomWidth: 0,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        marginTop: 5,
+        borderRadius: 10,
+    },
+    inputText: {
+        color: 'black',
+        fontFamily: 'Oswald_300Light',
+        fontSize: 16,
+        width: '100%',
+    },
+    tagText: {
+        color: 'white',
+        fontFamily: 'Oswald_300Light',
+        fontSize: 16,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+    },
+    inputFieldRadioLayout: {
+        flexDirection: 'column',
+        flexWrap: "wrap",
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    inputFieldRadio: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: ' rgba(220, 220, 225, 0.5);',
+        borderBottomColor: '#F7AD3B',
+        width: '100%',
+        borderBottomWidth: 0,
+        paddingHorizontal: 15,
+        paddingVertical: 10,
+        marginTop: 5,
+        borderRadius: 10,
+    },
+    submitContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonLayout: {
+        backgroundColor: '#A4C3B2',
+        borderColor: '#A4C3B2',
+        marginTop: 20,
+        margin: 5,
+        width: "80%",
+        height: 60,
+        padding: 15,
+        borderRadius: 30,
+        borderWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }, 
+    buttonText: {
+        color: '#545454',
+        fontSize: 16,
+        fontFamily: 'Oswald_500Medium',
+    },
 });

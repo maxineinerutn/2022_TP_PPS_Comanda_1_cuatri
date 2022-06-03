@@ -43,9 +43,9 @@
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 | 01 | Alta de dueño / supervisor | GONZALO  | Terminado | Rama altaDueño |
-| 02 | Alta de empleados | CECILIA  | En proceso | Rama altaEmpleado |
+| 02 | Alta de empleados | CECILIA  | Terminado | Rama altaEmpleado |
 | 03 | Alta de clientes | GONZALO | Terminado | Rama altaCliente |
-| 04 | Alta de Mesa | PEDRO | En Proceso | Rama altaMesa |
+| 04 | Alta de Mesa | PEDRO | Terminado | Rama altaMesa |
 | 05 | Alta de Productos | PEDRO | En Proceso | Rama altaProducto |
 | 12 | Agregar un nuevo cliente registrado  | GONZALO | Terminado | Rama altaCliente |
 | 17 | Agregar cliente nuevo | GONZALO | En Proceso | Rama altaClientePush |
