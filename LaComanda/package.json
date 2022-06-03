@@ -24,7 +24,8 @@
     "react-native-vector-icons": "^9.1.0",
     "react-native-web": "0.17.7",
     "expo-camera": "~12.2.0",
-    "expo-image-manipulator": "~10.3.1"
+    "expo-image-manipulator": "~10.3.1",
+    "expo-constants": "~13.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

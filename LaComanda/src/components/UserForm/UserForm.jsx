@@ -12,7 +12,8 @@ import React, { useState } from 'react';
 import { RadioButtons } from 'react-native-radio-buttons';
 import Styles from './Styles';
 import { UserTypes } from '../../util/Enums';
-import userImgDefault from '../../../assets/user.png';
+import userImgDefault from '../../../assets/iconoCamara.png';
+import CamaraView from '../CameraView/CamaraView';
 
 export default function UserForm( props ) {
   const { userType, onSubmit } = props;
@@ -32,6 +33,7 @@ export default function UserForm( props ) {
   const [errorRol, hasErrorRol] = useState({ message: '', error: false });
   const [photo, setPhoto] = useState( '' );
   const [errorPhoto, hasErrorPhoto] = useState({ message: '', error: false });
+  const [cameraActivated, setCameraActivate] = useState( false );
   function renderSpecificFormControl() {
     const options = ['Dueño', 'Supervisor'];
     const employeeOptions = ['Metre', 'Mozo', 'Cocinero', 'Bartender'];
@@ -183,63 +185,14 @@ export default function UserForm( props ) {
   const handleSubmit = () => {
     Keyboard.dismiss();
     setFormValid( true );
-    if ( name === '' ) {
-      hasErrorName({ message: 'El nombre es requerido.', error: true });
-      setFormValid( false );
-    } else if ( name.length < 2 ) {
-      hasErrorName({ message: 'El nombre es demasiado corto.', error: true });
-      setFormValid( false );
-    } else if ( name.length > 20 ) {
-      hasErrorName({ message: 'El nombre es demasiado largo.', error: true });
-      setFormValid( false );
-    } else {
-      hasErrorName({ message: '', error: false });
-    }
-
-    if ( surname === '' ) {
-      hasErrorSurname({ message: 'El apellido es requerido.', error: true });
-      setFormValid( false );
-    } else if ( surname.length < 2 ) {
-      hasErrorSurname({
-        message: 'El apellido es demasiado corto.',
-        error: true
-      });
-      setFormValid( false );
-    } else if ( surname.length > 20 ) {
-      hasErrorSurname({
-        message: 'El apellido es demasiado largo.',
-        error: true
-      });
-      setFormValid( false );
-    } else {
-      hasErrorSurname({ message: '', error: false });
-    }
-
-    if ( dni === '' ) {
-      hasErrorDni({ message: 'El dni es requerido.', error: true });
-      setFormValid( false );
-    } else if ( dni.length < 8 || dni.length > 8 ) {
-      hasErrorDni({ message: 'El dni es inválido.', error: true });
-      setFormValid( false );
-    } else {
-      hasErrorDni({ message: '', error: false });
-    }
-
-    if ( cuil === '' ) {
-      hasErrorCuil({ message: 'El cuil es requerido.', error: true });
-      setFormValid( false );
-    } else if ( cuil.length < 11 || cuil.length > 11 ) {
-      hasErrorCuil({ message: 'El cuil es inválido.', error: true });
-      setFormValid( false );
-    } else {
-      hasErrorCuil({ message: '', error: false });
-    }
-
-    if ( rol === '' ) {
-      hasErrorRol({ message: 'El rol es requerido.', error: true });
-      setFormValid( false );
-    } else {
-      hasErrorRol({ message: '', error: false });
+    if ( userType === UserTypes.Anonymous ) {
+      setRol( UserTypes.Anonymous );
+      setSurname( null );
+      setDni( null );
+      setCuil( null );
+    } else if ( userType === UserTypes.Client ) {
+      setRol( UserTypes.Client );
+      setCuil( null );
     }
 
     if ( photo === '' ) {
@@ -248,14 +201,74 @@ export default function UserForm( props ) {
     } else {
       hasErrorPhoto({ message: '', error: false });
     }
+
+    if ( name ) {
+      if ( name === '' ) {
+        hasErrorName({ message: 'El nombre es requerido.', error: true });
+        setFormValid( false );
+      } else if ( name.length < 2 ) {
+        hasErrorName({ message: 'El nombre es demasiado corto.', error: true });
+        setFormValid( false );
+      } else if ( name.length > 20 ) {
+        hasErrorName({ message: 'El nombre es demasiado largo.', error: true });
+        setFormValid( false );
+      } else {
+        hasErrorName({ message: '', error: false });
+      }
+    }
+    if ( surname ) {
+      if ( surname === '' ) {
+        hasErrorSurname({ message: 'El apellido es requerido.', error: true });
+        setFormValid( false );
+      } else if ( surname.length < 2 ) {
+        hasErrorSurname({
+          message: 'El apellido es demasiado corto.',
+          error: true
+        });
+        setFormValid( false );
+      } else if ( surname.length > 20 ) {
+        hasErrorSurname({
+          message: 'El apellido es demasiado largo.',
+          error: true
+        });
+        setFormValid( false );
+      } else {
+        hasErrorSurname({ message: '', error: false });
+      }
+    }
+    if ( dni ) {
+      if ( dni === '' ) {
+        hasErrorDni({ message: 'El dni es requerido.', error: true });
+        setFormValid( false );
+      } else if ( dni.length < 8 || dni.length > 8 ) {
+        hasErrorDni({ message: 'El dni es inválido.', error: true });
+        setFormValid( false );
+      } else {
+        hasErrorDni({ message: '', error: false });
+      }
+    }
+    if ( cuil ) {
+      if ( cuil === '' ) {
+        hasErrorCuil({ message: 'El cuil es requerido.', error: true });
+        setFormValid( false );
+      } else if ( cuil.length < 11 || cuil.length > 11 ) {
+        hasErrorCuil({ message: 'El cuil es inválido.', error: true });
+        setFormValid( false );
+      } else {
+        hasErrorCuil({ message: '', error: false });
+      }
+    }
+    if ( rol ) {
+      if ( rol === '' ) {
+        hasErrorRol({ message: 'El rol es requerido.', error: true });
+        setFormValid( false );
+      } else {
+        hasErrorRol({ message: '', error: false });
+      }
+    }
+
     if ( formValid ) {
       setFormValid( true );
-      if ( userType === UserTypes.Anonymous ) {
-        setRol( UserTypes.Anonymous );
-        setSurname( null );
-        setDni( null );
-        setCuil( null );
-      }
       const user = {
         name,
         surname,
@@ -267,39 +280,56 @@ export default function UserForm( props ) {
       onSubmit( user );
     }
   };
-
+  function takePhoto() {
+    setCameraActivate( true );
+  }
+  function handleCamera( photoTaken ) {
+    setPhoto( photoTaken );
+    setCameraActivate( false );
+  }
   return (
-    <View style={Styles.container}>
-      <View style={Styles.formControlPhoto}>
-        {photo === '' ? (
-          <Image
-            style={Styles.formControlPhotoWithoutPhoto}
-            source={userImgDefault}
-            resizeMode='center'
-          />
-        ) : (
-          <Image
-            style={Styles.formControlPhotoWithoutPhoto}
-            source={photo}
-            resizeMode='center'
-          />
+    <View>
+      { cameraActivated ? (
+        <View>
+          <CamaraView onKeepPhoto={( photoTaken ) => handleCamera( photoTaken )} />
+        </View>
+      )
+        : (
+          <View style={Styles.container}>
+            <View style={Styles.formControlPhoto}>
+              <TouchableWithoutFeedback onPress={() => takePhoto()}>
+                {photo === '' ? (
+                  <Image
+                    style={Styles.formControlPhotoWithoutPhoto}
+                    source={userImgDefault}
+                    resizeMode='center'
+                  />
+                ) : (
+                  <Image
+                    style={Styles.formControlPhotoWithPhoto}
+                    source={{ uri: photo }}
+                    resizeMode='center'
+                  />
+                )}
+              </TouchableWithoutFeedback>
+              {errorPhoto.error && (
+                <Text style={Styles.textError}>{errorPhoto.message}</Text>
+              )}
+            </View>
+            <View style={Styles.formControl}>
+              <TextInput
+                placeholder='Nombre'
+                value={name}
+                onChangeText={( text ) => setName( text )}
+              />
+              {errorName.error && (
+                <Text style={Styles.textError}>{errorName.message}</Text>
+              )}
+            </View>
+            {renderSpecificFormControl()}
+            <Button title='Registrar' onPress={() => handleSubmit()} />
+          </View>
         )}
-        {errorPhoto.error && (
-          <Text style={Styles.textError}>{errorPhoto.message}</Text>
-        )}
-      </View>
-      <View style={Styles.formControl}>
-        <TextInput
-          placeholder='Nombre'
-          value={name}
-          onChangeText={( text ) => setName( text )}
-        />
-        {errorName.error && (
-          <Text style={Styles.textError}>{errorName.message}</Text>
-        )}
-      </View>
-      {renderSpecificFormControl()}
-      <Button title='Registrar' onPress={() => handleSubmit()} />
     </View>
   );
 }

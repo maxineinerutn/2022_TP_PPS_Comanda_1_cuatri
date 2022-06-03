@@ -1,9 +1,10 @@
 import { StyleSheet, Dimensions } from 'react-native';
+// import { Constants } from 'expo-constants';
 
 const Styles = StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: Constants.statusBarHeight
+    flex: 1
+    // marginTop: Constants.statusBarHeight
   },
   camera: {
     width: Dimensions.get( 'screen' ).width,
@@ -21,32 +22,37 @@ const Styles = StyleSheet.create({
     marginTop: 100
   },
   button: {
-    alignSelf: 'flex-end',
     alignItems: 'center',
     backgroundColor: 'red',
-    padding: 20,
-    borderTopLeftRadius: 10,
-    borderBottomStartRadius: 10
+    height: Dimensions.get( 'screen' ).height * 0.05,
+    width: Dimensions.get( 'screen' ).width * 0.3,
+    borderRadius: 10
   },
   buttonSacarFoto: {
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-end',
     alignItems: 'center',
     backgroundColor: 'red',
-    padding: 20,
+    height: Dimensions.get( 'screen' ).height * 0.05,
+    width: Dimensions.get( 'screen' ).width * 0.3,
     borderRadius: 10
+  },
+  changeCameraIcon: {
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    height: Dimensions.get( 'screen' ).height * 0.05,
+    width: Dimensions.get( 'screen' ).width * 0.3
   },
   text: {
     fontSize: 18,
     color: 'white'
   },
   buttonGuardar: {
-    alignSelf: 'flex-end',
+    // alignSelf: 'flex-end',
     alignItems: 'center',
     backgroundColor: 'green',
-    paddingVertical: 20,
-    paddingHorizontal: 40,
-    borderTopRightRadius: 10,
-    borderBottomEndRadius: 10
+    height: Dimensions.get( 'screen' ).height * 0.05,
+    width: Dimensions.get( 'screen' ).width * 0.3,
+    borderRadius: 10
   }
 });
 export default Styles;

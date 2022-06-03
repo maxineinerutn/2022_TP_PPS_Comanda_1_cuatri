@@ -20,16 +20,21 @@ const Styles = StyleSheet.create({
   },
   formControlPhoto: {
     borderColor: theme.colors.details,
-    width: Dimensions.get( 'screen' ).width * 0.5,
-    height: Dimensions.get( 'screen' ).height * 0.2,
-    paddingVertical: Dimensions.get( 'screen' ).height * 0.01,
-    paddingLeft: Dimensions.get( 'screen' ).width * 0.02,
+    width: Dimensions.get( 'screen' ).width * 0.358,
+    height: Dimensions.get( 'screen' ).height * 0.167,
+    // paddingVertical: Dimensions.get( 'screen' ).height * 0.01,
+    // paddingLeft: Dimensions.get( 'screen' ).width * 0.04,
     borderRadius: 10,
     borderWidth: 4
   },
   formControlPhotoWithoutPhoto: {
-    width: Dimensions.get( 'screen' ).width * 0.45,
-    height: Dimensions.get( 'screen' ).height * 0.185
+    width: Dimensions.get( 'screen' ).width * 0.32,
+    height: Dimensions.get( 'screen' ).height * 0.16,
+    marginLeft: 4
+  },
+  formControlPhotoWithPhoto: {
+    width: Dimensions.get( 'screen' ).width * 0.34,
+    height: Dimensions.get( 'screen' ).height * 0.16
   },
   textError: {
     top: 15,

@@ -16,20 +16,21 @@ import { useIsFocused } from '@react-navigation/native';
 // import { guardarImagenStorage } from '../../services/StorageServices';
 // import { guardarFotoEnCollection } from '../../services/FirestoreServices';
 import { auth } from '../../../firebase';
-import theme from '../../theme';
+import theme from '../../config/theme';
 import Styles from './Styles';
+import changeCameraIcon from '../../../assets/girar-camara.png';
 
-export default function CamaraView({ route }) {
+export default function CamaraView( props ) {
+  const { onKeepPhoto } = props;
   const [fotoTomada, setFotoTomada] = useState( false );
   const [hideCamara, setHideCamara] = useState( false );
   const [spinner, setSpinner] = useState( false );
   const [spinnerGuardado, setSpinnerGuardado] = useState( false );
   const [uriFotoSacadaPreview, setUriFotoSacadaPreview] = useState( null );
   const [hasPermission, setHasPermission] = useState( null );
-  const [type] = useState( Camera.Constants.Type.back );
+  const [type, setType] = useState( Camera.Constants.Type.front );
   const isFocused = useIsFocused();
   const camaraRef = useRef();
-  const { tipoDeFoto } = route.params;
   useEffect(() => {
     ( async () => {
       const { status } = await Camera.requestCameraPermissionsAsync();
@@ -69,26 +70,27 @@ export default function CamaraView({ route }) {
     setFotoTomada( false );
     setUriFotoSacadaPreview( null );
   };
-  const guardarFoto = async () => {
-    try {
-      setSpinnerGuardado( true );
-      const blob = await ( await fetch( uriFotoSacadaPreview )).blob();
-      const imgRefName = `relevamientoVisual/${auth.currentUser.email}/${tipoDeFoto}`;
-      const { ref, docName } = await guardarImagenStorage( imgRefName, blob );
-      const fotoStorage = await ref.getDownloadURL();
-      const foto = {
-        id: docName,
-        email: auth.currentUser.email,
-        fotoURL: { uri: fotoStorage },
-        tipo: tipoDeFoto,
-        fecha: new Date().toLocaleString(),
-        votos: []
-      };
-      await guardarFotoEnCollection( 'relevamientoVisual', docName, foto );
-      resetearCamara();
-    } catch ( error ) {
-      console.log( `aca${error}` );
-    }
+  const keepPhoto = async () => {
+    onKeepPhoto( uriFotoSacadaPreview );
+    // try {
+    //   setSpinnerGuardado( true );
+    //   const blob = await ( await fetch( uriFotoSacadaPreview )).blob();
+    //   const imgRefName = `relevamientoVisual/${auth.currentUser.email}/${tipoDeFoto}`;
+    //   const { ref, docName } = await guardarImagenStorage( imgRefName, blob );
+    //   const fotoStorage = await ref.getDownloadURL();
+    //   const foto = {
+    //     id: docName,
+    //     email: auth.currentUser.email,
+    //     fotoURL: { uri: fotoStorage },
+    //     tipo: tipoDeFoto,
+    //     fecha: new Date().toLocaleString(),
+    //     votos: []
+    //   };
+    //   await guardarFotoEnCollection( 'relevamientoVisual', docName, foto );
+    //   resetearCamara();
+    // } catch ( error ) {
+    //   console.log( `aca${error}` );
+    // }
   };
   return (
     <View style={Styles.container}>
@@ -109,7 +111,7 @@ export default function CamaraView({ route }) {
                 { justifyContent: 'center', alignItems: 'center' }
               ]}
             >
-              <ActivityIndicator size={180} color={theme.colores.details} />
+              <ActivityIndicator size={180} color={theme.colors.details} />
             </View>
           ) : (
             <View
@@ -123,7 +125,7 @@ export default function CamaraView({ route }) {
             >
               <TouchableOpacity
                 style={Styles.buttonGuardar}
-                onPress={() => guardarFoto()}
+                onPress={() => keepPhoto()}
               >
                 <Text style={Styles.text}> Guardar </Text>
               </TouchableOpacity>
@@ -160,6 +162,12 @@ export default function CamaraView({ route }) {
                   >
                     <Text style={Styles.text}> Sacar Foto </Text>
                   </TouchableOpacity>
+                  <TouchableOpacity
+                    style={Styles.buttonSacarFoto}
+                    onPress={() => setType( type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back )}
+                  >
+                    <Image source={changeCameraIcon} resizeMode='contain' style={Styles.changeCameraIcon} />
+                  </TouchableOpacity>
                 </View>
               </View>
               {spinner && (
@@ -169,13 +177,13 @@ export default function CamaraView({ route }) {
                     { justifyContent: 'center', alignItems: 'center' }
                   ]}
                 >
-                  <ActivityIndicator size={180} color={theme.colores.details} />
+                  <ActivityIndicator size={180} color={theme.colors.details} />
                 </View>
               )}
             </View>
           ) : (
             <View style={Styles.container}>
-              <ActivityIndicator size={180} color={theme.colores.details} />
+              <ActivityIndicator size={180} color={theme.colors.details} />
             </View>
           )}
         </>
