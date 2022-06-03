@@ -12,6 +12,7 @@ import React, { useState } from 'react';
 import { RadioButtons } from 'react-native-radio-buttons';
 import Styles from './Styles';
 import { UserTypes } from '../../util/Enums';
+import userImgDefault from '../../../assets/user.png';
 
 export default function UserForm( props ) {
   const { userType, onSubmit } = props;
@@ -31,7 +32,6 @@ export default function UserForm( props ) {
   const [errorRol, hasErrorRol] = useState({ message: '', error: false });
   const [photo, setPhoto] = useState( '' );
   const [errorPhoto, hasErrorPhoto] = useState({ message: '', error: false });
-
   function renderSpecificFormControl() {
     const options = ['Dueño', 'Supervisor'];
     const employeeOptions = ['Metre', 'Mozo', 'Cocinero', 'Bartender'];
@@ -274,7 +274,7 @@ export default function UserForm( props ) {
         {photo === '' ? (
           <Image
             style={Styles.formControlPhotoWithoutPhoto}
-            source={require( '../../../assets/user.png' )}
+            source={userImgDefault}
             resizeMode='center'
           />
         ) : (
