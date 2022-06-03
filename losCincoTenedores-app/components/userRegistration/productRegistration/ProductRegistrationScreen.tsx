@@ -19,35 +19,32 @@ import { RadioButton } from 'react-native-paper';
 import RotatingLogo from "../../rotatingLogo/RotatingLogo";
 
 type NewUser = {
-  apellido:string;
-  nombre:string;
-  dni:string;
-  cuil:string;
-  email:string;
-  password:string;
-  confirmPassword:string
-  rol:string;
+  name:string;
+  description:string;
+  elaborationTime:string;
+  price:string;
+  type:string;
 }
 
 const ProductRegistration = () => {
 
     //CONSTANTES
     const navigation = useNavigation<NativeStackNavigationProp<any>>();
-    const [apellidoForm, setApellido] = useState("Descripción del Producto");
-    const [nombreForm, setNombre] = useState("Nombre del Producto");
-    const [dniForm, setDni] = useState("Tiempo de Elavoración");
-    const [cuilForm, setCuil] = useState("Precio");
-    const [emailForm, setEmail] = useState("Correro Electrónico");
-    const [passwordForm, setPassword] = useState("Contraseña");
-    const [confirmPasswordForm, setConfirmPassword] = useState("Confirmar Contraseña");
+    const [nameForm, setName] = useState("Nombre del Producto");
+    const [descriptionForm, setDescription] = useState("Descripción del Producto");
+    const [elaborationTimeForm, setElaborationTime] = useState("Tiempo de Elaboración");
+    const [priceForm, setPrice] = useState("Precio");
     const [scanned, setScanned] = useState(false);
     const [openQR, setOpenQR] = useState(false);
     const {getValues, formState:{}, reset, setValue} = useForm<NewUser>();
     const [image, setImage] = useState("");
+    const [image2, setImage2] = useState("");
+    const [image3, setImage3] = useState("");
     const [loading, setLoading] = useState(false);
     const [placeholderColor, setPlaceholderColor] = useState("white");
     const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
-    const [checked, setChecked] = React.useState('Dueño');
+    const [checked, setChecked] = React.useState('Comida');
+
 
     //VARIABLE PARA GUARDAR EL USUARIO ORIGINAL
     let originalUser = auth.currentUser;
@@ -75,15 +72,15 @@ const ProductRegistration = () => {
           setScanned(true);
           setOpenQR(false);
           const dataSplit = data.split('@');
-          const dni = dataSplit[4].trim();
-          const nombre = dataSplit[2].trim();
-          const apellido = dataSplit[1].trim();
-          setValue("dni",dni);
-          setValue("nombre",nombre);
-          setValue("apellido",apellido);
-          setApellido(apellido);
-          setNombre(nombre);
-          setDni(dni);
+          const elaborationTime = dataSplit[3].trim();
+          const name = dataSplit[1].trim();
+          const description = dataSplit[2].trim();
+          setValue("elaborationTime",elaborationTime);
+          setValue("name",name);
+          setValue("description",description);
+          setDescription(description);
+          setName(name);
+          setElaborationTime(elaborationTime);
           setPlaceholderColor("black");
         };
       
@@ -101,6 +98,28 @@ const ProductRegistration = () => {
           });
           if (!result.cancelled) {
             setImage(result["uri"]);
+          }
+        };
+
+        const handleCamera2 = async (type) => {
+          let result = await ImagePicker.launchCameraAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.All,
+              aspect: [4, 3],
+              quality: 2,
+          });
+          if (!result.cancelled) {
+            setImage2(result["uri"]);
+          }
+        };
+
+        const handleCamera3 = async (type) => {
+          let result = await ImagePicker.launchCameraAsync({
+              mediaTypes: ImagePicker.MediaTypeOptions.All,
+              aspect: [4, 3],
+              quality: 3,
+          });
+          if (!result.cancelled) {
+            setImage3(result["uri"]);
           }
         };
     
@@ -131,9 +150,16 @@ const ProductRegistration = () => {
               Toast.CENTER);
             return;
           }
-          if(values.password!==values.confirmPassword){
+          if(!image2){
             Toast.showWithGravity(
-              "Las contraseñas no coinciden",
+              "Debe tomar una foto",
+              Toast.LONG, 
+              Toast.CENTER);
+            return;
+          }
+          if(!image3){
+            Toast.showWithGravity(
+              "Debe tomar una foto",
               Toast.LONG, 
               Toast.CENTER);
             return;
@@ -142,28 +168,39 @@ const ProductRegistration = () => {
           toggleSpinnerAlert();
           try {
             console.log(auth.currentUser?.email);
-            //CREACION DE USUARIO
-            await createUserWithEmailAndPassword(auth,values.email,values.email);
-            console.log(auth.currentUser?.email);
-    
-            //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
-            await auth.signOut();
-            await auth.updateCurrentUser(originalUser);
-    
+
             //UPLOAD IMAGEN
             const blob:any = await getBlob(image);
             const fileName = image.substring(image.lastIndexOf("/") + 1);
-            const fileRef = ref(storage, "userInfo/" + fileName);
+
+            const blob2:any = await getBlob(image2);
+            const fileName2 = image2.substring(image2.lastIndexOf("/") + 1);
+
+            const blob3:any = await getBlob(image3);
+            const fileName3 = image3.substring(image3.lastIndexOf("/") + 1);
+
+            const fileRef = ref(storage, "productInfo/" + fileName);
             await uploadBytes(fileRef, blob);
+
+            const fileRef2 = ref(storage, "productInfo/" + fileName2);
+            await uploadBytes(fileRef2, blob2);
+
+            const fileRef3 = ref(storage, "productInfo/" + fileName3);
+            await uploadBytes(fileRef3, blob3);
+
+
+
             //UPLOAD DATA
-            await addDoc(collection(db, "userInfo"), {
-              lastName:values.apellido,
-              name:values.nombre,
-              dni:values.dni,
-              cuil:values.cuil,
-              email:values.email,
-              rol:checked,
+            await addDoc(collection(db, "productInfo"), {
+              description:values.description,
+              name:values.name,
+              elaborationTime:values.elaborationTime,
+              price:values.price,
+              type:checked,
               image:fileRef.fullPath,
+              image2:fileRef2.fullPath,
+              image3:fileRef3.fullPath,
+
               creationDate:new Date()          
             });        
             Toast.showWithGravity(
@@ -172,6 +209,9 @@ const ProductRegistration = () => {
               Toast.CENTER);      
           reset();
           setImage("");
+          setImage2("");
+          setImage3("");
+
           //VUELTA AL CONTROL PANEL ( VER DE PONER EL QUE CORRESPONDE EN CADA CASO)
           handleReturn;
           } catch (error:any) {
@@ -189,22 +229,19 @@ const ProductRegistration = () => {
         //RESET DEL FORM
         const resetForm = () => {
           setPlaceholderColor("white");
-          setApellido("Apellido");
-          setNombre("Nombre");
-          setDni("DNI");
-          setCuil("CUIL");
-          setEmail('Correo Electrónico');
-          setPassword('Contraseña');
-          setConfirmPassword('Confirmar Contraseña');
-          setValue("dni",'');
-          setValue("nombre",'');
-          setValue("apellido",'');
-          setValue("email",'');
-          setValue("password",'');
-          setValue("confirmPassword",'');
-          setValue("cuil",'');
-          setValue("rol",'');
+          setName("Nombre del Producto");
+          setDescription("Descripción del Producto");
+          setElaborationTime("Tiempo de Elaboración");
+          setPrice("Precio");
+          setValue("elaborationTime",'');
+          setValue("name",'');
+          setValue("description",'');
+          setValue("price",'');
+          setValue("type",'');
           setImage("");
+          setImage2("");
+          setImage3("");
+
         }
     
         //SPINNER
@@ -236,23 +273,23 @@ const ProductRegistration = () => {
 
       //MANEJADORES RADIOBUTTONS
 
-    const pressDueño = () => {
-      setChecked('Dueño');
+    const pressComida = () => {
+      setChecked('Comida');
     }
 
-    const pressSupervisor = () => {
-      setChecked('Supervisor');
+    const pressBebida = () => {
+      setChecked('Bebida');
     }
 
     //CARGA CAMPOS SEGUN SELECCION RADIO BUTTON
     useFocusEffect(
       useCallback(() => {
         console.log(checked);
-        if(checked=='Supervisor'){
-          setValue("rol",checked);
+        if(checked=='Bebida'){
+          setValue("type",checked);
         }
-        if(checked=='Dueño'){
-          setValue("rol",checked);
+        if(checked=='Comida'){
+          setValue("type",checked);
         }
     }, [checked]))
 
@@ -262,6 +299,8 @@ const ProductRegistration = () => {
           <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
           {loading}
           <View style={styles.body}>
+
+            <View style={styles.cameraTotal}>
             <View style={styles.cameraQrContainer}>
               {!image?
                 <TouchableOpacity onPress={handleCamera}>
@@ -271,106 +310,92 @@ const ProductRegistration = () => {
                   <Image style={styles.cameraImage} resizeMode="cover" source={{uri:image}}/>
                 </View>
               }
-
-              <TouchableOpacity onPress={handleOpenQR}>
-                <Image 
-                    style={styles.qrIcon} resizeMode="cover" source={qrIcon}
-                />
-              </TouchableOpacity>
+            </View>
+            <View style={styles.cameraQrContainer}>
+              {!image2?
+                <TouchableOpacity onPress={handleCamera2}>
+                  <Image style={styles.cameraIcon} resizeMode="cover" source={cameraIcon} />
+                </TouchableOpacity>:
+                <View>
+                  <Image style={styles.cameraImage} resizeMode="cover" source={{uri:image2}}/>
+                </View>
+              }
+            </View>
+            <View style={styles.cameraQrContainer}>
+              {!image3?
+                <TouchableOpacity onPress={handleCamera3}>
+                  <Image style={styles.cameraIcon} resizeMode="cover" source={cameraIcon} />
+                </TouchableOpacity>:
+                <View>
+                  <Image style={styles.cameraImage} resizeMode="cover" source={{uri:image3}}/>
+                </View>
+              }
+            </View>
             </View>
 
             <View style={styles.inputContainer}>
               <View style={styles.inputField}>
                 <TextInput
-                  placeholder={nombreForm}
+                  placeholder={nameForm}
                   placeholderTextColor= {placeholderColor}
                   style={styles.inputText}
-                  onChangeText={(text) => setValue("nombre",text)}
+                  onChangeText={(text) => setValue("name",text)}
                 />
               </View>
 
               <View style={styles.inputField}>
                 <TextInput
-                  placeholder= {apellidoForm}
+                  placeholder= {descriptionForm}
                   placeholderTextColor= {placeholderColor}
                   style={styles.inputText}
-                  onChangeText={(text) => setValue("apellido",text)}
+                  onChangeText={(text) => setValue("description",text)}
                 />
               </View>
 
               <View style={styles.inputField}>
                 <TextInput
-                  placeholder={dniForm}
+                  placeholder={elaborationTimeForm}
                   placeholderTextColor= {placeholderColor}
                   style={styles.inputText}
                   keyboardType={'numeric'}
-                  onChangeText={(text) => setValue("dni",text)}
+                  onChangeText={(text) => setValue("elaborationTime",text)}
                 />
               </View>
 
               <View style={styles.inputField}>
                 <TextInput
-                  placeholder={cuilForm}
+                  placeholder={priceForm}
                   placeholderTextColor="white"
                   style={styles.inputText}
                   keyboardType={'numeric'}
-                  onChangeText={(text) => setValue("cuil",text)}
+                  onChangeText={(text) => setValue("price",text)}
                 />
               </View>
 
-              {/* <View style={styles.inputField}>
-                <TextInput
-                  placeholder= {emailForm}
-                  placeholderTextColor="white"
-                  style={styles.inputText}
-                  onChangeText={(text) => setValue("email",text)}
-                />
-              </View> */}
-
-              {/* <View style={styles.inputField}>
-                <TextInput
-                  placeholder= {passwordForm}
-                  placeholderTextColor="white"
-                  style={styles.inputText}
-                  onChangeText={(text) => setValue("password",text)}
-                  secureTextEntry = {true}
-                />
-              </View> */}
-
-              {/* <View style={styles.inputField}>
-                <TextInput
-                  placeholder= {confirmPasswordForm}
-                  placeholderTextColor="white"
-                  style={styles.inputText}
-                  onChangeText={(text) => setValue("confirmPassword",text)}
-                  secureTextEntry = {true}
-                />
-              </View> */}
-
-              {/* <View style={styles.inputField}>
-                <Text style={styles.tagText}>TIPO DE ALTA</Text> 
-              </View> */}
+              <View style={styles.inputField}>
+                <Text style={styles.tagText}>TIPO DE PRODUCTO</Text> 
+              </View>
 
 
-              {/* <View style={styles.inputFieldRadioLayout}>
+              <View style={styles.inputFieldRadioLayout}>
                 <View style={styles.inputFieldRadio}>
                   <RadioButton
-                    value="Dueño"
-                    status={ checked === 'Dueño' ? 'checked' : 'unchecked' }
-                    onPress={ pressDueño }
+                    value="Comida"
+                    status={ checked === 'Comida' ? 'checked' : 'unchecked' }
+                    onPress={ pressComida }
                   />
-                  <Text style={styles.inputText}>DUEÑO</Text>               
+                  <Text style={styles.inputText}>Comida</Text>               
                 </View>
 
                 <View style={styles.inputFieldRadio}>
                   <RadioButton
-                    value="Supervisor"
-                    status={ checked === 'Supervisor' ? 'checked' : 'unchecked' }
-                    onPress={ pressSupervisor }
+                    value="Bebida"
+                    status={ checked === 'Bebida' ? 'checked' : 'unchecked' }
+                    onPress={ pressBebida }
                   />
-                  <Text style={styles.inputText}>SUPERVISOR</Text>
+                  <Text style={styles.inputText}>Bebida</Text>
                 </View>
-              </View> */}
+              </View>
 
 
               <View style={styles.submitContainer}>
