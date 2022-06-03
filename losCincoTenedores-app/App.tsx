@@ -7,7 +7,7 @@ import { useFonts, Oswald_200ExtraLight, Oswald_300Light, Oswald_400Regular, Osw
 import AppLoading from 'expo-app-loading';
 const Stack = createNativeStackNavigator();
 
-import { firebaseConfig } from './apiFirebase/firebase';
+import { firebaseConfig } from './firebase';
 import {initializeApp} from 'firebase/app';
 import {getAuth} from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
