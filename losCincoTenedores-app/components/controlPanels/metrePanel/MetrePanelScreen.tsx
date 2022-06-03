@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from "react";
 import styles from "../metrePanel/StyleMetrePanelScreen";
 import { ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
-import { userIcon, backgroundImage, logoutIcon, clientIcon } from "../metrePanel/AssetsMetrePanelScreen";
+import { userIcon, backgroundImage, logoutIcon, clientIcon, waitingListIcon } from "../metrePanel/AssetsMetrePanelScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { auth } from "../../../App";
@@ -25,7 +25,11 @@ const MetrePanel = () => {
     //NAVIGATION
     const handleClientRegister = () => {
       navigation.replace("ClientRegistration")
-    }      
+    }
+    
+    const handleClientEntry = () => {
+      navigation.replace("WaitingListManagment")
+    }
     
     //HEADER
     useLayoutEffect(() => {
@@ -59,6 +63,13 @@ const MetrePanel = () => {
                     <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}>
                       <Image source={clientIcon} style={styles.buttonImage} />
                       <Text style={styles.buttonText}>ALTA DE CLIENTE</Text>              
+                    </View>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity onPress = { handleClientEntry } style={styles.buttonLayout}>
+                    <View style={{ flexDirection: "row", alignItems: 'center', justifyContent: 'flex-start', }}>
+                      <Image source={waitingListIcon} style={styles.buttonImage} />
+                      <Text style={styles.buttonText}>LISTA DE ESPERA</Text>              
                     </View>
                   </TouchableOpacity>
                 

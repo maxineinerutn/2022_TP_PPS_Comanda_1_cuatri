@@ -1,5 +1,6 @@
 import styles from "../employeeRegistration/StyleEmployeeRegistrationScreen";
 import {
+  StyleSheet,
   ImageBackground,
   TextInput,
   TouchableOpacity,
@@ -103,22 +104,15 @@ const EmployeeRegistration = () => {
     setScanned(true);
     setOpenQR(false);
     const dataSplit = data.split("@");
-    const dni = dataSplit[5].trim();
-    const cuil = dataSplit[4].trim();
-    const nombre = dataSplit[3].trim();
-    const apellido = dataSplit[2].trim();
-    const tipoEmpleado = dataSplit[1].trim();
+    const dni = dataSplit[4].trim();
+    const nombre = dataSplit[2].trim();
+    const apellido = dataSplit[1].trim();
     setValue("dni", dni);
-    setValue("cuil", cuil);
     setValue("nombre", nombre);
     setValue("apellido", apellido);
-    setValue("employeeType", tipoEmpleado);
     setApellido(apellido);
     setNombre(nombre);
     setDni(dni);
-    setCuil(cuil);
-    setTipoEmpleado(tipoEmpleado);
-
     setPlaceholderColor("black");
     setPlaceholderColorEditable("black");
   };

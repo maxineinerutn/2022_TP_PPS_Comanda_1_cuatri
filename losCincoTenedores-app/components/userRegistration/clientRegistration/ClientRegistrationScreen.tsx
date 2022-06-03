@@ -1,7 +1,5 @@
 import styles from "../clientRegistration/StyleClientRegistrationScreen";
 import { returnIcon, backgroundImage,  } from "../adminRegistration/AssetsAdminRegistrationScreen";
-
-
 import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";

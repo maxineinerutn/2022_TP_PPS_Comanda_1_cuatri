@@ -29,4 +29,28 @@ export default StyleSheet.create({
         textAlign: 'center',
         alignContent: 'center',
     },
+    qrIcon: {
+        height:250, 
+        width:250, 
+        borderRadius:20, 
+        margin:10
+    },
+    buttonLayout: {
+        backgroundColor: '#A4C3B2',
+        borderColor: '#A4C3B2',
+        marginTop: 20,
+        margin: 5,
+        width: "80%",
+        height: 60,
+        padding: 15,
+        borderRadius: 30,
+        borderWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    }, 
+    buttonText: {
+        color: '#545454',
+        fontSize: 16,
+        fontFamily: 'Oswald_500Medium',
+    },
 });
