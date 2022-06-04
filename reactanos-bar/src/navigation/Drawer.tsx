@@ -4,8 +4,8 @@ import AddProductsScreen from '../components/screens/AddProductsScreen/AddProduc
 import { Screens } from './Screens';
 import { useDispatch } from 'react-redux';
 import { handleLogout } from '../redux/authReducer';
-import AddAdminsController from '../components/organisms/AddAdminsController/AddAdminsController.component';
 import AddAdminsScreen from '../components/screens/AddAdminsController/AddAdminsScreen.component';
+import AddClientScreen from '../components/screens/AddClient/AddClientScreen.component';
 
 const Drawer = createDrawerNavigator();
 
@@ -27,6 +27,7 @@ const DrawerStack = () => {
         <Drawer.Navigator initialRouteName={Screens.ADD_PRODUCTS} drawerContent={props => <CustomDrawerContent {...props} />} >
           <Drawer.Screen name={Screens.ADD_PRODUCTS} component={AddProductsScreen} />
           <Drawer.Screen name={Screens.ADD_ADMINS} component={AddAdminsScreen} />
+          <Drawer.Screen name={Screens.ADD_CLIENT} component={AddClientScreen} />
         </Drawer.Navigator>
     );
 }
