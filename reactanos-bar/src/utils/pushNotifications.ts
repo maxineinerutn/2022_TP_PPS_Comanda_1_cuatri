@@ -14,8 +14,8 @@ export const notificationsConfiguration = () => {
     Notifications.setNotificationHandler({
         handleNotification: async () => ({
           shouldShowAlert: true,
-          shouldPlaySound: false,
-          shouldSetBadge: false,
+          shouldPlaySound: true,
+          shouldSetBadge: true,
         }),
       });
     registerForPushNotificationsAsync();
@@ -46,19 +46,22 @@ export const notificationsConfiguration = () => {
 
 export const sendPushNotification = async ({title, description}:Notification) =>  {
     try {
-        const message = {
-          to: tokens,
-          title: title,
-          body: description,
-        };
-        await fetch('https://exp.host/--/api/v2/push/send', {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(message),
-        });
+        tokens.map(async token => {
+            const message = {
+              to: token,
+              title: title,
+              body: description,
+              sound: "default"
+            };
+            await fetch('https://exp.host/--/api/v2/push/send', {
+              method: 'POST',
+              headers: {
+                Accept: 'application/json',
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify(message),
+            });
+        })
     } catch (error) {
       console.log(error)              
     }
