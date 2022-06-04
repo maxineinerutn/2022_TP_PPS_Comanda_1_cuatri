@@ -14,6 +14,7 @@ export const saveImageInStorage = async ( imgRefName, blob ) => {
     const ref = storage.ref( `${imgRefName}/${docName}` );
     await ref.put( blob );
     const uri = await ref.getDownloadURL();
+    console.log( uri );
     const respuesta = { uri };
     return respuesta;
   } catch ( error ) {

@@ -3,6 +3,7 @@ import { React } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Credentials from '../../pages/Credentials/Credentials';
+import CreateTable from '../../pages/CreateTable/CreateTable';
 
 const Stack = createNativeStackNavigator();
 
@@ -12,7 +13,7 @@ export default function Main() {
   return (
     <View style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator initialRouteName='CreateTable'>
           <Stack.Screen
             options={{
               title: 'Aplicación',
@@ -28,6 +29,13 @@ export default function Main() {
             }}
             name='Credentials'
             component={Credentials}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: false
+            }}
+            name='CreateTable'
+            component={CreateTable}
           />
         </Stack.Navigator>
       </NavigationContainer>
