@@ -4,18 +4,16 @@ import {
     StyledMargin,
     StyledView,
 } from "./AddClientScreen.styled";
-import { Image, ImageBackground, StyleSheet, View } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import ControlledInput from "../../molecules/ControlledInput/ControlledInput.component";
 import { useForm } from 'react-hook-form';
 import ControlledPassword from '../../molecules/ControlledPassword/ControlledPassword.component';
 import ImageButton from "../../atoms/ImageButton/ImageButton.component";
 import Button from '../../atoms/Button/Button.component';
-import Spinner from '../../atoms/Spinner/Spinner.component';
 import { addDoc, collection } from "firebase/firestore";
 import { errorHandler } from '../../../utils/ErrorsHandler';
 import { auth, db, storage } from '../../../InitApp';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import InputGroup from "../../molecules/InputGroup/InputGroup.component";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ref, uploadBytes } from 'firebase/storage';
 import { showMessage } from 'react-native-flash-message';
@@ -23,6 +21,7 @@ import * as ImagePicker from "expo-image-picker";
 import { getBlob } from '../../../utils/utils';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useFocusEffect } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 type NewClient = {
     lastName: string;
@@ -34,13 +33,13 @@ type NewClient = {
 }
 
 const AddClientScreen = () => {
-    const [loading, setLoading] = useState(false);
     const [image, setImage] = useState("");
     const { control, getValues, formState: { errors }, reset, setValue } = useForm<NewClient>();
     const [scanned, setScanned] = useState(false);
     const [openQR, setOpenQR] = useState(false);
     const [show, setShow] = useState(false);
 
+    const dispatch = useDispatch();
     const passInput: MutableRefObject<any> = useRef();
 
     const handleBarCodeScanned = ({ data }) => {
@@ -80,7 +79,7 @@ const AddClientScreen = () => {
             errorHandler('pass-diff');
             return;
         }
-        setLoading(true)
+        dispatch(fetchLoadingStart());
         try {
             if(!guest){
               await createUserWithEmailAndPassword(
@@ -128,7 +127,7 @@ const AddClientScreen = () => {
         } catch (error: any) {
             errorHandler(error.code);
         } finally {
-            setLoading(false);
+            dispatch(fetchLoadingFinish());
         }
     }
 
@@ -157,8 +156,7 @@ const AddClientScreen = () => {
     
     return !openQR ? (
         <StyledView>
-        <StyledLinearGradient colors={["#6190E8", "#A7BFE8"]}>
-            {loading && <Spinner />}
+        <StyledLinearGradient colors={["#6190E8", "#A7BFE8"]}>            
             <View
               style={{
                 flexDirection: "row",
