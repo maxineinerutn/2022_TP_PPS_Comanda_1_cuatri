@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { LoginStackParamList } from '../../../navigation/stacks/LoginStack';
 import { Screens } from "../../../navigation/Screens";
 import { StyledView } from "./LoginScreen.styled";
@@ -12,7 +12,8 @@ import { handleLogin } from "../../../redux/authReducer";
 import { FormData } from "../../../models/login/formData.types";
 import Button from "../../atoms/Button/Button.component";
 import { sendPushNotification } from "../../../utils/pushNotifications";
-import { showMessage } from "react-native-flash-message";
+import { validateInputs } from '../../../utils/utils';
+import { errorHandler } from '../../../utils/ErrorsHandler';
 
 type LoginScreenProps = NativeStackScreenProps<LoginStackParamList, Screens.LOGIN>;
 
@@ -27,12 +28,13 @@ const LoginScreen:FC<LoginScreenProps> = ({navigation}) => {
 
 
 	const handleSignIn = () => {
-        const values = getValues();
-        if(!values.email || !values.password){
-            showMessage({type:"danger", message:"Error", description:"Todos los campos son requeridos"});
-            return
+        try {
+            const values = getValues();
+            validateInputs(values);
+            dispatch(handleLogin(values));
+        } catch (error:any) {
+            errorHandler(error.code)
         }
-        dispatch(handleLogin(values));
     }
 
 	return (
