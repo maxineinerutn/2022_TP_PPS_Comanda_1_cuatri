@@ -46,7 +46,7 @@
 | 02 | Alta de empleados | CECILIA  | Terminado | Rama altaEmpleado |
 | 03 | Alta de clientes | GONZALO | Terminado | Rama altaCliente |
 | 04 | Alta de Mesa | PEDRO | Terminado | Rama altaMesa |
-| 05 | Alta de Productos | PEDRO | En Proceso | Rama altaProducto |
+| 05 | Alta de Productos | PEDRO | Terminado | Rama altaProducto |
 | 12 | Agregar un nuevo cliente registrado  | GONZALO | Terminado | Rama altaCliente |
 | 17 | Agregar cliente nuevo | GONZALO | En Proceso | Rama altaClientePush |
 
@@ -73,10 +73,10 @@
 | - | Registro | GONZALO | Terminado | Rama main |
 | ALTAS                      
 | 01 | Alta de dueño / supervisor | GONZALO  | Terminado | Rama altaDueño |
-| 02 | Alta de empleados | CECILIA  | En proceso | Rama altaEmpleado |
+| 02 | Alta de empleados | CECILIA  | Terminado | Rama altaEmpleado |
 | 03 | Alta de clientes | GONZALO | Terminado | Rama altaCliente |
-| 04 | Alta de Mesa | PEDRO | En Proceso | Rama altaMesa |
-| 05 | Alta de Productos | PEDRO | En Proceso | Rama altaProducto |
+| 04 | Alta de Mesa | PEDRO | Terminado | Rama altaMesa |
+| 05 | Alta de Productos | PEDRO | Terminado | Rama altaProducto |
 | CODIGOS QR                      
 | 06 | Qr ingreso al local | PEDRO | - | Rama qrIngreso | 
 | 07 | Qr de la mesa | GONZALO | - | Rama qrMesa |
