@@ -6,18 +6,27 @@ import {
   Button,
   Keyboard,
   TouchableWithoutFeedback,
-  Image
+  Image,
+  ScrollView
 } from 'react-native';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RadioButtons } from 'react-native-radio-buttons';
 import Styles from './Styles';
 import { UserTypes } from '../../util/Enums';
 import userImgDefault from '../../../assets/iconoCamara.png';
 import CamaraView from '../CameraView/CamaraView';
+import Scanner from '../Scanner/Scanner';
 
 export default function UserForm( props ) {
   const { userType, onSubmit } = props;
   const [formValid, setFormValid] = useState( false );
+  const [email, setEmail] = useState( '' );
+  const [errorEmail, hasErrorEmail] = useState({ message: '', error: false });
+  const [password, setPassword] = useState( '' );
+  const [errorPassword, hasErrorPassword] = useState({
+    message: '',
+    error: false
+  });
   const [name, setName] = useState( '' );
   const [errorName, hasErrorName] = useState({ message: '', error: false });
   const [surname, setSurname] = useState( '' );
@@ -34,6 +43,32 @@ export default function UserForm( props ) {
   const [photo, setPhoto] = useState( '' );
   const [errorPhoto, hasErrorPhoto] = useState({ message: '', error: false });
   const [cameraActivated, setCameraActivate] = useState( false );
+  const [scannerActivated, setScannerActivate] = useState( false );
+  useEffect(() => {
+    if ( userType === UserTypes.Anonymous ) {
+      setRol( UserTypes.Anonymous );
+      setSurname( '-' );
+      setDni( '-' );
+      setCuil( '-' );
+    } else if ( userType === UserTypes.Client ) {
+      setRol( UserTypes.Client );
+      setCuil( '-' );
+    }
+  }, []);
+  useEffect(() => {
+    if ( formValid ) {
+      setFormValid( true );
+      validatePhoto();
+      validateRol();
+      validateCuil();
+      validateName();
+      validateSurname();
+      validateDni();
+      validateEmail();
+      validatePassword();
+    }
+  }, [email, password, name, surname, dni, cuil, rol, photo]);
+
   function renderSpecificFormControl() {
     const options = ['Dueño', 'Supervisor'];
     const employeeOptions = ['Metre', 'Mozo', 'Cocinero', 'Bartender'];
@@ -47,6 +82,7 @@ export default function UserForm( props ) {
                 placeholder='Apellido'
                 value={surname}
                 onChangeText={( text ) => setSurname( text )}
+                onBlur={() => validateSurname()}
               />
               {errorSurname.error && (
                 <Text style={Styles.textError}>{errorSurname.message}</Text>
@@ -58,6 +94,7 @@ export default function UserForm( props ) {
                 keyboardType='numeric'
                 value={dni}
                 onChangeText={( text ) => setDni( text )}
+                onBlur={() => validateDni()}
               />
               {errorDni.error && (
                 <Text style={Styles.textError}>{errorDni.message}</Text>
@@ -69,6 +106,7 @@ export default function UserForm( props ) {
                 keyboardType='numeric'
                 value={cuil}
                 onChangeText={( text ) => setCuil( text )}
+                onBlur={() => validateCuil()}
               />
               {errorCuil.error && (
                 <Text style={Styles.textError}>{errorCuil.message}</Text>
@@ -96,6 +134,7 @@ export default function UserForm( props ) {
                 placeholder='Apellido'
                 value={surname}
                 onChangeText={( text ) => setSurname( text )}
+                onBlur={() => validateSurname()}
               />
               {errorSurname.error && (
                 <Text style={Styles.textError}>{errorSurname.message}</Text>
@@ -107,6 +146,7 @@ export default function UserForm( props ) {
                 keyboardType='numeric'
                 value={dni}
                 onChangeText={( text ) => setDni( text )}
+                onBlur={() => validateDni()}
               />
               {errorDni.error && (
                 <Text style={Styles.textError}>{errorDni.message}</Text>
@@ -118,6 +158,7 @@ export default function UserForm( props ) {
                 keyboardType='numeric'
                 value={cuil}
                 onChangeText={( text ) => setCuil( text )}
+                onBlur={() => validateCuil()}
               />
               {errorCuil.error && (
                 <Text style={Styles.textError}>{errorCuil.message}</Text>
@@ -145,6 +186,7 @@ export default function UserForm( props ) {
                 placeholder='Apellido'
                 value={surname}
                 onChangeText={( text ) => setSurname( text )}
+                onBlur={() => validateSurname()}
               />
               {errorSurname.error && (
                 <Text style={Styles.textError}>{errorSurname.message}</Text>
@@ -156,6 +198,7 @@ export default function UserForm( props ) {
                 keyboardType='numeric'
                 value={dni}
                 onChangeText={( text ) => setDni( text )}
+                onBlur={() => validateDni()}
               />
               {errorDni.error && (
                 <Text style={Styles.textError}>{errorDni.message}</Text>
@@ -182,27 +225,43 @@ export default function UserForm( props ) {
   function renderContainer( options ) {
     return <View style={Styles.containerRadioButton}>{options}</View>;
   }
-  const handleSubmit = () => {
-    Keyboard.dismiss();
-    setFormValid( true );
-    if ( userType === UserTypes.Anonymous ) {
-      setRol( UserTypes.Anonymous );
-      setSurname( null );
-      setDni( null );
-      setCuil( null );
-    } else if ( userType === UserTypes.Client ) {
-      setRol( UserTypes.Client );
-      setCuil( null );
-    }
-
+  function validatePhoto() {
     if ( photo === '' ) {
       hasErrorPhoto({ message: 'La foto es requerida.', error: true });
       setFormValid( false );
     } else {
       hasErrorPhoto({ message: '', error: false });
     }
-
-    if ( name ) {
+  }
+  function validateEmail() {
+    if ( email !== '-' ) {
+      if ( email === '' ) {
+        hasErrorEmail({ message: 'El Correo electrónico es requerido.', error: true });
+        setFormValid( false );
+      } else if ( !email.includes( '@' )) {
+        hasErrorEmail({ message: 'El nombre es inválido.', error: true });
+        setFormValid( false );
+      } else {
+        hasErrorEmail({ message: '', error: false });
+      }
+    }
+  }
+  function validatePassword() {
+    if ( password === '' ) {
+      hasErrorPassword({ message: 'La clave es requerida.', error: true });
+      setFormValid( false );
+    } else if ( password.length < 8 ) {
+      hasErrorPassword({ message: 'La clave es demasiada corta.', error: true });
+      setFormValid( false );
+    } else if ( password.length > 20 ) {
+      hasErrorPassword({ message: 'La clave es demasiada larga.', error: true });
+      setFormValid( false );
+    } else {
+      hasErrorPassword({ message: '', error: false });
+    }
+  }
+  function validateName() {
+    if ( name !== '-' ) {
       if ( name === '' ) {
         hasErrorName({ message: 'El nombre es requerido.', error: true });
         setFormValid( false );
@@ -216,7 +275,9 @@ export default function UserForm( props ) {
         hasErrorName({ message: '', error: false });
       }
     }
-    if ( surname ) {
+  }
+  function validateSurname() {
+    if ( surname !== '-' ) {
       if ( surname === '' ) {
         hasErrorSurname({ message: 'El apellido es requerido.', error: true });
         setFormValid( false );
@@ -236,7 +297,9 @@ export default function UserForm( props ) {
         hasErrorSurname({ message: '', error: false });
       }
     }
-    if ( dni ) {
+  }
+  function validateDni() {
+    if ( dni !== '-' ) {
       if ( dni === '' ) {
         hasErrorDni({ message: 'El dni es requerido.', error: true });
         setFormValid( false );
@@ -247,7 +310,9 @@ export default function UserForm( props ) {
         hasErrorDni({ message: '', error: false });
       }
     }
-    if ( cuil ) {
+  }
+  function validateCuil() {
+    if ( cuil !== '-' ) {
       if ( cuil === '' ) {
         hasErrorCuil({ message: 'El cuil es requerido.', error: true });
         setFormValid( false );
@@ -258,7 +323,9 @@ export default function UserForm( props ) {
         hasErrorCuil({ message: '', error: false });
       }
     }
-    if ( rol ) {
+  }
+  function validateRol() {
+    if ( rol !== '-' ) {
       if ( rol === '' ) {
         hasErrorRol({ message: 'El rol es requerido.', error: true });
         setFormValid( false );
@@ -266,16 +333,29 @@ export default function UserForm( props ) {
         hasErrorRol({ message: '', error: false });
       }
     }
+  }
+  const handleSubmit = () => {
+    Keyboard.dismiss();
+    setFormValid( true );
+    validatePhoto();
+    validateRol();
+    validateCuil();
+    validateName();
+    validateSurname();
+    validateDni();
+    validateEmail();
+    validatePassword();
 
     if ( formValid ) {
-      setFormValid( true );
       const user = {
         name,
         surname,
         dni,
         cuil,
         rol,
-        photo
+        photo,
+        email,
+        password
       };
       onSubmit( user );
     }
@@ -287,47 +367,92 @@ export default function UserForm( props ) {
     setPhoto( photoTaken );
     setCameraActivate( false );
   }
+  function handleScanner() {
+    setScannerActivate( true );
+    setCameraActivate( true );
+  }
+  function handleScannerResult( result ) {
+    setScannerActivate( false );
+    setCameraActivate( false );
+    setName( result.name );
+    setSurname( result.surname );
+    setDni( result.dni );
+  }
   return (
     <View>
       { cameraActivated ? (
         <View>
-          <CamaraView onKeepPhoto={( photoTaken ) => handleCamera( photoTaken )} />
+          {scannerActivated ? ( <Scanner onScan={( result ) => handleScannerResult( result )} /> )
+            : ( <CamaraView onKeepPhoto={( photoTaken ) => handleCamera( photoTaken )} /> )}
         </View>
       )
         : (
           <View style={Styles.container}>
-            <View style={Styles.formControlPhoto}>
-              <TouchableWithoutFeedback onPress={() => takePhoto()}>
-                {photo === '' ? (
-                  <Image
-                    style={Styles.formControlPhotoWithoutPhoto}
-                    source={userImgDefault}
-                    resizeMode='center'
+            <ScrollView>
+              <View style={Styles.containerForm}>
+                <View style={Styles.formControlPhoto}>
+                  <TouchableWithoutFeedback onPress={() => takePhoto()}>
+                    {photo === '' ? (
+                      <Image
+                        style={Styles.formControlPhotoWithoutPhoto}
+                        source={userImgDefault}
+                        resizeMode='center'
+                      />
+                    ) : (
+                      <Image
+                        style={Styles.formControlPhotoWithPhoto}
+                        source={{ uri: photo }}
+                        resizeMode='center'
+                      />
+                    )}
+                  </TouchableWithoutFeedback>
+                  {errorPhoto.error && (
+                    <Text style={Styles.textError}>{errorPhoto.message}</Text>
+                  )}
+                </View>
+                <View style={Styles.formControl}>
+                  <TextInput
+                    placeholder='Nombre'
+                    value={name}
+                    onChangeText={( text ) => setName( text )}
+                    onBlur={() => validateName()}
+
                   />
-                ) : (
-                  <Image
-                    style={Styles.formControlPhotoWithPhoto}
-                    source={{ uri: photo }}
-                    resizeMode='center'
+                  {errorName.error && (
+                    <Text style={Styles.textError}>{errorName.message}</Text>
+                  )}
+                </View>
+                {renderSpecificFormControl()}
+                <View style={Styles.formControl}>
+                  <TextInput
+                    placeholder='Correo Electrónico'
+                    value={email}
+                    onChangeText={( text ) => setEmail( text )}
+                    keyboardType='email-address'
+                    onBlur={() => validateEmail()}
                   />
-                )}
-              </TouchableWithoutFeedback>
-              {errorPhoto.error && (
-                <Text style={Styles.textError}>{errorPhoto.message}</Text>
-              )}
+                  {errorEmail.error && (
+                    <Text style={Styles.textError}>{errorEmail.message}</Text>
+                  )}
+                </View>
+                <View style={Styles.formControl}>
+                  <TextInput
+                    placeholder='Clave'
+                    value={password}
+                    onChangeText={( text ) => setPassword( text )}
+                    secureTextEntry
+                    onBlur={() => validatePassword()}
+                  />
+                  {errorPassword.error && (
+                    <Text style={Styles.textError}>{errorPassword.message}</Text>
+                  )}
+                </View>
+              </View>
+            </ScrollView>
+            <View style={Styles.containerActionButtons}>
+              <Button title='Scanner Dni' onPress={() => handleScanner()} />
+              <Button title='Registrar' onPress={() => handleSubmit()} />
             </View>
-            <View style={Styles.formControl}>
-              <TextInput
-                placeholder='Nombre'
-                value={name}
-                onChangeText={( text ) => setName( text )}
-              />
-              {errorName.error && (
-                <Text style={Styles.textError}>{errorName.message}</Text>
-              )}
-            </View>
-            {renderSpecificFormControl()}
-            <Button title='Registrar' onPress={() => handleSubmit()} />
           </View>
         )}
     </View>

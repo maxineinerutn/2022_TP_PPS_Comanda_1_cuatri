@@ -9,6 +9,13 @@ const Styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: 'center'
   },
+  containerForm: {
+    // backgroundColor: "green",
+    height: Dimensions.get( 'screen' ).height,
+    width: Dimensions.get( 'screen' ).width,
+    justifyContent: 'space-evenly',
+    alignItems: 'center'
+  },
   formControl: {
     borderBottomColor: theme.colors.details,
     width: Dimensions.get( 'screen' ).width * 0.7,
@@ -20,7 +27,7 @@ const Styles = StyleSheet.create({
   },
   formControlPhoto: {
     borderColor: theme.colors.details,
-    width: Dimensions.get( 'screen' ).width * 0.358,
+    width: Dimensions.get( 'screen' ).width * 0.37,
     height: Dimensions.get( 'screen' ).height * 0.167,
     // paddingVertical: Dimensions.get( 'screen' ).height * 0.01,
     // paddingLeft: Dimensions.get( 'screen' ).width * 0.04,
@@ -30,11 +37,12 @@ const Styles = StyleSheet.create({
   formControlPhotoWithoutPhoto: {
     width: Dimensions.get( 'screen' ).width * 0.32,
     height: Dimensions.get( 'screen' ).height * 0.16,
-    marginLeft: 4
+    marginLeft: 6
   },
   formControlPhotoWithPhoto: {
-    width: Dimensions.get( 'screen' ).width * 0.34,
-    height: Dimensions.get( 'screen' ).height * 0.16
+    width: Dimensions.get( 'screen' ).width * 0.35,
+    height: Dimensions.get( 'screen' ).height * 0.158,
+    marginLeft: 0
   },
   textError: {
     top: 15,
@@ -65,6 +73,15 @@ const Styles = StyleSheet.create({
   },
   radioBtnSelected: {
     backgroundColor: theme.colors.details
+  },
+  containerActionButtons: {
+    width: Dimensions.get( 'screen' ).width * 0.7,
+    // height: Dimensions.get( 'screen' ).height * 0.5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-evenly',
+    alignContent: 'center',
+    marginBottom: 15
   }
 });
 export default Styles;

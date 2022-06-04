@@ -15,7 +15,6 @@ import { manipulateAsync } from 'expo-image-manipulator';
 import { useIsFocused } from '@react-navigation/native';
 // import { guardarImagenStorage } from '../../services/StorageServices';
 // import { guardarFotoEnCollection } from '../../services/FirestoreServices';
-import { auth } from '../../../firebase';
 import theme from '../../config/theme';
 import Styles from './Styles';
 import changeCameraIcon from '../../../assets/girar-camara.png';
@@ -72,25 +71,6 @@ export default function CamaraView( props ) {
   };
   const keepPhoto = async () => {
     onKeepPhoto( uriFotoSacadaPreview );
-    // try {
-    //   setSpinnerGuardado( true );
-    //   const blob = await ( await fetch( uriFotoSacadaPreview )).blob();
-    //   const imgRefName = `relevamientoVisual/${auth.currentUser.email}/${tipoDeFoto}`;
-    //   const { ref, docName } = await guardarImagenStorage( imgRefName, blob );
-    //   const fotoStorage = await ref.getDownloadURL();
-    //   const foto = {
-    //     id: docName,
-    //     email: auth.currentUser.email,
-    //     fotoURL: { uri: fotoStorage },
-    //     tipo: tipoDeFoto,
-    //     fecha: new Date().toLocaleString(),
-    //     votos: []
-    //   };
-    //   await guardarFotoEnCollection( 'relevamientoVisual', docName, foto );
-    //   resetearCamara();
-    // } catch ( error ) {
-    //   console.log( `aca${error}` );
-    // }
   };
   return (
     <View style={Styles.container}>
