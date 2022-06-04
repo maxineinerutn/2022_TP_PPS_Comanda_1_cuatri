@@ -13,23 +13,15 @@
   </tr>
 </table>
 
-#### SCREENSHOTS
+### SCREENSHOTS
 
-#### SPLASH
+#### SPLASH, PANTALLA DE INICIO E INICIO RAPIDO
 
-<img src="Documentos/splash.gif" width="300"/>
+<img src="Documentos/splash.gif" width="300"/><img src="Documentos/login.jpeg" width="245"/> <img src="Documentos/inicioRapido.jpeg" width="245"/>
 
-#### PANTALLA DE INICIO E INICIO RAPIDO
+#### EJEMPLOS DE PANEL DE USUARIO Y DE ALTA
 
-<img src="Documentos/login.jpeg" width="300"/> <img src="Documentos/inicioRapido.jpeg" width="300"/>
-
-#### EJEMPLO DE PANEL DE USUARIO
-
-<img src="Documentos/ejemploPanelControl.jpeg" width="300"/>
-
-#### EJEMPLO DE ALTA
-
-<img src="Documentos/ejemploAlta.jpeg" width="300"/>
+<img src="Documentos/ejemploPanelControl.jpeg" width="245"/><img src="Documentos/ejemploAlta.jpeg" width="245"/>
 
 ## CINCO TENEDORES APP - SEMANA 1 (21/05 AL 27/05):
 | # | Tarea | Responsable | Estado | Rama |
