@@ -1,12 +1,10 @@
 import React, { FC, MutableRefObject, useRef, useState } from "react";
 import InputGroup from "../../molecules/InputGroup/InputGroup.component";
-import Input from "../../atoms/Input/Input.component";
 import Button from "../../atoms/Button/Button.component";
 import { StyledView } from "./LoginController.styled";
-import { Control, Controller } from "react-hook-form";
+import { Control } from "react-hook-form";
 import ControlledInput from "../../molecules/ControlledInput/ControlledInput.component";
 import ControlledPassword from "../../molecules/ControlledPassword/ControlledPassword.component";
-import { Icon } from "native-base";
 import { MaterialIcons } from "@expo/vector-icons";
 
 interface LoginControllerProps {
