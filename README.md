@@ -33,7 +33,12 @@ SINNOTT SEGURA GONZALO
 
 #### QR's MESAS
 
-<img src="Documentos/mesa1.png" width="300"/>
+<img src="Documentos/mesa1.png" width="300"/><img src="Documentos/mesa2.png" width="300"/>
+
+<img src="Documentos/mesa3.png" width="300"/><img src="Documentos/mesa4.png" width="300"/>
+
+
+
 
 
 ## CINCO TENEDORES APP - SEMANA 1 (21/05 AL 27/05):
