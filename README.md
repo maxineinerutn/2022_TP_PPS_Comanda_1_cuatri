@@ -31,6 +31,11 @@ SINNOTT SEGURA GONZALO
 
 <img src="Documentos/ejemploPanelControl.jpeg" width="245"/><img src="Documentos/ejemploAlta.jpeg" width="245"/>
 
+#### QR's MESAS
+
+<img src="Documentos/mesa1.png" width="300"/>
+
+
 ## CINCO TENEDORES APP - SEMANA 1 (21/05 AL 27/05):
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
@@ -39,7 +44,7 @@ SINNOTT SEGURA GONZALO
 | - | Login | PEDRO | Terminado | Rama main |
 | - | Registro | GONZALO | Terminado | Rama main |
 
-## CINCO TENEDORES APP - SEMANA 1 (28/05 AL 03/06):
+## CINCO TENEDORES APP - SEMANA 2 (28/05 AL 03/06):
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 | 01 | Alta de dueño / supervisor | GONZALO  | Terminado | Rama altaDueño |
@@ -50,15 +55,19 @@ SINNOTT SEGURA GONZALO
 | 12 | Agregar un nuevo cliente registrado  | GONZALO | Terminado | Rama altaCliente |
 | 17 | Agregar cliente nuevo | GONZALO | En Proceso | Rama altaClientePush |
 
-## CINCO TENEDORES APP - SEMANA 1 (04/06 AL 10/06):
+## CINCO TENEDORES APP - SEMANA 3 (04/06 AL 10/06):
+| # | Tarea | Responsable | Estado | Rama |
+| :------: | :------: | :------: | :------: | :------: |
+| 06 | Qr ingreso al local | PEDRO | En Proceso | Rama qrIngreso | 
+| 07 | Qr de la mesa | GONZALO | Terminado | Rama qrMesa |
+| 08 | Qr de propina  | CECILIA | En Proceso | Rama qrPropina |
+| 17 | Agregar cliente nuevo | GONZALO | En Proceso | Rama altaClientePush |
+
+## CINCO TENEDORES APP - SEMANA 4 (11/06 AL 17/06):
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 
-## CINCO TENEDORES APP - SEMANA 1 (11/06 AL 17/06):
-| # | Tarea | Responsable | Estado | Rama |
-| :------: | :------: | :------: | :------: | :------: |
-
-## CINCO TENEDORES APP - SEMANA 1 (18/06 AL 24/06):
+## CINCO TENEDORES APP - SEMANA 5 (18/06 AL 24/06):
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
 
