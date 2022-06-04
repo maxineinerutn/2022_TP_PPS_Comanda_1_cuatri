@@ -13,7 +13,7 @@ export default function Main() {
   return (
     <View style={{ flex: 1 }}>
       <NavigationContainer>
-        <Stack.Navigator initialRouteName='CreateTable'>
+        <Stack.Navigator>
           <Stack.Screen
             options={{
               title: 'Aplicación',
@@ -29,13 +29,6 @@ export default function Main() {
             }}
             name='Credentials'
             component={Credentials}
-          />
-          <Stack.Screen
-            options={{
-              headerShown: false
-            }}
-            name='CreateTable'
-            component={CreateTable}
           />
         </Stack.Navigator>
       </NavigationContainer>
