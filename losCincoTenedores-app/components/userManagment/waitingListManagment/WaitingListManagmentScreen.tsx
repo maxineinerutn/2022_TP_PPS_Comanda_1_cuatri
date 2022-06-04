@@ -115,8 +115,7 @@ const WaitingListManagment = () => {
         setLoadingTables(false); 
         toggleModalTable();       
     }
-  } 
-  
+  }   
 
   //HEADER
   useLayoutEffect(() => {
@@ -169,7 +168,7 @@ const WaitingListManagment = () => {
                     {dataTables.map((item: { tableNumber: any;
                                         id: string;}) => (               
                       <View style={styles.modalIconContainer}>
-                          <Text style={styles.tableHeaderText}> MESA: {item.tableNumber}</Text>
+                          <Text style={styles.tableCellText}> MESA: {item.tableNumber}</Text>
                           <TouchableOpacity onPress={() => handleTableReservation(item.id)} style={styles.buttonLayout}>
                             <Text style={styles.buttonText}>ASIGNAR MESA</Text> 
                           </TouchableOpacity>

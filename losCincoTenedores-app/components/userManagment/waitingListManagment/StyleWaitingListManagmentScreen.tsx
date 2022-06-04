@@ -55,19 +55,18 @@ export default StyleSheet.create({
     cardIcon: {
         padding: 10,
         margin: 5,
-        height: 100,
-        width: 100,
+        height: 50,
+        width: 50,
         resizeMode: 'contain',
     },
     tableHeaderText: {
-        alignSelf: 'center',
         color: '#3D4544',
         fontSize: 12,
         fontFamily: 'Oswald_500Medium',
     },
     tableCellText: {
-        color: '#3D4544',
-        fontSize: 15,
+        color: 'black',
+        fontSize: 25,
         fontFamily: 'Oswald_500Medium',
     },
     modalContainer: {
@@ -80,7 +79,6 @@ export default StyleSheet.create({
         borderWidth: 2,
         padding: 15,
         borderRadius: 25,
-        alignItems: 'center',
     },
     modalIconContainer: {
         flexDirection: 'row', 
