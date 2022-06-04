@@ -14,4 +14,5 @@ export const StyledLinearGradient = styled(LinearGradient)`
 export const StyledMargin = styled.View`
     margin-vertical:15px;
     width:100%;
-`
+    background-color:white;
+    border-radius:25px;`
