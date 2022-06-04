@@ -60,7 +60,9 @@ const ClientRegistration = () => {
 
     //RETURN
     const handleReturn = () => {
-      if(auth.currentUser == null){
+      console.log(auth.currentUser);
+      
+      if(auth.currentUser == undefined){
         navigation.replace("Login")
       }else{
         navigation.replace("ControlPanelMetre")
@@ -170,7 +172,9 @@ const ClientRegistration = () => {
 
         //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
         await auth.signOut();
-        await auth.updateCurrentUser(originalUser);
+        if(originalUser){
+          await auth.updateCurrentUser(originalUser);
+        }
 
         //UPLOAD IMAGEN
         const blob:any = await getBlob(image);
