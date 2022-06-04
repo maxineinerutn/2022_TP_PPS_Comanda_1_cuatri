@@ -7,18 +7,21 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Image,
-  ScrollView
+  ScrollView,
+  TouchableOpacity
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { RadioButtons } from 'react-native-radio-buttons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Styles from './Styles';
 import { UserTypes } from '../../util/Enums';
 import userImgDefault from '../../../assets/iconoCamara.png';
 import CamaraView from '../CameraView/CamaraView';
 import Scanner from '../Scanner/Scanner';
+import theme from '../../config/theme';
 
 export default function UserForm( props ) {
-  const { userType, onSubmit } = props;
+  const { userType, onSubmit, onCancel } = props;
   const [formValid, setFormValid] = useState( false );
   const [email, setEmail] = useState( '' );
   const [errorEmail, hasErrorEmail] = useState({ message: '', error: false });
@@ -45,8 +48,8 @@ export default function UserForm( props ) {
   const [cameraActivated, setCameraActivate] = useState( false );
   const [scannerActivated, setScannerActivate] = useState( false );
   useEffect(() => {
-    if ( userType === UserTypes.Anonymous ) {
-      setRol( UserTypes.Anonymous );
+    if ( userType === UserTypes.Guest ) {
+      setRol( UserTypes.Guest );
       setSurname( '-' );
       setDni( '-' );
       setCuil( '-' );
@@ -121,7 +124,7 @@ export default function UserForm( props ) {
                 renderContainer={renderContainer}
               />
               {errorRol.error && (
-                <Text style={Styles.textError}>{errorRol.message}</Text>
+                <Text style={Styles.textErrorRadioButton}>{errorRol.message}</Text>
               )}
             </View>
           </>
@@ -173,7 +176,7 @@ export default function UserForm( props ) {
                 renderContainer={renderContainer}
               />
               {errorRol.error && (
-                <Text style={Styles.textError}>{errorRol.message}</Text>
+                <Text style={Styles.textErrorRadioButton}>{errorRol.message}</Text>
               )}
             </View>
           </>
@@ -217,7 +220,7 @@ export default function UserForm( props ) {
     return (
       <TouchableWithoutFeedback onPress={onSelect} key={index}>
         <View style={[Styles.radioBtn, containerStateStyle]}>
-          <Text style={[{ textAlign: 'center' }, textStyle]}>{option}</Text>
+          <Text style={[{ textAlign: 'center' }, textStyle, selected && { color: 'white' }]}>{option}</Text>
         </View>
       </TouchableWithoutFeedback>
     );
@@ -388,6 +391,12 @@ export default function UserForm( props ) {
       )
         : (
           <View style={Styles.container}>
+            <TouchableOpacity
+              onPress={() => onCancel()}
+              style={Styles.buttonCancelRegistration}
+            >
+              <MaterialCommunityIcons name='close-circle' color={theme.colors.primary} size={50} />
+            </TouchableOpacity>
             <ScrollView>
               <View style={Styles.containerForm}>
                 <View style={Styles.formControlPhoto}>
@@ -416,7 +425,6 @@ export default function UserForm( props ) {
                     value={name}
                     onChangeText={( text ) => setName( text )}
                     onBlur={() => validateName()}
-
                   />
                   {errorName.error && (
                     <Text style={Styles.textError}>{errorName.message}</Text>
@@ -450,7 +458,7 @@ export default function UserForm( props ) {
               </View>
             </ScrollView>
             <View style={Styles.containerActionButtons}>
-              <Button title='Scanner Dni' onPress={() => handleScanner()} />
+              {userType !== UserTypes.Guest && <Button title='Scanner Dni' onPress={() => handleScanner()} />}
               <Button title='Registrar' onPress={() => handleSubmit()} />
             </View>
           </View>
