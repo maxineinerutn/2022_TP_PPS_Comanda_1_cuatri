@@ -10,7 +10,6 @@ export const StyledLinearGradient = styled(LinearGradient)`
     align-items:center;
     padding:5%;
 `
-
 export const StyledMargin = styled.View`
     margin-vertical:15px;
     width:100%;
