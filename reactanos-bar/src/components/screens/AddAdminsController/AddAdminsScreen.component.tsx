@@ -1,6 +1,7 @@
-import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
+import React, {MutableRefObject, useCallback, useEffect, useRef, useState } from 'react'
 import {
     StyledLinearGradient,
+    StyledMargin,
     StyledView,
 } from "./AddAdminsScreen.styled";
 import { Image, StyleSheet, View } from 'react-native';
@@ -14,26 +15,27 @@ import { addDoc, collection } from "firebase/firestore";
 import { errorHandler } from '../../../utils/ErrorsHandler';
 import { auth, db, storage } from '../../../InitApp';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import InputGroup from "../../molecules/InputGroup/InputGroup.component";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ref, uploadBytes } from 'firebase/storage';
 import { showMessage } from 'react-native-flash-message';
 import * as ImagePicker from "expo-image-picker";
 import { getBlob } from '../../../utils/utils';
 import { BarCodeScanner } from 'expo-barcode-scanner';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 type NewUser = {
     lastName: string;
     name: string;
     dni: number;
+    cuil: string;
     profile: string;
     email: string;
     password: string;
     passwordRepeat: string;
 }
 
-const AddAdminsScreen = () => {
+const AddAdminsScreen = ({navigation}) => {
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState("");
     const { control, handleSubmit, getValues, formState: { errors }, reset, setValue } = useForm<NewUser>();
@@ -42,6 +44,60 @@ const AddAdminsScreen = () => {
     const [show, setShow] = useState(false);
     const passInput: MutableRefObject<any> = useRef();
 
+    //HARDCODEO
+    // useEffect(() => {
+    //     setValue("lastName", "rojas");
+    //     setValue("name", "lucho");
+    //     setValue("dni", "37933047");
+    //     setValue("cuil", "24379330479");
+    //     setValue("profile", "admin");
+    //     setValue("email", "rojas"+ Math.floor(Math.random()*100) + 1 +"@gmail.com"); 
+    //     setValue("password", "roja$1");
+    //     setValue("passwordRepeat", "roja$1");
+    // }, []);
+
+
+    function cuilValidator(cuil: string): boolean { 
+        if (cuil.length !== 11) {
+          return false;
+        }
+      
+        const [checkDigit, ...rest] = cuil
+          .split('')
+          .map(Number)
+          .reverse();
+      
+        const total = rest.reduce(
+          (acc, cur, index) => acc + cur * (2 + (index % 6)),
+          0,
+        );
+      
+        const mod11 = 11 - (total % 11);
+      
+        if (mod11 === 11) {
+          return checkDigit === 0;
+        }
+      
+        if (mod11 === 10) {
+          return false;
+        }
+      
+        return checkDigit === mod11;
+      }
+
+      React.useEffect(
+        () =>
+          navigation.addListener('beforeRemove', (e) => {
+            e.preventDefault();
+          }),
+        []
+      );
+
+      useFocusEffect(
+        useCallback(() => {
+            setOpenQR(false);
+        }, [])
+      );
 
     const handleBarCodeScanned = ({ data }:any) => {
         setScanned(true);
@@ -66,6 +122,11 @@ const AddAdminsScreen = () => {
                 return;
             }
         })
+        if (cuilValidator(values.cuil)) {
+            showMessage({ type: "danger", message: "Error", description: "CUIL INVAlIDO" });
+            return;
+        }
+
         if (error || !image) {
             showMessage({ type: "danger", message: "Error", description: "Todos los campos son requeridos" });
             return;
@@ -76,7 +137,7 @@ const AddAdminsScreen = () => {
         }
         setLoading(true)
         try {
-            await createUserWithEmailAndPassword(auth, values.email, values.email);
+            await createUserWithEmailAndPassword(auth, values.email, values.password);
             const blob: any = await getBlob(image);
             const fileName = image.substring(image.lastIndexOf("/") + 1);
             const fileRef = ref(storage, "images/" + fileName);
@@ -85,6 +146,7 @@ const AddAdminsScreen = () => {
                 lastName: values.lastName,
                 name: values.name,
                 dni: values.dni,
+                cuil: values.cuil,
                 profile: values.profile,
                 email: values.email,
                 image: fileRef.fullPath,
@@ -99,6 +161,7 @@ const AddAdminsScreen = () => {
             setValue("lastName", "")
             setValue("name", "")
             setValue("dni", null)
+            setValue("cuil", "")
             setValue("profile", "")
             setValue("email", "")
             setValue("password", "")
@@ -110,7 +173,6 @@ const AddAdminsScreen = () => {
             setLoading(false);
         }
     }
-
 
     const handleCamera = async (type) => {
         let result = await ImagePicker.launchCameraAsync({
@@ -149,63 +211,98 @@ const AddAdminsScreen = () => {
                         }
                         <ImageButton source={require('../../../../assets/read-qr.png')} onPress={handleOpenQR} />
                     </View>
-                    <InputGroup>
+
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
                             control={control}
                             name="lastName"
                             placeholder='Apellido'
                         />
+                    </StyledMargin>
+
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
                             control={control}
                             name="name"
                             placeholder='Nombres'
                         />
+                    </StyledMargin>
+
+
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
                             control={control}
                             name="dni"
                             placeholder='Documento'
                             keyboardType='number-pad'
                         />
+                    </StyledMargin>
 
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
+                            control={control}
+                            name="cuil"
+                            placeholder='CUIL'
+                        />
+                    </StyledMargin>
+
+                    <StyledMargin>
+                        <ControlledInput
+                            variant="rounded"
                             control={control}
                             name="profile"
                             placeholder='Perfil'
                         />
+                    </StyledMargin>
 
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
                             onSubmitEditing={() => passInput.current.focus()}
                             placeholder="Correo electrónico"
                             keyboardType="email-address"
                             control={control}
                             name="email"
                         />
-                        <ControlledPassword
-                            show={show}
-                            rightIcon={
-                                <MaterialIcons
-                                    name={show ? "visibility" : "visibility-off"}
-                                />
-                            }
-                            onPressRight={() => setShow(!show)}
-                            ref={passInput}
-                            placeholder="Contraseña"
-                            name="password"
-                            control={control}
-                        />
-                        <ControlledPassword
-                            show={show}
-                            rightIcon={
-                                <MaterialIcons
-                                    name={show ? "visibility" : "visibility-off"}
-                                />
-                            }
-                            onPressRight={() => setShow(!show)}
-                            placeholder="Repetir contraseña"
-                            name="passwordRepeat"
-                            control={control}
-                        />
-                    </InputGroup>
+                    </StyledMargin>
+
+                    <StyledMargin>
+                    <ControlledPassword
+                       variant="rounded"
+                        show={show}
+                        rightIcon={
+                            <MaterialIcons
+                                name={show ? "visibility" : "visibility-off"}
+                            />
+                        }
+                        onPressRight={() => setShow(!show)}
+                        ref={passInput}
+                        placeholder="Contraseña"
+                        name="password"
+                        control={control}
+                    />
+                    </StyledMargin>
+
+                    <StyledMargin>
+                    <ControlledPassword
+                     variant="rounded"
+                        show={show}
+                        rightIcon={
+                            <MaterialIcons
+                                name={show ? "visibility" : "visibility-off"}
+                            />
+                        }
+                        onPressRight={() => setShow(!show)}
+                        placeholder="Repetir contraseña"
+                        name="passwordRepeat"
+                        control={control}
+                    />
+                    </StyledMargin>
+
                     <Button onPress={handleSubmit(onSubmit)}>Crear usuario</Button>
                 </StyledLinearGradient>
             </StyledView> : <BarCodeScanner

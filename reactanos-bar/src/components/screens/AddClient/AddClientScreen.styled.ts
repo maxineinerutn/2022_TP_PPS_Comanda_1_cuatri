@@ -10,9 +10,9 @@ export const StyledLinearGradient = styled(LinearGradient)`
     align-items:center;
     padding:5%;
 `
-
 export const StyledMargin = styled.View`
-    margin-vertical:8px;
+    margin-vertical:15px;
     width:100%;
     background-color:white;
-    border-radius:25px;`
+    border-radius:25px;
+`

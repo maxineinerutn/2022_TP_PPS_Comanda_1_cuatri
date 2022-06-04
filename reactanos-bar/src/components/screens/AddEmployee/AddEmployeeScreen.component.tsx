@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import {
     StyledLinearGradient,
+    StyledMargin,
     StyledView,
 } from "./AddEmployeeScreen.styled";
 import { Image, StyleSheet, View } from 'react-native';
@@ -14,7 +15,6 @@ import { addDoc, collection } from "firebase/firestore";
 import { errorHandler } from '../../../utils/ErrorsHandler';
 import { auth, db, storage } from '../../../InitApp';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import InputGroup from "../../molecules/InputGroup/InputGroup.component";
 import { MaterialIcons } from "@expo/vector-icons";
 import { ref, uploadBytes } from 'firebase/storage';
 import { showMessage } from 'react-native-flash-message';
@@ -33,7 +33,7 @@ type NewEmployee = {
     passwordRepeat: string;
 }
 
-const AddAdminsScreen = () => {
+const AddEmployeeScreen = () => {
     const [loading, setLoading] = useState(false);
     const [image, setImage] = useState("");
     const { control, handleSubmit, getValues, formState: { errors }, reset, setValue } = useForm<NewEmployee>();
@@ -42,6 +42,19 @@ const AddAdminsScreen = () => {
     const [show, setShow] = useState(false);
     const passInput: MutableRefObject<any> = useRef();
 
+
+
+    //HARDCODEO
+    // useEffect(() => {
+    //     setValue("lastName", "rojas");
+    //     setValue("name", "lucho");
+    //     setValue("dni", "37933047");
+    //     setValue("cuil", "24379330479");
+    //     setValue("profile", "admin");
+    //     setValue("email", "rojas" + Math.floor(Math.random() * 100) + 1 + "@gmail.com");
+    //     setValue("password", "roja$1");
+    //     setValue("passwordRepeat", "roja$1");
+    // }, []);
 
     const handleBarCodeScanned = ({ data }) => {
         setScanned(true);
@@ -66,7 +79,7 @@ const AddAdminsScreen = () => {
                 return;
             }
         })
-        if (error || !image) {
+        if (error) {
             showMessage({ type: "danger", message: "Error", description: "Todos los campos son requeridos" });
             return;
         }
@@ -77,19 +90,32 @@ const AddAdminsScreen = () => {
         setLoading(true)
         try {
             await createUserWithEmailAndPassword(auth, values.email, values.email);
-            const blob: any = await getBlob(image);
-            const fileName = image.substring(image.lastIndexOf("/") + 1);
-            const fileRef = ref(storage, "images/" + fileName);
-            await uploadBytes(fileRef, blob);
-            await addDoc(collection(db, "employee"), {
-                lastName: values.lastName,
-                name: values.name,
-                dni: values.dni,
-                profile: values.profile,
-                email: values.email,
-                image: fileRef.fullPath,
-                creationDate: new Date()
+
+            if (image !== "") {
+                const blob: any = await getBlob(image);
+                const fileName = image.substring(image.lastIndexOf("/") + 1);
+                const fileRef = ref(storage, "images/" + fileName);
+                await uploadBytes(fileRef, blob);
+                await addDoc(collection(db, "employee"), {
+                    lastName: values.lastName,
+                    name: values.name,
+                    dni: values.dni,
+                    profile: values.profile,
+                    email: values.email,
+                    image: fileRef.fullPath,
+                    creationDate: new Date()
+                });
+            } else {
+                await addDoc(collection(db, "employee"), {
+                    lastName: values.lastName,
+                    name: values.name, 
+                    dni: values.dni,
+                    profile: values.profile,
+                    email: values.email,
+                    image: "",
+                    creationDate: new Date()
             });
+        }
             showMessage({
                 type: "success",
                 message: "Exito",
@@ -149,38 +175,68 @@ const AddAdminsScreen = () => {
                         }
                         <ImageButton source={require('../../../../assets/read-qr.png')} onPress={handleOpenQR} />
                     </View>
-                    <InputGroup>
+
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
                             control={control}
                             name="lastName"
                             placeholder='Apellido'
                         />
+                    </StyledMargin>
+
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
                             control={control}
                             name="name"
                             placeholder='Nombres'
                         />
+                    </StyledMargin>
+
+
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
                             control={control}
                             name="dni"
                             placeholder='Documento'
                             keyboardType='number-pad'
                         />
+                    </StyledMargin>
 
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
+                            control={control}
+                            name="cuil"
+                            placeholder='CUIL'
+                        />
+                    </StyledMargin>
+
+                    <StyledMargin>
+                        <ControlledInput
+                            variant="rounded"
                             control={control}
                             name="profile"
                             placeholder='Perfil'
                         />
+                    </StyledMargin>
 
+                    <StyledMargin>
                         <ControlledInput
+                            variant="rounded"
                             onSubmitEditing={() => passInput.current.focus()}
                             placeholder="Correo electrónico"
                             keyboardType="email-address"
                             control={control}
                             name="email"
                         />
+                    </StyledMargin>
+
+                    <StyledMargin>
                         <ControlledPassword
+                            variant="rounded"
                             show={show}
                             rightIcon={
                                 <MaterialIcons
@@ -193,7 +249,11 @@ const AddAdminsScreen = () => {
                             name="password"
                             control={control}
                         />
+                    </StyledMargin>
+
+                    <StyledMargin>
                         <ControlledPassword
+                            variant="rounded"
                             show={show}
                             rightIcon={
                                 <MaterialIcons
@@ -205,8 +265,9 @@ const AddAdminsScreen = () => {
                             name="passwordRepeat"
                             control={control}
                         />
-                    </InputGroup>
-                    <Button onPress={handleSubmit(onSubmit)}>Crear usuario</Button>
+                    </StyledMargin>
+
+                    <Button onPress={handleSubmit(onSubmit)}>Crear empleado</Button>
                 </StyledLinearGradient>
             </StyledView> : <BarCodeScanner
                 onBarCodeScanned={scanned && openQR ? undefined : handleBarCodeScanned}
@@ -214,4 +275,4 @@ const AddAdminsScreen = () => {
             />
     )
 }
-export default AddAdminsScreen
+export default AddEmployeeScreen

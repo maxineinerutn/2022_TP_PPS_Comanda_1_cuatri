@@ -2,7 +2,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import React from "react";
-import { Text } from "react-native";
 import { useSelector } from "react-redux";
 import { firebaseConfig } from "../firebase";
 import LoginStack from "./navigation/stacks/LoginStack";

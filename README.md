@@ -19,21 +19,21 @@ Repositorio: Luciano
 
 
 #### Altas 
-A- Alta de dueño/supervisor: Luciano
+A- Alta de dueño/supervisor: Luciano (Finalizado)
 
-B- Alta de empleados: Luciano
+B- Alta de empleados: Luciano (Finalizado)
 
-C- Alta de clientes: Ezequiel
+C- Alta de clientes: Ezequiel (Finalizado)
 
-D- Alta de Mesa: Alan
+D- Alta de Mesa: Alan (Finalizado)
 
-E- Alta de productos: Alan
+E- Alta de productos: Alan (Finalizado)
 
 #### QR
 
-E- Qr de ingreso al local: Alan
+E- Qr de ingreso al local: Ezequiel / Luciano
 
-F- Qr de la mesa: Ezequiel / Luciano
+F- Qr de la mesa: Alan (En Progreso)
 
 #### Encuestas
 
