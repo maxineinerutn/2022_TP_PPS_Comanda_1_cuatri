@@ -119,7 +119,7 @@ const ClientRegistration = () => {
         console.log(checked);
         if(checked=='Anonimo'){
           setValue("clientType",'Anónimo');
-          setValue("clientStatus",'Approved');
+          setValue("clientStatus",'Accepted');
         }
         if(checked=='Registrado'){
           setValue("clientType",'Registrado');
