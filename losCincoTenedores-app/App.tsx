@@ -38,6 +38,8 @@ SplashScreen.preventAutoHideAsync()
 
 export default () => { 
 
+  console.disableYellowBox = true;
+
   let [fontsLoaded] = useFonts({
     Oswald_200ExtraLight,
     Oswald_300Light,
