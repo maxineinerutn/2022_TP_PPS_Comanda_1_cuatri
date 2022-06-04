@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, {MutableRefObject, useCallback, useEffect, useRef, useState } from 'react'
 import {
     StyledLinearGradient,
     StyledMargin,
@@ -99,7 +99,7 @@ const AddAdminsScreen = ({navigation}) => {
         }, [])
       );
 
-    const handleBarCodeScanned = ({ data }) => {
+    const handleBarCodeScanned = ({ data }:any) => {
         setScanned(true);
         setOpenQR(false);
         const dataSplit = data.split('@')
