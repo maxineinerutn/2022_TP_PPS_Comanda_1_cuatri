@@ -4,20 +4,20 @@ import { Screens } from "../../../navigation/Screens";
 import { StyledView } from "./LoginScreen.styled";
 import { FC } from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { ImageBackground } from "react-native";
+import { ImageBackground } from 'react-native';
 import LoginController from "../../organisms/LoginController/LoginController.component";
 import { useForm } from "react-hook-form";
-import { showMessage } from "react-native-flash-message";
 import { useDispatch } from "react-redux";
 import { handleLogin } from "../../../redux/authReducer";
 import { FormData } from "../../../models/login/formData.types";
+import Button from "../../atoms/Button/Button.component";
+import { sendPushNotification } from "../../../utils/pushNotifications";
 import { validateInputs } from '../../../utils/utils';
 import { errorHandler } from '../../../utils/ErrorsHandler';
 
 type LoginScreenProps = NativeStackScreenProps<LoginStackParamList, Screens.LOGIN>;
 
 const LoginScreen:FC<LoginScreenProps> = ({navigation}) => {
-
     const {control, handleSubmit, getValues, setValue} = useForm<FormData>();
 	const dispatch = useDispatch();
 
