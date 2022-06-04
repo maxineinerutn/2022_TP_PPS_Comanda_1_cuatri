@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 import {
     StyledLinearGradient,
     StyledView,
@@ -43,7 +43,7 @@ const AddAdminsScreen = () => {
     const passInput: MutableRefObject<any> = useRef();
 
 
-    const handleBarCodeScanned = ({ data }) => {
+    const handleBarCodeScanned = ({ data }:any) => {
         setScanned(true);
         setOpenQR(false);
         const dataSplit = data.split('@')

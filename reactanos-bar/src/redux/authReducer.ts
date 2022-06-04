@@ -4,17 +4,16 @@ import { sleep } from "../utils/utils";
 import { errorHandler } from '../utils/ErrorsHandler';
 import { auth } from "../InitApp";
 import { FormData } from "../models/login/formData.types";
+import { fetchLoadingStart, fetchLoadingFinish } from './loaderReducer';
 
 const initialState = {
     user:{},
-    loading:false,
     success:false,
     error:'',
 }
 
 export interface AuthTypes{
     user:any;
-    loading:boolean;
     success:boolean;
     error:string;
 }
@@ -28,11 +27,11 @@ const RESET_ERROR = 'RESET_ERROR';
 const authReducer = (state = initialState, action:any={}) => {
   switch (action.type) {
     case LOGIN_INIT:
-        return {...state, loading:true};
+        return {...state};
     case LOGIN_SUCCESS:
-        return {...state, loading:false, success:true, user:action.payload};
+        return {...state, success:true, user:action.payload};
     case LOGIN_ERROR:
-        return {...state, loading:false, success:false, error:action.payload};
+        return {...state, success:false, error:action.payload};
     case RESET_ERROR:
         return {...state, error:''};
     case INITIAL_STATE:
@@ -68,18 +67,22 @@ export const fetchInitialState = () => ({
 export const handleLogin = (data:FormData) =>  async (dispatch:any) => {
     try {
         dispatch(fetchInit());
+        dispatch(fetchLoadingStart());
         const res = await signInWithEmailAndPassword(auth,data.email,data.password);
         await sleep();
         dispatch(fetchSuccess(res.user));
     } catch (error:any) {
         errorHandler(error.code);
         dispatch(fetchError(error.code));
+    } finally{
+        dispatch(fetchLoadingFinish());
     }
 }
 
 export const handleRegister = (data:FormData) =>  async (dispatch:any) => {
     try {
         dispatch(fetchInit());
+        dispatch(fetchLoadingStart());
         const res = await createUserWithEmailAndPassword(auth,data.email,data.password);
         await sleep();
         dispatch(fetchInitialState());
@@ -87,17 +90,22 @@ export const handleRegister = (data:FormData) =>  async (dispatch:any) => {
     } catch (error:any) {
         errorHandler(error.code);
         dispatch(fetchError(error.code));
+    } finally{
+        dispatch(fetchLoadingFinish());
     }
 }
 
 export const handleLogout = () => async (dispatch:any) => {
     try {
         dispatch(fetchInit());
+        dispatch(fetchLoadingStart());
         await signOut(auth);
         dispatch(fetchInitialState());
     } catch (error:any) {
         errorHandler(error.code);
         dispatch(fetchError(error.code));
+    } finally{
+        dispatch(fetchLoadingFinish());
     }
 }
 

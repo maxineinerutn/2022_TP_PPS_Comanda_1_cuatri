@@ -6,12 +6,13 @@ import { Text } from "react-native";
 import { useSelector } from "react-redux";
 import { firebaseConfig } from "../firebase";
 import LoginStack from "./navigation/stacks/LoginStack";
-import { IStore } from "./redux/store";
+import { IStore } from './redux/store';
 import { AuthTypes } from "./redux/authReducer";
 import Spinner from "./components/atoms/Spinner/Spinner.component";
 import DrawerStack from "./navigation/Drawer";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import QRCodeScreen from "./components/screens/QRCodeScreen/QRCodeScreen.component";
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -19,11 +20,11 @@ export const storage = getStorage(app);
 export const db = getFirestore(app);
 
 const InitApp = () => {
-    const data: AuthTypes = useSelector<IStore, any>((store) => store.auth);
+    const data:IStore = useSelector<IStore, any>(store => store);
     return (
         <NavigationContainer>
-            {data.loading && <Spinner />}
-            {data.success ? <DrawerStack /> : <LoginStack />}
+            {data.loader.loading && <Spinner />}
+            {data.auth.success ? <DrawerStack /> : <LoginStack />}
         </NavigationContainer>
     );
 };
