@@ -1,6 +1,14 @@
 # Trabajo práctico grupal - PPS - segundo parcial
 
-#### LOOK AND FEEL
+### INTEGRANTES:
+
+SANCHEZ PEDRO
+
+SILVA CECILIA
+
+SINNOTT SEGURA GONZALO
+
+### LOOK AND FEEL
 
 <table>
   <tr>
