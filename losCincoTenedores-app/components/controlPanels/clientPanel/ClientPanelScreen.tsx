@@ -52,7 +52,7 @@ const ClientPanel = () => {
       }
       else {
         Toast.showWithGravity(
-          "Debe ingresar a la lista de espera",
+          "QR Eroneo. Debe ingresar a la lista de espera",
           Toast.LONG,
           Toast.CENTER);
       }

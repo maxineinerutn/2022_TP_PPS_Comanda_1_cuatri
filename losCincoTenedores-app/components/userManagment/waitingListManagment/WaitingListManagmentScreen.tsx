@@ -18,13 +18,24 @@ const WaitingListManagment = () => {
   //CONSTANTES
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
   const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
-  
+  const [isModalTableVisible, setModalTableVisible] = useState(false);
+  const [loadingUsers, setLoadingUsers] = useState(false);
+  const [loadingTables, setLoadingTables] = useState(false);
+  const [dataUsers, setDataUsers] = useState<any>([]); 
+  const [dataTables, setDataTables] = useState<any>([]); 
+  const [user, setUser] = useState<any>([]);
 
   //RETURN
   const handleReturn = () => {
     navigation.replace("ControlPanelMetre")
   }
 
+  //REFRESH DE LA DATA
+  useFocusEffect(
+    useCallback(() => {
+        getUsers();
+        toggleSpinnerAlert();
+  }, []))
   
   //TOOGLE SPINNER
   const toggleSpinnerAlert = () => {
@@ -34,7 +45,77 @@ const WaitingListManagment = () => {
     }, 3000);
   };
 
-  //TOOGLE CANCEL USER
+  //GET DATA USUARIOS
+  const getUsers = async () => {
+    setLoadingUsers(true);    
+    setDataUsers([]);    
+    try {
+      const q = query(collection(db, "waitingList"), where("status", "==", "waiting"));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (doc) => {
+        const res: any = { ...doc.data(), id: doc.id };
+        setDataUsers((arr: any) => [...arr, { ...res, id: doc.id}]);
+      });
+    } catch (error) {
+        console.log(error)                    
+    }finally{
+        setLoadingUsers(false);
+    }
+  }
+
+  //GET DATA MESAS
+  const getTables = async () => {
+    setLoadingTables(true);    
+    setDataTables([]);    
+    try {
+      const q = query(collection(db, "tableInfo"), where("status", "==", "free"));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach(async (doc) => {
+        const res: any = { ...doc.data(), id: doc.id };
+        setDataTables((arr: any) => [...arr, { ...res, id: doc.id}]);
+      });
+    } catch (error) {
+        console.log(error)                    
+    }finally{
+      setLoadingTables(false);
+    }
+  }
+
+  //SET ID PARA ASIGNAR A MESA
+  const showAvailableTables = async (id) => {
+    setUser(id);
+    toggleModalTable();      
+  }
+
+  //ABRIR / CERRAR MODAL
+  const toggleModalTable = () => {
+    setModalTableVisible(!isModalTableVisible);
+    toggleSpinnerAlert();
+    getTables();
+  }; 
+
+  //ASIGNAR MESA A CLIENTE
+  const handleTableReservation = async (id) => {
+    try {
+      const ref = doc(db, "tableInfo", id);
+      const status =  'Assigned';
+      await updateDoc(ref, {status:status});
+      await updateDoc(ref, {assignedClient:user});
+      getTables();
+      toggleSpinnerAlert();
+      setTimeout(() => {
+        Toast.showWithGravity(
+          "MESA ASIGNADA",
+          Toast.LONG, 
+          Toast.CENTER);
+      }, 4000);      
+    } catch (error) {
+      console.log(error)
+    } finally{
+        setLoadingTables(false); 
+        toggleModalTable();       
+    }
+  } 
   
 
   //HEADER
@@ -46,7 +127,7 @@ const WaitingListManagment = () => {
           </TouchableOpacity>
         ),
         headerTitle: () => (
-          <Text style={styles.headerText}>ADMINSITRAR LISTA DE ESPERA</Text>
+          <Text style={styles.headerText}>ADMINISTRAR LISTA DE ESPERA</Text>
         ),
         headerTintColor: "transparent",
         headerBackButtonMenuEnabled: false,
@@ -58,21 +139,59 @@ const WaitingListManagment = () => {
 
   return (
     <View style={styles.container}>
-        <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
-        
-        <View style={styles.body}>
-          
-                <Text> LISTA DE ESPERA</Text>
- 
-        </View> 
+      {loadingUsers}
+      <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
+      
+      <View style={styles.body}>
+      <ScrollView>
+          {dataUsers.map((item: { user: any;
+                              id: string;}) => (               
+            <View style={styles.cardStyle}>
+              <View style={styles.infoContainer}>
+                <Text style={styles.tableHeaderText}> CLIENTE: {item.user}</Text> 
+                <TouchableOpacity onPress={() => showAvailableTables(item.user)} style={styles.buttonLayout}>
+                  <Text style={styles.buttonText}>ASIGNAR MESA</Text> 
+                </TouchableOpacity>
+              </View> 
+              
+              <Modal backdropOpacity={0.5} isVisible={isModalTableVisible}>
+                <View style={styles.modalContainer}> 
+                  {loadingTables}
+                  <View style={styles.modalBody}>
+                  <View style={styles.modalIconContainer}>
+                    <Text style={styles.buttonText}>MESAS DISPONIBLES</Text>
+                      <TouchableOpacity  onPress={toggleModalTable} >
+                        <Image source={cancelIcon} style={styles.cardIcon} />
+                      </TouchableOpacity>
+                    </View>
 
-        <View>
-          <Modal backdropOpacity={0.5} animationIn="rotate" animationOut="rotate" isVisible={isModalSpinnerVisible}>
-            <RotatingLogo></RotatingLogo>
-          </Modal>
-        </View>
-        
-        </ImageBackground>           
+                    <ScrollView>
+                    {dataTables.map((item: { tableNumber: any;
+                                        id: string;}) => (               
+                      <View style={styles.modalIconContainer}>
+                          <Text style={styles.tableHeaderText}> MESA: {item.tableNumber}</Text>
+                          <TouchableOpacity onPress={() => handleTableReservation(item.id)} style={styles.buttonLayout}>
+                            <Text style={styles.buttonText}>ASIGNAR MESA</Text> 
+                          </TouchableOpacity>
+                        </View>
+                        ))}
+                      </ScrollView>                       
+                   </View>
+                </View>
+              </Modal>              
+            </View>              
+          ))}
+        </ScrollView> 
+
+      </View> 
+
+      <View>
+        <Modal backdropOpacity={0.5} animationIn="rotate" animationOut="rotate" isVisible={isModalSpinnerVisible}>
+          <RotatingLogo></RotatingLogo>
+        </Modal>
+      </View>
+      
+      </ImageBackground>           
     </View> 
   );
 };
