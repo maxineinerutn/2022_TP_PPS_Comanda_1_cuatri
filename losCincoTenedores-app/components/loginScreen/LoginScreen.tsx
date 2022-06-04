@@ -170,7 +170,7 @@ const LoginScreen = () => {
                             Toast.LONG,
                             Toast.CENTER);
                         break;
-                    case 'Approved':
+                    case 'Accepted':
                         navigation.replace("ControlPanelCliente");
                 }
                 break;              
