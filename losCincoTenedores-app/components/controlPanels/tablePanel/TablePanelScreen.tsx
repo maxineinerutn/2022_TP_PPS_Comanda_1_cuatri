@@ -1,26 +1,21 @@
 import React, { useEffect, useLayoutEffect, useState } from "react";
-import styles from "../clientPanel/StyleClientPanelScreen";
+import styles from "../tablePanel/StyleTablePanelScreen";
 import { StyleSheet, ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
-import { userIcon, backgroundImage, logoutIcon, qrIcon } from "../clientPanel/AssetsClientPanelScreen";
+import { backgroundImage, logoutIcon, qrIcon, tableIcon } from "../tablePanel/AssetsTablePanelScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { auth, db } from "../../../App";
+import { auth } from "../../../App";
 import { Camera } from "expo-camera";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import Toast from 'react-native-simple-toast';
-import { addDoc, collection } from "firebase/firestore";
-import RotatingLogo from "../../rotatingLogo/RotatingLogo";
-import Modal from "react-native-modal";
 
 
-
-const ClientPanel = () => {
+const TablePanel = () => {
 
     //CONSTANTES
     const navigation = useNavigation<NativeStackNavigationProp<any>>();
     const [scanned, setScanned] = useState(false);
     const [openQR, setOpenQR] = useState(false);
-    const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
 
     //LOGOUT
     const handleLogout = () => {
@@ -46,72 +41,28 @@ const ClientPanel = () => {
       setOpenQR(false);
       const dataSplit = data.split('@');
       const qrType = dataSplit[0];
-
-      if(qrType === 'ingresoLocal'){
-        addToWaitingList();
-      }
-      else {
-        Toast.showWithGravity(
-          "Debe ingresar a la lista de espera",
-          Toast.LONG,
-          Toast.CENTER);
-      }
-
-
       console.log(qrType);
 
+      //MANEJO QR MESA
 
-      //Si es entrada al local mandar push notification 
-      //al metre avisandole que alguien entro(CECI)
 
-    };
 
-    //RUTEO A LA LISTA DE ESPERA
-    const addToWaitingList = async () => {
-      toggleSpinnerAlert();
-      try {
-        console.log(auth.currentUser?.email);
-        //UPLOAD DATA
-        await addDoc(collection(db, "waitingList"), {
-          user:auth.currentUser?.email,
-          status:'waiting',                       
-        });
-        Toast.showWithGravity(
-          "INGRESO A LA LISTA DE ESPERA EXITOSO",
-          Toast.LONG, 
-          Toast.CENTER);
-          navigation.replace("TableControlPanel");
-      } catch (error:any) {
-        Toast.showWithGravity(
-          error.code,
-          Toast.LONG, 
-          Toast.CENTER);
-      }  
-    }
-
-    //SPINNER
-    const toggleSpinnerAlert = () => {
-      setModalSpinnerVisible(true);
-      setTimeout(() => {
-        setModalSpinnerVisible(false);          
-      }, 6000);
     };
 
     //MANEJADOR DEL QR Y CAMARA
     const handleOpenQR = () => {
       setScanned(false);
       setOpenQR(true);
-    } 
-        
+    }         
     
     //HEADER
     useLayoutEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <Image source={userIcon} style={styles.headerIcon} />
+                <Image source={tableIcon} style={styles.headerIcon} />
              ),
           headerTitle: () => (
-            <Text style={styles.headerText}>CLIENTE</Text>
+            <Text style={styles.headerText}>MESA</Text>
           ),
           headerTintColor: "transparent",
           headerBackButtonMenuEnabled: false,
@@ -125,7 +76,6 @@ const ClientPanel = () => {
          )
         });
       }, []);
-
     
     return (
       !openQR ?
@@ -140,14 +90,7 @@ const ClientPanel = () => {
                   <Text style={styles.buttonText}>ESCANEE EL CODIGO QR</Text>
                   <Text style={styles.buttonText}>PARA INGRESAR AL LOCAL</Text>
                 </View>
-              </View>    
-
-               <View>
-                <Modal backdropOpacity={0.5} animationIn="rotate" animationOut="rotate" isVisible={isModalSpinnerVisible}>
-                  <RotatingLogo></RotatingLogo>
-                </Modal>
-              </View> 
-
+              </View>                
           </ImageBackground>           
       </View> : <BarCodeScanner
                   onBarCodeScanned={scanned && openQR ? undefined : handleBarCodeScanned}
@@ -155,4 +98,4 @@ const ClientPanel = () => {
     );
 };
 
-export default ClientPanel;
+export default TablePanel;
