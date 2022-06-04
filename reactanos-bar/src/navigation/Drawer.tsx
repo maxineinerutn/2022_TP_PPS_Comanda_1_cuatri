@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { handleLogout } from '../redux/authReducer';
 import AddAdminsScreen from '../components/screens/AddAdminsController/AddAdminsScreen.component';
 import AddClientScreen from '../components/screens/AddClient/AddClientScreen.component';
+import AddEmployeeScreen from '../components/screens/AddEmployee/AddEmployeeScreen.component';
 
 const Drawer = createDrawerNavigator();
 
@@ -28,6 +29,7 @@ const DrawerStack = () => {
           <Drawer.Screen name={Screens.ADD_PRODUCTS} component={AddProductsScreen} />
           <Drawer.Screen name={Screens.ADD_ADMINS} component={AddAdminsScreen} />
           <Drawer.Screen name={Screens.ADD_CLIENT} component={AddClientScreen} />
+          <Drawer.Screen name={Screens.ADD_EMPLOYEE} component={AddEmployeeScreen} />
         </Drawer.Navigator>
     );
 }
