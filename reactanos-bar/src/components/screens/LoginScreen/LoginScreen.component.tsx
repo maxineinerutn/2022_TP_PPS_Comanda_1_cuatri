@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LoginStackParamList } from '../../../navigation/stacks/LoginStack';
 import { Screens } from "../../../navigation/Screens";
 import { StyledView } from "./LoginScreen.styled";
@@ -18,8 +18,13 @@ type LoginScreenProps = NativeStackScreenProps<LoginStackParamList, Screens.LOGI
 
 const LoginScreen:FC<LoginScreenProps> = ({navigation}) => {
 
-    const {control, handleSubmit, getValues} = useForm<FormData>();
+    const {control, handleSubmit, getValues, setValue} = useForm<FormData>();
 	const dispatch = useDispatch();
+
+    useEffect(() => {
+        setValue("email", "admin@gmail.com");
+        setValue("password", "Admin1234");
+    }, [])
 
 
 	const handleSignIn = () => {
