@@ -1,7 +1,7 @@
 import uuid from 'react-native-uuid';
 import { app } from '../../firebase';
 
-const storage = app.storage( 'gs://lacomanda-47138.appspot.com' );
+const storage = app.storage();
 /**
  *
  * @param {string} imgRefName Ruta donde se va a guardar la imagen en el storage
@@ -13,7 +13,8 @@ export const saveImageInStorage = async ( imgRefName, blob ) => {
     const docName = uuid.v4().toString();
     const ref = storage.ref( `${imgRefName}/${docName}` );
     await ref.put( blob );
-    const respuesta = { ref, docName };
+    const uri = await ref.getDownloadURL();
+    const respuesta = { uri };
     return respuesta;
   } catch ( error ) {
     throw new Error( error.message );
