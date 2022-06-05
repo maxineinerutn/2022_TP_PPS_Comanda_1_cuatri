@@ -7,7 +7,7 @@ import Modal from "react-native-modal";
 import React, { useCallback, useLayoutEffect, useState } from 'react'
 import RotatingLogo from "../../rotatingLogo/RotatingLogo";
 import { db, storage } from "../../../App";
-import { collection, query, where, getDocs, updateDoc, doc } from "firebase/firestore";
+import { collection, query, where, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 import { getDownloadURL, ref } from 'firebase/storage'
 import { format } from 'date-fns'
 import Toast from 'react-native-simple-toast';
@@ -23,7 +23,8 @@ const WaitingListManagment = () => {
   const [loadingTables, setLoadingTables] = useState(false);
   const [dataUsers, setDataUsers] = useState<any>([]); 
   const [dataTables, setDataTables] = useState<any>([]); 
-  const [user, setUser] = useState<any>([]);
+  const [user, setUser] = useState<any>('');
+  const [userId, setUserId] = useState<any>('');
 
   //RETURN
   const handleReturn = () => {
@@ -82,8 +83,9 @@ const WaitingListManagment = () => {
   }
 
   //SET ID PARA ASIGNAR A MESA
-  const showAvailableTables = async (id) => {
-    setUser(id);
+  const showAvailableTables = async (id, user) => {
+    setUserId(id);
+    setUser(user);
     toggleModalTable();      
   }
 
@@ -97,10 +99,15 @@ const WaitingListManagment = () => {
   //ASIGNAR MESA A CLIENTE
   const handleTableReservation = async (id) => {
     try {
+      //ASIGNAR MESA
       const ref = doc(db, "tableInfo", id);
-      const status =  'Assigned';
+      const status =  'assigned';
       await updateDoc(ref, {status:status});
       await updateDoc(ref, {assignedClient:user});
+      //BORRAR CLIENTE DE LA LISTA DE ESPERA
+      const refUser = doc(db, "waitingList", userId);
+      await deleteDoc(refUser);
+
       getTables();
       toggleSpinnerAlert();
       setTimeout(() => {
@@ -113,7 +120,8 @@ const WaitingListManagment = () => {
       console.log(error)
     } finally{
         setLoadingTables(false); 
-        toggleModalTable();       
+        toggleModalTable(); 
+        getUsers();      
     }
   }   
 
@@ -144,11 +152,11 @@ const WaitingListManagment = () => {
       <View style={styles.body}>
       <ScrollView>
           {dataUsers.map((item: { user: any;
-                              id: string;}) => (               
+                                  id: any;}) => (               
             <View style={styles.cardStyle}>
               <View style={styles.infoContainer}>
                 <Text style={styles.tableHeaderText}> CLIENTE: {item.user}</Text> 
-                <TouchableOpacity onPress={() => showAvailableTables(item.user)} style={styles.buttonLayout}>
+                <TouchableOpacity onPress={() => showAvailableTables(item.id, item.user)} style={styles.buttonLayout}>
                   <Text style={styles.buttonText}>ASIGNAR MESA</Text> 
                 </TouchableOpacity>
               </View> 

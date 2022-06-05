@@ -35,6 +35,7 @@ export default StyleSheet.create({
         margin: 10,
         borderRadius: 10,
         borderWidth: 2,
+        width: '90%',
     },
     infoContainer: {
         flexDirection: 'row', 
@@ -61,7 +62,7 @@ export default StyleSheet.create({
     },
     tableHeaderText: {
         color: '#3D4544',
-        fontSize: 12,
+        fontSize: 14,
         fontFamily: 'Oswald_500Medium',
     },
     tableCellText: {
