@@ -24,22 +24,4 @@ export const splitUserFromEmail = (email:string) => {
     return emailUser.charAt(0).toUpperCase() + emailUser.slice(1)
 }
 
-export const AcceptEmail = ({ user }) => ({
-    subject: `USUARIO APROBADO`,
-    body: (
-      <div>
-        <p>Hola {user}, su usuario se encuentra habilitado</p>
-      </div>
-    )
-  })
 
-  export const RejectEmail = ({ user, motive }) => ({
-    subject: `USUARIO RECHAZADO`,
-    body: (
-      <div>
-        <p>Hola {user}, su usuario fue rechazado por los siguientes motivos:</p>
-        <p>{motive}</p>
-
-      </div>
-    )
-  })

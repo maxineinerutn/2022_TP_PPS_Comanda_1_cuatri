@@ -8,7 +8,7 @@ import { auth, db } from "../../../App";
 import { Camera } from "expo-camera";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import Toast from 'react-native-simple-toast';
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import RotatingLogo from "../../rotatingLogo/RotatingLogo";
 import Modal from "react-native-modal";
 
@@ -56,11 +56,6 @@ const ClientPanel = () => {
           Toast.LONG,
           Toast.CENTER);
       }
-
-
-      console.log(qrType);
-
-
       //Si es entrada al local mandar push notification 
       //al metre avisandole que alguien entro(CECI)
 
@@ -69,13 +64,29 @@ const ClientPanel = () => {
     //RUTEO A LA LISTA DE ESPERA
     const addToWaitingList = async () => {
       toggleSpinnerAlert();
+
+      //CHECK SI SE ENCUENTRA EN LISTA DE ESPERA O CON MESA YA ASIGNADA
+      const query1 = query(collection(db, "tableInfo"), where("assignedClient", "==", auth.currentUser?.email));
+      const querySnapshot1 = await getDocs(query1);
+      if(querySnapshot1.size > 0){
+        navigation.replace("TableControlPanel");
+        return;
+      } 
+
+      const query2 = query(collection(db, "waitingList"), where("user", "==", auth.currentUser?.email));
+      const querySnapshot2 = await getDocs(query2);
+      if(querySnapshot2.size > 0){
+        navigation.replace("TableControlPanel");
+        return;
+      } 
+
       try {
-        console.log(auth.currentUser?.email);
         //UPLOAD DATA
         await addDoc(collection(db, "waitingList"), {
-          user:auth.currentUser?.email,
-          status:'waiting',                       
-        });
+              user:auth.currentUser?.email,
+              status:'waiting',                
+        })     
+
         Toast.showWithGravity(
           "INGRESO A LA LISTA DE ESPERA EXITOSO",
           Toast.LONG, 

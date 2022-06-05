@@ -12,6 +12,8 @@ import { getDownloadURL, ref } from 'firebase/storage'
 import { format } from 'date-fns'
 import Toast from 'react-native-simple-toast';
 import emailjs from '@emailjs/browser';
+import { splitUserFromEmail } from "../../../utils/utils";
+import { faDatabase } from "@fortawesome/free-solid-svg-icons";
 
 const WaitingListManagment = () => {
 
@@ -104,9 +106,9 @@ const WaitingListManagment = () => {
       const status =  'assigned';
       await updateDoc(ref, {status:status});
       await updateDoc(ref, {assignedClient:user});
-      //BORRAR CLIENTE DE LA LISTA DE ESPERA
+      //CAMBIAR STATUS DEL CLIENTE EN LA LISTA DE ESPERA
       const refUser = doc(db, "waitingList", userId);
-      await deleteDoc(refUser);
+      await updateDoc(refUser, {status:status});
 
       getTables();
       toggleSpinnerAlert();
@@ -155,7 +157,7 @@ const WaitingListManagment = () => {
                                   id: any;}) => (               
             <View style={styles.cardStyle}>
               <View style={styles.infoContainer}>
-                <Text style={styles.tableHeaderText}> CLIENTE: {item.user}</Text> 
+                <Text style={styles.tableHeaderText}> CLIENTE: {splitUserFromEmail(item.user)}</Text> 
                 <TouchableOpacity onPress={() => showAvailableTables(item.id, item.user)} style={styles.buttonLayout}>
                   <Text style={styles.buttonText}>ASIGNAR MESA</Text> 
                 </TouchableOpacity>

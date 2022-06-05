@@ -4,10 +4,11 @@ import { StyleSheet, ImageBackground, TouchableOpacity, View, Image, Text } from
 import { backgroundImage, logoutIcon, qrIcon, tableIcon } from "../tablePanel/AssetsTablePanelScreen";
 import { useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import { auth } from "../../../App";
+import { auth, db } from "../../../App";
 import { Camera } from "expo-camera";
 import { BarCodeScanner } from "expo-barcode-scanner";
 import Toast from 'react-native-simple-toast';
+import { collection, getDocs, query, where } from "firebase/firestore";
 
 
 const TablePanel = () => {
@@ -16,6 +17,8 @@ const TablePanel = () => {
     const navigation = useNavigation<NativeStackNavigationProp<any>>();
     const [scanned, setScanned] = useState(false);
     const [openQR, setOpenQR] = useState(false);
+    const [tableNumber, setTableNumber] = useState('');
+    const [assignedTable, setAssignedTable] = useState(false);
 
     //LOGOUT
     const handleLogout = () => {
@@ -36,15 +39,35 @@ const TablePanel = () => {
     }, [])
 
     //COMPLETADO DEL FORM A PARTIR DEL QR
-    const handleBarCodeScanned = ({ data }) => {
+    const handleBarCodeScanned = async ({ data }) => {
       setScanned(true);
       setOpenQR(false);
       const dataSplit = data.split('@');
       const qrType = dataSplit[0];
+      const tableNumberQR = dataSplit[1];
       console.log(qrType);
-
+      console.log(tableNumberQR);
       //MANEJO QR MESA
-
+      if(qrType === 'mesa'){
+        const query1 = query(collection(db, "tableInfo"), where("assignedClient", "==", auth.currentUser?.email), where("tableNumber", "==", tableNumberQR));
+        const querySnapshot1 = await getDocs(query1);
+        if(querySnapshot1.size > 0){
+          setTableNumber(tableNumberQR);
+          setAssignedTable(true);
+        }
+        else {
+          Toast.showWithGravity(
+            "TODAVIA NO SE LE ASIGNO MESA O NO ESCANEO UN QR DE MESA",
+            Toast.LONG,
+            Toast.CENTER);
+        } 
+      }
+      else {
+        Toast.showWithGravity(
+          "NO ES UN QR DE MESA",
+          Toast.LONG,
+          Toast.CENTER);
+      }
 
 
     };
@@ -82,14 +105,27 @@ const TablePanel = () => {
       <View style={styles.container}>
           <ImageBackground source={backgroundImage} resizeMode="cover" style={styles.backgroundImage} imageStyle = {{opacity:0.5}}>
               <View style={styles.body}>
-                <TouchableOpacity onPress={handleOpenQR}>
-                  <Image style={styles.qrIcon} resizeMode="cover" source={qrIcon} />
-                </TouchableOpacity>
 
-                <View style={styles.buttonLayout}>
-                  <Text style={styles.buttonText}>ESCANEE EL CODIGO QR</Text>
-                  <Text style={styles.buttonText}>PARA INGRESAR AL LOCAL</Text>
+                <View style={styles.rowContainer}>
+                  
+                    {!assignedTable ?
+                    (
+                      <View style={styles.buttonLayout}>
+                        <Text style={styles.buttonText}>ESCANEE EL CODIGO QR</Text>
+                        <Text style={styles.buttonText}>PARA INGRESAR A SU MESA</Text>
+                      </View>)
+                    :
+                    (<View style={styles.buttonLayout}>
+                      <Text style={styles.buttonText}>MESA NUMERO {tableNumber}</Text>
+                    </View>)}
+
+                  <TouchableOpacity onPress={handleOpenQR}>
+                    <Image style={styles.qrIcon} resizeMode="cover" source={qrIcon} />
+                  </TouchableOpacity>
                 </View>
+
+
+                
               </View>                
           </ImageBackground>           
       </View> : <BarCodeScanner

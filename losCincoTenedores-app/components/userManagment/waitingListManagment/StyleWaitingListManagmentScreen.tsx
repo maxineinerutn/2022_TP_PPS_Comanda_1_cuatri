@@ -36,6 +36,9 @@ export default StyleSheet.create({
         borderRadius: 10,
         borderWidth: 2,
         width: '90%',
+        justifyContent: 'space-between',
+        alignContent: 'center',
+        alignItems: 'center',
     },
     infoContainer: {
         flexDirection: 'row', 

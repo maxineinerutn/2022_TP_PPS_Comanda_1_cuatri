@@ -29,9 +29,16 @@ export default StyleSheet.create({
         textAlign: 'center',
         alignContent: 'center',
     },
+    rowContainer: {
+        flexDirection: 'row',
+        alignItems: 'center', 
+        alignContent: 'center', 
+        justifyContent: 'center', 
+        marginBottom: 5
+    },
     qrIcon: {
-        height:250, 
-        width:250, 
+        height:100, 
+        width:100, 
         borderRadius:20, 
         margin:10
     },
@@ -40,7 +47,7 @@ export default StyleSheet.create({
         borderColor: '#A4C3B2',
         marginTop: 20,
         margin: 5,
-        width: "80%",
+        width: "60%",
         height: 60,
         padding: 15,
         borderRadius: 30,
