@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { MutableRefObject, useEffect, useRef, useState } from 'react'
 import {
     StyledLinearGradient,
     StyledMargin,
@@ -21,7 +21,9 @@ import { showMessage } from 'react-native-flash-message';
 import * as ImagePicker from "expo-image-picker";
 import { getBlob } from '../../../utils/utils';
 import { BarCodeScanner } from 'expo-barcode-scanner';
-
+import { useSelector, useDispatch } from "react-redux";
+import { fetchLoadingFinish, fetchLoadingStart } from '../../../redux/loaderReducer';
+import Select from '../../molecules/Select/Select.component';
 
 type NewEmployee = {
     lastName: string;
@@ -41,20 +43,22 @@ const AddEmployeeScreen = () => {
     const [openQR, setOpenQR] = useState(false);
     const [show, setShow] = useState(false);
     const passInput: MutableRefObject<any> = useRef();
+    const dispatch = useDispatch();
+    const [type, setType] = useState("");
+
 
 
 
     //HARDCODEO
-    // useEffect(() => {
-    //     setValue("lastName", "rojas");
-    //     setValue("name", "lucho");
-    //     setValue("dni", "37933047");
-    //     setValue("cuil", "24379330479");
-    //     setValue("profile", "admin");
-    //     setValue("email", "rojas" + Math.floor(Math.random() * 100) + 1 + "@gmail.com");
-    //     setValue("password", "roja$1");
-    //     setValue("passwordRepeat", "roja$1");
-    // }, []);
+    useEffect(() => {
+        setValue("lastName", "rojas");
+        setValue("name", "luchoE");
+        setValue("dni", "37933047");
+        setValue("cuil", "24379330479");
+        setValue("email", "rojas" + Math.floor(Math.random() * 100) + 1 + "@gmail.com");
+        setValue("password", "roja$1");
+        setValue("passwordRepeat", "roja$1");
+    }, []);
 
     const handleBarCodeScanned = ({ data }) => {
         setScanned(true);
@@ -87,7 +91,7 @@ const AddEmployeeScreen = () => {
             errorHandler('pass-diff');
             return;
         }
-        setLoading(true)
+        dispatch(fetchLoadingStart());
         try {
             await createUserWithEmailAndPassword(auth, values.email, values.email);
 
@@ -129,12 +133,13 @@ const AddEmployeeScreen = () => {
             setValue("email", "")
             setValue("password", "")
             setValue("passwordRepeat", "")
+            setType("");
             setImage("");
         } catch (error: any) {
             errorHandler(error.code);
         } finally {
-            setLoading(false);
-        }
+            dispatch(fetchLoadingFinish());
+                }
     }
 
 
@@ -149,6 +154,19 @@ const AddEmployeeScreen = () => {
         }
     };
 
+    const handleSelectType = (value:string) => {
+        setType(value);
+        setValue("profile",value);
+    }
+
+    const data = [
+        {label:"Cocinero", value:"cook"},
+        {label:"Repartidor", value:"deliveryman"},
+        {label:"Mozo", value:"waiter"},
+        {label:"Metre", value:"meter"},
+    ]
+
+
     useEffect(() => {
         (async () => {
             await BarCodeScanner.requestPermissionsAsync();
@@ -159,7 +177,6 @@ const AddEmployeeScreen = () => {
         !openQR ?
             <StyledView>
                 <StyledLinearGradient colors={["#6190E8", "#A7BFE8"]}>
-                    {loading && <Spinner />}
                     <View style={{
                         flexDirection: 'row',
                         alignContent: 'center',
@@ -215,12 +232,7 @@ const AddEmployeeScreen = () => {
                     </StyledMargin>
 
                     <StyledMargin>
-                        <ControlledInput
-                            variant="rounded"
-                            control={control}
-                            name="profile"
-                            placeholder='Perfil'
-                        />
+                    <Select value={type} onChange={handleSelectType} placeholder="Tipo de empleado" data={data} />
                     </StyledMargin>
 
                     <StyledMargin>

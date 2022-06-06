@@ -57,33 +57,30 @@ const AddAdminsScreen = ({navigation}) => {
     // }, []);
 
 
-    function cuilValidator(cuil: string): boolean { 
-        if (cuil.length !== 11) {
+    const verifyCuil = (cuit) => {
+        if (cuit.length !== 11) {
           return false;
         }
       
-        const [checkDigit, ...rest] = cuil
-          .split('')
-          .map(Number)
-          .reverse();
+        let acumulado = 0;
+        let digitos = cuit.split('');
+        let digito = parseInt(digitos.pop());
       
-        const total = rest.reduce(
-          (acc, cur, index) => acc + cur * (2 + (index % 6)),
-          0,
-        );
-      
-        const mod11 = 11 - (total % 11);
-      
-        if (mod11 === 11) {
-          return checkDigit === 0;
+        for (let i = 0; i < digitos.length; i++) {
+          acumulado += digitos[9 - i] * (2 + (i % 6));
         }
       
-        if (mod11 === 10) {
-          return false;
+        let verif = 11 - (acumulado % 11);
+        if (verif === 11) {
+          verif = 0;
+        } else if (verif === 10) {
+          verif = 9;
         }
       
-        return checkDigit === mod11;
-      }
+        return digito === verif;
+      };
+      
+      
 
       React.useEffect(
         () =>
@@ -122,7 +119,7 @@ const AddAdminsScreen = ({navigation}) => {
                 return;
             }
         })
-        if (cuilValidator(values.cuil)) {
+        if (!verifyCuil(values.cuil)) {
             showMessage({ type: "danger", message: "Error", description: "CUIL INVAlIDO" });
             return;
         }
@@ -142,7 +139,7 @@ const AddAdminsScreen = ({navigation}) => {
             const fileName = image.substring(image.lastIndexOf("/") + 1);
             const fileRef = ref(storage, "images/" + fileName);
             await uploadBytes(fileRef, blob);
-            await addDoc(collection(db, "users"), {
+            await addDoc(collection(db, "employee"), { //Verificar
                 lastName: values.lastName,
                 name: values.name,
                 dni: values.dni,
