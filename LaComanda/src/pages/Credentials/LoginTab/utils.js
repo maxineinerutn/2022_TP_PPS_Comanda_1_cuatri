@@ -20,16 +20,14 @@ export const handleLoginErrorMessage = ( code ) => {
   }
 };
 
-export const verifyUserIsApproved = ( email ) => {
-  getUserByEmail(
-    'users',
-    email,
-    ( querySnapshot ) => {
-      const user = querySnapshot.docs.map(( doc ) => doc.data());
-      return user.approved;
-    },
-    () => {
-      console.log( err );
-    }
-  );
-};
+export const verifyUserIsApproved = ( email ) => getUserByEmail(
+  'users',
+  email,
+  ( querySnapshot ) => {
+    const user = querySnapshot.docs.map(( doc ) => doc.data())[0];
+    return user ? user.approved : undefined;
+  },
+  () => {
+    console.log( err );
+  }
+);

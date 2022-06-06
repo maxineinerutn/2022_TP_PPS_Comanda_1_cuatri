@@ -1,14 +1,14 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import theme from '../../config/theme';
 // import { Constants } from 'expo-constants';
 
 const Styles = StyleSheet.create({
   container: {
     flex: 1
-    // marginTop: Constants.statusBarHeight
   },
   camera: {
     width: Dimensions.get( 'screen' ).width,
-    height: Dimensions.get( 'screen' ).height * 0.6
+    height: Dimensions.get( 'screen' ).height * 0.7
   },
   hideCamera: {
     display: 'none',
@@ -16,43 +16,61 @@ const Styles = StyleSheet.create({
     height: 0
   },
   buttonContainer: {
-    backgroundColor: 'transparent',
+    width: Dimensions.get( 'screen' ).width,
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 100
+    borderTopWidth: 4,
+    borderTopColor: theme.colors.primary
   },
   button: {
+    marginTop: 15,
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: theme.colors.primary,
     height: Dimensions.get( 'screen' ).height * 0.05,
-    width: Dimensions.get( 'screen' ).width * 0.3,
-    borderRadius: 10
+    width: Dimensions.get( 'screen' ).width * 0.4,
+    borderRadius: 10,
+    marginLeft: 5
   },
-  buttonSacarFoto: {
-    // alignSelf: 'flex-end',
+  buttonEliminar: {
+    marginTop: 15,
     alignItems: 'center',
-    backgroundColor: 'red',
+    backgroundColor: theme.colors.secondary,
+    borderColor: theme.colors.primary,
+    borderWidth: 2,
     height: Dimensions.get( 'screen' ).height * 0.05,
-    width: Dimensions.get( 'screen' ).width * 0.3,
-    borderRadius: 10
+    width: Dimensions.get( 'screen' ).width * 0.4,
+    borderRadius: 10,
+    marginLeft: 5
   },
   changeCameraIcon: {
-    alignSelf: 'flex-end',
     alignItems: 'center',
     height: Dimensions.get( 'screen' ).height * 0.05,
     width: Dimensions.get( 'screen' ).width * 0.3
   },
   text: {
-    fontSize: 18,
-    color: 'white'
+    fontSize: 24,
+    fontWeight: '300',
+    color: 'white',
+    textAlign: 'center'
   },
-  buttonGuardar: {
-    // alignSelf: 'flex-end',
+  textEliminar: {
+    fontSize: 24,
+    fontWeight: '300',
+    color: theme.colors.primary,
+    textAlign: 'center'
+  },
+  spinnerContainer: {
+    position: 'absolute',
+    zIndex: 99,
+    opacity: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'green',
-    height: Dimensions.get( 'screen' ).height * 0.05,
-    width: Dimensions.get( 'screen' ).width * 0.3,
-    borderRadius: 10
+    width: '100%',
+    height: '100%'
+  },
+  spinner: {
+    width: '100%',
+    height: '100%'
   }
 });
 export default Styles;

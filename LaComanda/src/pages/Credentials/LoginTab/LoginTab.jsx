@@ -10,15 +10,16 @@ import {
 import React, { useContext, useState } from 'react';
 import { styles } from './styles';
 import GlobalContext from '../../../context/GlobalContext';
-import { handleLoginErrorMessage, verifyUserIsApproved } from './utils';
+import { verifyUserIsApproved, handleLoginErrorMessage } from './utils';
 import theme from '../../../config/theme';
-import { auth } from '../../../../firebase';
-import Gifplay from '../../../../assets/gifplay.gif';
+import { signInUser } from '../../../services/AuthService';
+import Gifplay from '../../../../assets/gifplayBig.gif';
 
 function LoginTab() {
   const {
     email, setEmail, password, setPassword
   } = useContext( GlobalContext );
+
   const [errorMessage, setErrorMessage] = useState( '' );
   const [error, setError] = useState( false );
   const [loading, setLoading] = useState( false );
@@ -28,14 +29,14 @@ function LoginTab() {
     if ( verifyUserIsApproved( email )) {
       signIn( email, password );
     } else {
+      setErrorMessage( 'Su usuario todavía no fué aprobado' );
       setError( true );
       setLoading( false );
     }
   };
 
-  const signIn = ( username, userPassword ) => {
-    auth
-      .signInWithEmailAndPassword( username, userPassword )
+  const signIn = async ( userEmail, userPassword ) => {
+    await signInUser( userEmail, userPassword )
       .then(( userCredential ) => {
         setLoading( false );
         console.log( 'User logged in with: ', userCredential.user.email );
@@ -63,7 +64,7 @@ function LoginTab() {
         <View style={styles.inputContainer}>
 
           <Image
-            style={{ width: 200, height: 200 }}
+            style={{ width: 290, height: 290 }}
             source={Gifplay}
           />
 
@@ -90,14 +91,7 @@ function LoginTab() {
             onPress={handleLogin}
             style={styles.button}
           >
-            <Text style={styles.buttonText}>Ingresá con tu usuario</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={handleLogin}
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>Ingresá como invitado</Text>
+            <Text style={styles.buttonText}>Ingresar</Text>
           </TouchableOpacity>
 
         </View>
