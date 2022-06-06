@@ -43,9 +43,10 @@ export default StyleSheet.create({
     infoContainer: {
         flexDirection: 'row', 
         marginBottom: 5,
-        justifyContent: 'center',
+        justifyContent: 'space-between',
         alignContent: 'center',
         alignItems: 'center',
+
     },
     cardImage: {
         flex: 1, 

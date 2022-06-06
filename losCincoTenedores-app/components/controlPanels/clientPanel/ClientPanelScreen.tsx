@@ -1,8 +1,8 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import styles from "../clientPanel/StyleClientPanelScreen";
 import { StyleSheet, ImageBackground, TouchableOpacity, View, Image, Text } from "react-native";
 import { userIcon, backgroundImage, logoutIcon, qrIcon } from "../clientPanel/AssetsClientPanelScreen";
-import { useNavigation } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { auth, db } from "../../../App";
 import { Camera } from "expo-camera";
@@ -21,6 +21,24 @@ const ClientPanel = () => {
     const [scanned, setScanned] = useState(false);
     const [openQR, setOpenQR] = useState(false);
     const [isModalSpinnerVisible, setModalSpinnerVisible] = useState(false);
+    const [clientName, setClientName] = useState('');
+    const [clientLastName, setClientLastName] = useState('');
+
+    //SETEO DATA DEL USUARIO
+    useFocusEffect(
+      useCallback(() => {
+        checkClientStatus();
+    }, []))
+
+    const checkClientStatus = async () => {
+      const query1 = query(collection(db, "userInfo"), where("email", "==", auth.currentUser?.email));
+      const querySnapshot1 = await getDocs(query1);
+      querySnapshot1.forEach(async (doc) => {
+        setClientName(doc.data().name);
+        setClientLastName(doc.data().lastName);
+      });
+    }      
+  
 
     //LOGOUT
     const handleLogout = () => {
@@ -84,6 +102,8 @@ const ClientPanel = () => {
         //UPLOAD DATA
         await addDoc(collection(db, "waitingList"), {
               user:auth.currentUser?.email,
+              name:clientName,
+              lastName:clientLastName,
               status:'waiting',                
         })     
 

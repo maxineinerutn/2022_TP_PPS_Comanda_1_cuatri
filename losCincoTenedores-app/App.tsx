@@ -28,6 +28,7 @@ import ProductRegistration from './components/userRegistration/productRegistrati
 import ClientManagment from './components/userManagment/clientManagment/ClientManagmentScreen';
 import WaitingListManagment from './components/userManagment/waitingListManagment/WaitingListManagmentScreen';
 import TablePanel from './components/controlPanels/tablePanel/TablePanelScreen';
+import NewClientSurvey from './components/surveys/clientSurvey/ClientSurveyScreen';
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -80,6 +81,7 @@ export default () => {
         <Stack.Screen options =  {{ headerShown: true }}  name="ProductRegistration" component={ProductRegistration} />
         <Stack.Screen options =  {{ headerShown: true }}  name="ClientManagment" component={ClientManagment} />
         <Stack.Screen options =  {{ headerShown: true }}  name="WaitingListManagment" component={WaitingListManagment} />
+        <Stack.Screen options =  {{ headerShown: true }}  name="NewClientSurvey" component={NewClientSurvey} />
         
       </Stack.Navigator>
     </NavigationContainer> );

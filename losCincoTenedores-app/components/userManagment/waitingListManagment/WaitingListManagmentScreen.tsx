@@ -150,10 +150,12 @@ const WaitingListManagment = () => {
       <View style={styles.body}>
       <ScrollView>
           {dataUsers.map((item: { user: any;
+                                  name: any;
+                                  lastName: any;
                                   id: any;}) => (               
             <View style={styles.cardStyle}>
               <View style={styles.infoContainer}>
-                <Text style={styles.tableHeaderText}> CLIENTE: {splitUserFromEmail(item.user)}</Text> 
+                <Text style={styles.tableHeaderText}> CLIENTE: {item.name} {item.lastName}</Text> 
                 <TouchableOpacity onPress={() => showAvailableTables(item.id, item.user)} style={styles.buttonLayout}>
                   <Text style={styles.buttonText}>ASIGNAR MESA</Text> 
                 </TouchableOpacity>
