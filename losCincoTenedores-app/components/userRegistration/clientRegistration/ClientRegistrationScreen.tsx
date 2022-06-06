@@ -60,7 +60,9 @@ const ClientRegistration = () => {
 
     //RETURN
     const handleReturn = () => {
-      if(auth.currentUser == null){
+      console.log(auth.currentUser);
+      
+      if(auth.currentUser == undefined){
         navigation.replace("Login")
       }else{
         navigation.replace("ControlPanelMetre")
@@ -117,7 +119,7 @@ const ClientRegistration = () => {
         console.log(checked);
         if(checked=='Anonimo'){
           setValue("clientType",'Anónimo');
-          setValue("clientStatus",'Approved');
+          setValue("clientStatus",'Accepted');
         }
         if(checked=='Registrado'){
           setValue("clientType",'Registrado');
@@ -170,7 +172,9 @@ const ClientRegistration = () => {
 
         //DESLOGUEO DEL USUARIO CREADO Y REESTABLECIMIENTO DEL USUARIO ORIGINAL
         await auth.signOut();
-        await auth.updateCurrentUser(originalUser);
+        if(originalUser){
+          await auth.updateCurrentUser(originalUser);
+        }
 
         //UPLOAD IMAGEN
         const blob:any = await getBlob(image);

@@ -119,6 +119,8 @@ const TableRegistration = () => {
           tableCapacity:values.capacity,
           tableType:checked,
           image:fileRef.fullPath,
+          status: "free",
+          assignedClient: "",
           creationDate:new Date()          
         });        
         Toast.showWithGravity(

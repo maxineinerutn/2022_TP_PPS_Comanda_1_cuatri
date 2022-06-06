@@ -35,13 +35,18 @@ export default StyleSheet.create({
         margin: 10,
         borderRadius: 10,
         borderWidth: 2,
-    },
-    imageIconContainer: {
-        flexDirection: 'row', 
-        alignContent: 'center', 
-        justifyContent: 'center',
+        width: '90%',
+        justifyContent: 'space-between',
+        alignContent: 'center',
         alignItems: 'center',
-        marginBottom: 5
+    },
+    infoContainer: {
+        flexDirection: 'row', 
+        marginBottom: 5,
+        justifyContent: 'space-between',
+        alignContent: 'center',
+        alignItems: 'center',
+
     },
     cardImage: {
         flex: 1, 
@@ -54,19 +59,19 @@ export default StyleSheet.create({
     cardIcon: {
         padding: 10,
         margin: 5,
-        height: 100,
-        width: 100,
+        height: 50,
+        width: 50,
         resizeMode: 'contain',
     },
     tableHeaderText: {
         color: '#3D4544',
-        fontSize: 20,
+        fontSize: 14,
         fontFamily: 'Oswald_500Medium',
     },
     tableCellText: {
-    color: '#3D4544',
-    fontSize: 15,
-    fontFamily: 'Oswald_500Medium',
+        color: 'black',
+        fontSize: 25,
+        fontFamily: 'Oswald_500Medium',
     },
     modalContainer: {
         flex: 1,
@@ -76,18 +81,15 @@ export default StyleSheet.create({
         borderColor: 'white',
         backgroundColor: '#3D4544',
         borderWidth: 2,
-        width: '100%',
         padding: 15,
         borderRadius: 25,
-        alignItems: 'center',
     },
     modalIconContainer: {
         flexDirection: 'row', 
-        alignContent: 'center', 
-        justifyContent: 'center',
+        marginBottom: 5,
+        justifyContent: 'space-between',
+        alignContent: 'center',
         alignItems: 'center',
-        marginBottom: 10,
-        marginTop: 10
     },
     inputField: {
         flexDirection: 'row',
@@ -106,5 +108,23 @@ export default StyleSheet.create({
         fontFamily: 'Oswald_300Light',
         fontSize: 16,
         width: '100%',
+    },
+    buttonLayout: {
+        backgroundColor: '#A4C3B2',
+        borderColor: '#A4C3B2',
+        marginTop: 20,
+        margin: 5,
+        width: "35%",
+        height: 60,
+        padding: 15,
+        borderRadius: 30,
+        borderWidth: 0,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+      buttonText: {
+        color: 'black',
+        fontSize: 15,
+        fontFamily: 'Oswald_500Medium',
     },
 });
