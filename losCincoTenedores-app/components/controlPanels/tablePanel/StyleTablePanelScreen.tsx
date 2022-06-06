@@ -29,33 +29,6 @@ export default StyleSheet.create({
         textAlign: 'center',
         alignContent: 'center',
     },
-    rowContainer: {
-        flexDirection: 'row',
-        alignItems: 'center', 
-        alignContent: 'center', 
-        justifyContent: 'flex-start', 
-        marginBottom: 5
-    },
-    qrIcon: {
-        height:100, 
-        width:100, 
-        borderRadius:20, 
-        margin:10
-    },
-    buttonLayoutHeader: {
-        backgroundColor: '#A4C3B2',
-        borderColor: '#A4C3B2',
-        marginTop: 20,
-        margin: 5,
-        width: "65%",
-        height: 80,
-        padding: 15,
-        borderRadius: 30,
-        borderWidth: 0,
-        justifyContent: 'center',
-        alignContent: 'center',
-        alignItems: 'center'
-    },
     buttonLayout: {
         backgroundColor: '#A4C3B2',
         borderColor: '#A4C3B2',
@@ -66,30 +39,24 @@ export default StyleSheet.create({
         padding: 15,
         borderRadius: 30,
         borderWidth: 0,
-        justifyContent: 'space-around',
-    }, 
-    buttonText: {
-        color: '#545454',
-        fontSize: 16,
-        fontFamily: 'Oswald_500Medium',
-    },
-    tableButtonLayout: {
-        flexDirection: "row", 
-        alignItems: 'center', 
+        justifyContent: 'center',
+        alignItems: 'center',
     }, 
     buttonImage: {
-        justifyContent: 'flex-start',
         padding: 10,
         margin: 5,
         height: 50,
         width: 50,
         resizeMode: 'contain',
     },
-    hiddenOptions: {
-        width: "100%",
-        alignItems: 'center',
+      buttonText: {
+        color: '#545454',
+        fontSize: 16,
+        fontFamily: 'Oswald_500Medium',
     },
-    noTableSelected: {
-        marginTop: 400,
-    },
+    registerButtonLayout: {
+        flexDirection: "row", 
+        alignItems: 'center', 
+        justifyContent: 'flex-start',
+    }
 });
