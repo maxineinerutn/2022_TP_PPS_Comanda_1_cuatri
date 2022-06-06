@@ -33,7 +33,11 @@ export default StyleSheet.create({
         flexDirection: 'row', 
         alignContent: 'center', 
         justifyContent: 'center', 
-        marginBottom: 5
+        marginBottom: 1
+    },
+    cameraTotal: {
+        flexDirection: 'row',
+        alignContent: 'center',
     },
     cameraIcon: {
         height:100, 

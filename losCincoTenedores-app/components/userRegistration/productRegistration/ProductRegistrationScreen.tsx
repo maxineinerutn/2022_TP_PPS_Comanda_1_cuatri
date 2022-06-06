@@ -60,6 +60,7 @@ const ProductRegistration = () => {
       };
   }, [checked]))
 
+
   const handleReturn = () => {
     
     if(auth.currentUser?.email == "cincotenedorescocina@gmail.com"){
@@ -334,6 +335,7 @@ const ProductRegistration = () => {
               />
             </View>
 
+
             <View style={styles.inputFieldRadioLayout}>
               <View style={styles.inputFieldRadio}>
                 <RadioButton
@@ -343,6 +345,7 @@ const ProductRegistration = () => {
                 />
                 <Text style={styles.inputText}>COMIDA</Text>               
               </View>
+
 
               <View style={styles.inputFieldRadio}>
                 <RadioButton
