@@ -24,7 +24,7 @@ const ClientPanel = () => {
     const [clientName, setClientName] = useState('');
     const [clientLastName, setClientLastName] = useState('');
 
-    //SETEO DATA DEL USUARIO
+    //SETEO DATA DEL USUARIO Y CHECK DE STATUS
     useFocusEffect(
       useCallback(() => {
         checkClientStatus();
@@ -37,6 +37,12 @@ const ClientPanel = () => {
         setClientName(doc.data().name);
         setClientLastName(doc.data().lastName);
       });
+
+      const query2 = query(collection(db, "waitingList"), where("user", "==", auth.currentUser?.email), where("status", "==", "assigned"));
+      const querySnapshot2 = await getDocs(query2);
+      if(querySnapshot2.size > 0){
+        navigation.replace("TableControlPanel");
+      }      
     }      
   
 
@@ -82,21 +88,6 @@ const ClientPanel = () => {
     //RUTEO A LA LISTA DE ESPERA
     const addToWaitingList = async () => {
       toggleSpinnerAlert();
-
-      //CHECK SI SE ENCUENTRA EN LISTA DE ESPERA O CON MESA YA ASIGNADA
-      const query1 = query(collection(db, "tableInfo"), where("assignedClient", "==", auth.currentUser?.email));
-      const querySnapshot1 = await getDocs(query1);
-      if(querySnapshot1.size > 0){
-        navigation.replace("TableControlPanel");
-        return;
-      } 
-
-      const query2 = query(collection(db, "waitingList"), where("user", "==", auth.currentUser?.email));
-      const querySnapshot2 = await getDocs(query2);
-      if(querySnapshot2.size > 0){
-        navigation.replace("TableControlPanel");
-        return;
-      } 
 
       try {
         //UPLOAD DATA
