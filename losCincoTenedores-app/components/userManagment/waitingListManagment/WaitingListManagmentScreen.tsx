@@ -2,18 +2,14 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import styles from "../waitingListManagment/StyleWaitingListManagmentScreen";
 import { Image, ImageBackground, Text, TouchableOpacity, View, ScrollView, TextInput, Alert } from "react-native";
-import { returnIcon, backgroundImage, confirmIcon, cancelIcon } from "./AssetsWaitingListManagmentScreen";
+import { returnIcon, backgroundImage, cancelIcon } from "./AssetsWaitingListManagmentScreen";
 import Modal from "react-native-modal";
 import React, { useCallback, useLayoutEffect, useState } from 'react'
 import RotatingLogo from "../../rotatingLogo/RotatingLogo";
-import { db, storage } from "../../../App";
+import { db } from "../../../App";
 import { collection, query, where, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
-import { getDownloadURL, ref } from 'firebase/storage'
-import { format } from 'date-fns'
 import Toast from 'react-native-simple-toast';
-import emailjs from '@emailjs/browser';
 import { splitUserFromEmail } from "../../../utils/utils";
-import { faDatabase } from "@fortawesome/free-solid-svg-icons";
 
 const WaitingListManagment = () => {
 

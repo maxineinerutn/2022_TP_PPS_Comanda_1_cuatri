@@ -49,6 +49,14 @@ const TablePanel = () => {
       console.log(tableNumberQR);
       //MANEJO QR MESA
       if(qrType === 'mesa'){
+        if(assignedTable){
+          Toast.showWithGravity(
+            "YA TIENE UNA MESA ASIGNADA",
+            Toast.LONG,
+            Toast.CENTER);
+            return;
+        }
+
         const query1 = query(collection(db, "tableInfo"), where("assignedClient", "==", auth.currentUser?.email), where("tableNumber", "==", tableNumberQR));
         const querySnapshot1 = await getDocs(query1);
         if(querySnapshot1.size > 0){
@@ -57,7 +65,7 @@ const TablePanel = () => {
         }
         else {
           Toast.showWithGravity(
-            "TODAVIA NO SE LE ASIGNO MESA O NO ESCANEO UN QR DE MESA",
+            "TODAVIA NO SE LE ASIGNO MESA O ESCANEO UN QR DE OTRA MESA",
             Toast.LONG,
             Toast.CENTER);
         } 

@@ -33,7 +33,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center', 
         alignContent: 'center', 
-        justifyContent: 'center', 
+        justifyContent: 'flex-start', 
         marginBottom: 5
     },
     qrIcon: {
