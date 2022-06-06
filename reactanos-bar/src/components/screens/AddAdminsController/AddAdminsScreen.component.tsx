@@ -58,6 +58,31 @@ const AddAdminsScreen = ({navigation}) => {
     //     setValue("passwordRepeat", "roja$1");
     // }, []);
 
+
+    const verifyCuil = (cuit) => {
+        if (cuit.length !== 11) {
+          return false;
+        }
+      
+        let acumulado = 0;
+        let digitos = cuit.split('');
+        let digito = parseInt(digitos.pop());
+      
+        for (let i = 0; i < digitos.length; i++) {
+          acumulado += digitos[9 - i] * (2 + (i % 6));
+        }
+      
+        let verif = 11 - (acumulado % 11);
+        if (verif === 11) {
+          verif = 0;
+        } else if (verif === 10) {
+          verif = 9;
+        }
+      
+        return digito === verif;
+      };
+      
+      
     const data = [
         {label:"Dueño", value:"admin"},
         {label:"Supervisor", value:"supervisor"},
@@ -125,7 +150,7 @@ const AddAdminsScreen = ({navigation}) => {
             const fileName = image.substring(image.lastIndexOf("/") + 1);
             const fileRef = ref(storage, "images/" + fileName);
             await uploadBytes(fileRef, blob);
-            await addDoc(collection(db, "users"), {
+            await addDoc(collection(db, "employee"), { //Verificar
                 lastName: values.lastName,
                 name: values.name,
                 dni: values.dni,
