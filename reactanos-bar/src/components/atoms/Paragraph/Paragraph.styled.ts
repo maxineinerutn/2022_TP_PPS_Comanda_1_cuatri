@@ -7,7 +7,7 @@ interface ParagraphProps{
     textAlign: 'left' | 'center' | 'right';
 }
 
-const sizes = {XL: '18px', L: '16px', M:'14px'}
+const sizes = {XL: '18px', L: '16px', M:'14px', S:'12px'}
 
 export const StyledParagraph = styled.Text<ParagraphProps>`
     text-align:${({textAlign})=>textAlign};

@@ -4,7 +4,7 @@ import { StyledParagraph } from './Paragraph.styled';
 
 interface ParagraphProps extends TextProps{
     children:React.ReactNode;
-    level?:"XL" | "L" | "M";
+    level?:"XL" | "L" | "M" | "S";
     color?:string;
     bold?:boolean;
     textAlign?:'center' | 'left' | 'right';

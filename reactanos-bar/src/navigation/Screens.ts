@@ -7,4 +7,5 @@ export enum Screens{
     QRCode='Codigo QR',
     ADD_CLIENT='Agregar cliente',
     ADD_EMPLOYEE='Agregar empleado',
+    CLIENT_LIST='Lista de clientes'
 }
