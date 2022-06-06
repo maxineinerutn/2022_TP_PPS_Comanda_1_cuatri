@@ -1,14 +1,14 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { NativeStackNavigationProp } from "@react-navigation/native-stack";
-import styles from "./StyleClientSurveyScreen";
+import styles from "./StyleEmployeeSurveyScreen";
 import { Image, ImageBackground, Text, TouchableOpacity, View, ScrollView } from "react-native";
-import { returnIcon, backgroundImage, cancelIcon } from "./AssetsClientSurveyScreen";
+import { returnIcon, backgroundImage, cancelIcon } from "./AssetsEmployeeSurveyScreen";
 import Modal from "react-native-modal";
 import React, { useCallback, useLayoutEffect, useState } from 'react'
 import RotatingLogo from "../../rotatingLogo/RotatingLogo";
 
 
-const NewClientSurvey = () => {
+const EmployeeSurvey = () => {
 
   //CONSTANTES
   const navigation = useNavigation<NativeStackNavigationProp<any>>();
@@ -36,7 +36,7 @@ const NewClientSurvey = () => {
           </TouchableOpacity>
         ),
         headerTitle: () => (
-          <Text style={styles.headerText}>ENCUESTA DE SATISFACCION</Text>
+          <Text style={styles.headerText}>EVALUACION DE INGRESO</Text>
         ),
         headerTintColor: "transparent",
         headerBackButtonMenuEnabled: false,
@@ -66,4 +66,4 @@ const NewClientSurvey = () => {
   );
 };
 
-export default NewClientSurvey;
+export default EmployeeSurvey;
