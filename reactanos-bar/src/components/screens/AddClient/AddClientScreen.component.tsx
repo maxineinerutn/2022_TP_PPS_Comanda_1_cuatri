@@ -91,13 +91,14 @@ const AddClientScreen = () => {
               const fileName = image.substring(image.lastIndexOf("/") + 1);
               const fileRef = ref(storage, "images/" + fileName);
               await uploadBytes(fileRef, blob);
-              await addDoc(collection(db, "client"), {
+              await addDoc(collection(db, "clients"), {
                   lastName: values.lastName,
                   name: values.name,
                   dni: values.dni,
                   email: values.email,
                   image: fileRef.fullPath,
-                  creationDate: new Date()
+                  creationDate: new Date(),
+                  status:"Pendiente"
               });
             }else{
                 const blob: any = await getBlob(image);

@@ -10,6 +10,7 @@ import { Feather } from '@expo/vector-icons';
 import AddProductStack from './stacks/AddProductStack';
 import AddClientScreen from '../components/screens/AddClient/AddClientScreen.component';
 import AddEmployeeScreen from '../components/screens/AddEmployee/AddEmployeeScreen.component';
+import ClientListScreen from '../components/screens/ClientListScreen/ClientListScreen.component';
 
 const Drawer = createDrawerNavigator();
 
@@ -40,6 +41,7 @@ const DrawerStack = () => {
           <Drawer.Screen name={Screens.ADD_TABLE} component={AddTableStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.ADD_CLIENT} component={AddClientScreen} />
           <Drawer.Screen name={Screens.ADD_EMPLOYEE} component={AddEmployeeScreen} />
+          <Drawer.Screen name={Screens.CLIENT_LIST} component={ClientListScreen} />
         </Drawer.Navigator>
     );
 }
