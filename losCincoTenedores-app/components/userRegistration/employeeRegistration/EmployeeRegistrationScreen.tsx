@@ -219,6 +219,9 @@ const EmployeeRegistration = () => {
     } finally {
       setLoading(false);
       resetForm();
+      console.log(auth.currentUser?.email);
+
+      
     }
   };
 
