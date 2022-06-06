@@ -10,7 +10,6 @@ import { useForm } from 'react-hook-form';
 import ControlledPassword from '../../molecules/ControlledPassword/ControlledPassword.component';
 import ImageButton from "../../atoms/ImageButton/ImageButton.component";
 import Button from '../../atoms/Button/Button.component';
-import Spinner from '../../atoms/Spinner/Spinner.component';
 import { addDoc, collection } from "firebase/firestore";
 import { errorHandler } from '../../../utils/ErrorsHandler';
 import { auth, db, storage } from '../../../InitApp';
@@ -22,7 +21,9 @@ import * as ImagePicker from "expo-image-picker";
 import { getBlob } from '../../../utils/utils';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useFocusEffect } from '@react-navigation/native';
-
+import Select from '../../molecules/Select/Select.component';
+import { useDispatch } from 'react-redux';
+import { fetchLoadingFinish, fetchLoadingStart } from '../../../redux/loaderReducer';
 
 type NewUser = {
     lastName: string;
@@ -36,20 +37,21 @@ type NewUser = {
 }
 
 const AddAdminsScreen = ({navigation}) => {
-    const [loading, setLoading] = useState(false);
     const [image, setImage] = useState("");
     const { control, handleSubmit, getValues, formState: { errors }, reset, setValue } = useForm<NewUser>();
     const [scanned, setScanned] = useState(false);
     const [openQR, setOpenQR] = useState(false);
     const [show, setShow] = useState(false);
     const passInput: MutableRefObject<any> = useRef();
+    const [type, setType] = useState("");
+    const dispatch = useDispatch();
 
     //HARDCODEO
     // useEffect(() => {
     //     setValue("lastName", "rojas");
     //     setValue("name", "lucho");
     //     setValue("dni", "37933047");
-    //     setValue("cuil", "24379330479");
+    //     setValue("cuil", "23379330479");
     //     setValue("profile", "admin");
     //     setValue("email", "rojas"+ Math.floor(Math.random()*100) + 1 +"@gmail.com"); 
     //     setValue("password", "roja$1");
@@ -81,6 +83,14 @@ const AddAdminsScreen = ({navigation}) => {
       };
       
       
+    const data = [
+        {label:"Dueño", value:"admin"},
+        {label:"Supervisor", value:"supervisor"},
+    ]
+    const handleSelectType = (value:string) => {
+        setType(value);
+        setValue("profile",value);
+    }
 
       React.useEffect(
         () =>
@@ -119,7 +129,7 @@ const AddAdminsScreen = ({navigation}) => {
                 return;
             }
         })
-        if (!verifyCuil(values.cuil)) {
+        if (!verifyCuit(values.cuil)) {
             showMessage({ type: "danger", message: "Error", description: "CUIL INVAlIDO" });
             return;
         }
@@ -132,7 +142,8 @@ const AddAdminsScreen = ({navigation}) => {
             errorHandler('pass-diff');
             return;
         }
-        setLoading(true)
+        dispatch(fetchLoadingStart());
+       
         try {
             await createUserWithEmailAndPassword(auth, values.email, values.password);
             const blob: any = await getBlob(image);
@@ -163,11 +174,12 @@ const AddAdminsScreen = ({navigation}) => {
             setValue("email", "")
             setValue("password", "")
             setValue("passwordRepeat", "")
+            setType("");
             setImage("");
         } catch (error: any) {
             errorHandler(error.code);
         } finally {
-            setLoading(false);
+            dispatch(fetchLoadingFinish());
         }
     }
 
@@ -192,7 +204,6 @@ const AddAdminsScreen = ({navigation}) => {
         !openQR ?
             <StyledView>
                 <StyledLinearGradient colors={["#6190E8", "#A7BFE8"]}>
-                    {loading && <Spinner />}
                     <View style={{
                         flexDirection: 'row',
                         alignContent: 'center',
@@ -248,12 +259,7 @@ const AddAdminsScreen = ({navigation}) => {
                     </StyledMargin>
 
                     <StyledMargin>
-                        <ControlledInput
-                            variant="rounded"
-                            control={control}
-                            name="profile"
-                            placeholder='Perfil'
-                        />
+                       <Select value={type} onChange={handleSelectType} placeholder="Perfil" data={data} />
                     </StyledMargin>
 
                     <StyledMargin>
