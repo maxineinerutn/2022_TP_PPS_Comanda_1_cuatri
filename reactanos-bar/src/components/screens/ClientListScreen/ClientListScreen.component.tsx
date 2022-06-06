@@ -20,17 +20,7 @@ import {
 } from "../../../redux/loaderReducer";
 import { StyledView } from "./ClientListScreen.styled";
 import UserCard from "../../molecules/UserCard/UserCard.component";
-
-interface Client {
-    creationDate: Date;
-    dni: string;
-    email: string;
-    image: string;
-    lastName: string;
-    name: string;
-    id: string;
-    state: string;
-}
+import { Client } from "../../../models/user/client.types";
 
 const ClientListScreen = () => {
     const [data, setData] = useState<Client[]>([]);
@@ -47,7 +37,7 @@ const ClientListScreen = () => {
         setData([]);
         try {
             const querySnapshot = await getDocs(
-                query(collection(db, "client"),  where("status", "==", "Pendiente"), orderBy("creationDate"))
+                query(collection(db, "users"), where("profile","==","cliente"), where("status", "==", "Pendiente"), orderBy("creationDate"))
             );
             querySnapshot.forEach(async (doc) => {
                 const res: any = { ...doc.data(), id: doc.id };
@@ -74,7 +64,7 @@ const ClientListScreen = () => {
     const handleAccept = async (id:string) => {
         dispatch(fetchLoadingStart())
         try {
-            const ref = doc(db, "client", id);
+            const ref = doc(db, "users", id);
             await updateDoc(ref, {status:"Activo"})
             getDocuments();
         } catch (error) {

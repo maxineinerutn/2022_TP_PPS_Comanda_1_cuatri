@@ -2,9 +2,11 @@ import { signInWithEmailAndPassword, signOut, createUserWithEmailAndPassword } f
 import { showMessage } from "react-native-flash-message";
 import { sleep } from "../utils/utils";
 import { errorHandler } from '../utils/ErrorsHandler';
-import { auth } from "../InitApp";
+import { auth, db } from '../InitApp';
 import { FormData } from "../models/login/formData.types";
 import { fetchLoadingStart, fetchLoadingFinish } from './loaderReducer';
+import { collection, doc, getDocs, query, where } from 'firebase/firestore';
+import { authHandler } from "../utils/AuthHandler";
 
 const initialState = {
     user:{},
@@ -69,10 +71,18 @@ export const handleLogin = (data:FormData) =>  async (dispatch:any) => {
         dispatch(fetchInit());
         dispatch(fetchLoadingStart());
         const res = await signInWithEmailAndPassword(auth,data.email,data.password);
-        await sleep();
+        const querySnapshot = await getDocs(
+            query(collection(db, "users"), where("email", "==", data.email))
+        );
+        querySnapshot.forEach((user) => {
+            const data = user.data();
+            authHandler(data);
+        })
+        await sleep(1000);
         dispatch(fetchSuccess(res.user));
     } catch (error:any) {
         errorHandler(error.code);
+        handleLogout();
         dispatch(fetchError(error.code));
     } finally{
         dispatch(fetchLoadingFinish());

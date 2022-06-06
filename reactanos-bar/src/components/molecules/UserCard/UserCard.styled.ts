@@ -7,6 +7,7 @@ export const StyledView = styled.View`
     border-radius:20px;
     overflow:hidden;
     elevation:20;
+    margin-vertical:10px;
 `
 
 export const StyledImageContainer = styled.View`

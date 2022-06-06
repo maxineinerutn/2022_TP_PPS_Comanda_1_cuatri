@@ -30,6 +30,9 @@ export const errorHandler = (error:any) => {
         case 'table-exists':
             message="El número de la tabla ya existe"
         break;
+        case 'unauthorized':
+            message="Usuario no autorizado"
+        break;
         default:
             message="Ha ocurrido un error, por favor reintente nuevamente"
         break;

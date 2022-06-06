@@ -22,6 +22,7 @@ import { getBlob } from '../../../utils/utils';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useFocusEffect } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+import { fetchLoadingFinish, fetchLoadingStart } from '../../../redux/loaderReducer';
 
 type NewClient = {
     lastName: string;
@@ -91,13 +92,14 @@ const AddClientScreen = () => {
               const fileName = image.substring(image.lastIndexOf("/") + 1);
               const fileRef = ref(storage, "images/" + fileName);
               await uploadBytes(fileRef, blob);
-              await addDoc(collection(db, "clients"), {
+              await addDoc(collection(db, "users"), {
                   lastName: values.lastName,
                   name: values.name,
                   dni: values.dni,
                   email: values.email,
                   image: fileRef.fullPath,
                   creationDate: new Date(),
+                  profile:"cliente",
                   status:"Pendiente"
               });
             }else{
