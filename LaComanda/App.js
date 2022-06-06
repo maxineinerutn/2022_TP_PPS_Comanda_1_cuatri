@@ -15,7 +15,7 @@ export default function App() {
       password,
       setPassword
     }),
-    []
+    [email, password]
   );
 
   useEffect(() => {

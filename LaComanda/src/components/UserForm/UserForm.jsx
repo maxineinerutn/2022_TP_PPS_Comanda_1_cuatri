@@ -3,25 +3,22 @@ import {
   Text,
   View,
   TextInput,
-  Button,
+  TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
   Image,
-  ScrollView,
-  TouchableOpacity
+  ScrollView
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { RadioButtons } from 'react-native-radio-buttons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Styles from './Styles';
 import { UserTypes } from '../../util/Enums';
 import userImgDefault from '../../../assets/iconoCamara.png';
 import CamaraView from '../CameraView/CamaraView';
 import Scanner from '../Scanner/Scanner';
-import theme from '../../config/theme';
 
 export default function UserForm( props ) {
-  const { userType, onSubmit, onCancel } = props;
+  const { userType, onSubmit } = props;
   const [formValid, setFormValid] = useState( false );
   const [email, setEmail] = useState( '' );
   const [errorEmail, hasErrorEmail] = useState({ message: '', error: false });
@@ -47,6 +44,7 @@ export default function UserForm( props ) {
   const [errorPhoto, hasErrorPhoto] = useState({ message: '', error: false });
   const [cameraActivated, setCameraActivate] = useState( false );
   const [scannerActivated, setScannerActivate] = useState( false );
+
   useEffect(() => {
     if ( userType === UserTypes.Guest ) {
       setRol( UserTypes.Guest );
@@ -358,22 +356,27 @@ export default function UserForm( props ) {
         rol,
         photo,
         email,
-        password
+        password,
+        approved: false
       };
       onSubmit( user );
     }
   };
+
   function takePhoto() {
     setCameraActivate( true );
   }
+
   function handleCamera( photoTaken ) {
     setPhoto( photoTaken );
     setCameraActivate( false );
   }
+
   function handleScanner() {
     setScannerActivate( true );
     setCameraActivate( true );
   }
+
   function handleScannerResult( result ) {
     setScannerActivate( false );
     setCameraActivate( false );
@@ -381,6 +384,7 @@ export default function UserForm( props ) {
     setSurname( result.surname );
     setDni( result.dni );
   }
+
   return (
     <View>
       { cameraActivated ? (
@@ -391,13 +395,8 @@ export default function UserForm( props ) {
       )
         : (
           <View style={Styles.container}>
-            <TouchableOpacity
-              onPress={() => onCancel()}
-              style={Styles.buttonCancelRegistration}
-            >
-              <MaterialCommunityIcons name='close-circle' color={theme.colors.primary} size={50} />
-            </TouchableOpacity>
             <ScrollView>
+
               <View style={Styles.containerForm}>
                 <View style={Styles.formControlPhoto}>
                   <TouchableWithoutFeedback onPress={() => takePhoto()}>
@@ -458,8 +457,15 @@ export default function UserForm( props ) {
               </View>
             </ScrollView>
             <View style={Styles.containerActionButtons}>
-              {userType !== UserTypes.Guest && <Button title='Scanner Dni' onPress={() => handleScanner()} />}
-              <Button title='Registrar' onPress={() => handleSubmit()} />
+              {userType !== UserTypes.Guest
+              && (
+                <TouchableOpacity style={Styles.button} onPress={() => handleScanner()}>
+                  <Text style={Styles.buttonText}>Escanear DNI</Text>
+                </TouchableOpacity>
+              )}
+              <TouchableOpacity style={Styles.button} onPress={() => handleSubmit()}>
+                <Text style={Styles.buttonText}>Registrarse</Text>
+              </TouchableOpacity>
             </View>
           </View>
         )}

@@ -39,7 +39,6 @@ export const styles = StyleSheet.create({
   buttonContainer: {
     width: Dimensions.get( 'window' ).width * 0.8,
     height: Dimensions.get( 'window' ).height * 0.25,
-    paddingBottom: 50,
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'Roboto'
@@ -47,8 +46,7 @@ export const styles = StyleSheet.create({
   button: {
     backgroundColor: theme.colors.primary,
     width: '100%',
-    height: '60%',
-    marginTop: 15,
+    height: '70%',
     borderRadius: 15,
     alignItems: 'center',
     textAlign: 'center',
@@ -56,8 +54,8 @@ export const styles = StyleSheet.create({
   },
   buttonText: {
     color: 'white',
-    fontWeight: '700',
-    fontSize: 20
+    fontWeight: '500',
+    fontSize: 38
   },
   buttonOutline: {
     backgroundColor: 'white',
@@ -71,9 +69,10 @@ export const styles = StyleSheet.create({
     fontSize: 16
   },
   error: {
-    color: 'red',
+    color: '#C1292E',
     padding: 5,
-    marginLeft: 5
+    marginLeft: 5,
+    fontSize: 20
   },
   success: {
     color: 'green',

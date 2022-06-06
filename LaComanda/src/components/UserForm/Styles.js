@@ -3,37 +3,35 @@ import theme from '../../config/theme';
 
 const Styles = StyleSheet.create({
   container: {
-    // backgroundColor: "green",
     height: Dimensions.get( 'screen' ).height * 0.8,
     width: Dimensions.get( 'screen' ).width,
     justifyContent: 'space-evenly',
     alignItems: 'center'
   },
   containerForm: {
-    height: Dimensions.get( 'screen' ).height * 0.9,
+    height: Dimensions.get( 'screen' ).height * 0.95,
     width: Dimensions.get( 'screen' ).width,
     justifyContent: 'flex-start',
     alignItems: 'center'
   },
   formControl: {
     borderColor: theme.colors.primary,
-    width: Dimensions.get( 'screen' ).width * 0.7,
-    height: Dimensions.get( 'screen' ).height * 0.05,
+    width: Dimensions.get( 'screen' ).width * 0.8,
+    height: Dimensions.get( 'screen' ).height * 0.065,
     paddingVertical: Dimensions.get( 'screen' ).height * 0.01,
     paddingLeft: Dimensions.get( 'screen' ).width * 0.02,
     borderRadius: 10,
-    borderWidth: 4,
+    borderWidth: 3,
     marginBottom: 25
   },
   formControlPhoto: {
     borderColor: theme.colors.primary,
     width: Dimensions.get( 'screen' ).width * 0.37,
     height: Dimensions.get( 'screen' ).height * 0.167,
-    // paddingVertical: Dimensions.get( 'screen' ).height * 0.01,
-    // paddingLeft: Dimensions.get( 'screen' ).width * 0.04,
     borderRadius: 10,
     borderWidth: 4,
-    marginBottom: 40
+    marginBottom: 40,
+    marginTop: 5
   },
   formControlPhotoWithoutPhoto: {
     width: Dimensions.get( 'screen' ).width * 0.32,
@@ -55,7 +53,6 @@ const Styles = StyleSheet.create({
   },
   containerRadioButton: {
     width: Dimensions.get( 'screen' ).width * 0.7,
-    // height: Dimensions.get("screen").height * 0.5,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
@@ -81,8 +78,7 @@ const Styles = StyleSheet.create({
     color: theme.colors.error
   },
   containerActionButtons: {
-    width: Dimensions.get( 'screen' ).width * 0.7,
-    // height: Dimensions.get( 'screen' ).height * 0.5,
+    width: Dimensions.get( 'screen' ).width,
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-evenly',
@@ -90,10 +86,23 @@ const Styles = StyleSheet.create({
     marginBottom: 15
   },
   buttonCancelRegistration: {
-    margin: 0,
+    margin: 2,
     padding: 0,
     justifyContent: 'flex-start',
     alignSelf: 'flex-end'
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    width: Dimensions.get( 'screen' ).width * 0.4,
+    height: Dimensions.get( 'screen' ).height * 0.07,
+    borderRadius: 15,
+    justifyContent: 'space-evenly'
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '500',
+    fontSize: 24,
+    textAlign: 'center'
   }
 });
 export default Styles;
