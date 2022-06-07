@@ -3,12 +3,14 @@
 import { View, TouchableOpacity, Text } from 'react-native';
 import React, { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import UserForm from '../../../components/UserForm/UserForm';
 import { UserTypes } from '../../../util/Enums';
 import Styles from './Styles';
 import { createUserWithEmailAndPassword, signOutUser } from '../../../services/AuthService';
 import { saveImageInStorage } from '../../../services/StorageServices';
 import { saveItemInCollection } from '../../../services/FirestoreServices';
+import theme from '../../../config/theme';
 
 function RegisterTab({ route }) {
   const { displayFormOnType } = route.params;
@@ -44,13 +46,32 @@ function RegisterTab({ route }) {
     </View>
   );
 
+  const renderHeaderIcon = () => (
+    <TouchableOpacity onPress={() => handleBack()}>
+      <MaterialCommunityIcons name='arrow-left-circle' color={theme.colors.secondary} size={50} />
+    </TouchableOpacity>
+  );
+
+  const handleBack = () => {
+    navigation.replace( 'Credentials', { screen: 'Registrarse', displayFormOnType: UserTypes.None });
+  };
+
+  const handleHeaderIcon = () => {
+    navigation.setOptions({ headerLeft: renderHeaderIcon });
+  };
+
+  const handleChosen = ( type ) => {
+    handleHeaderIcon();
+    setUserTypeForm( type );
+  };
+
   return (
     <View style={Styles.container}>
       {userTypeForm !== UserTypes.None ? renderForm( userTypeForm )
         : (
-          <>
+          <View style={Styles.containerChoose}>
             <TouchableOpacity
-              onPress={() => setUserTypeForm( UserTypes.Guest )}
+              onPress={() => handleChosen( UserTypes.Client )}
               style={Styles.button}
             >
               <View>
@@ -59,7 +80,7 @@ function RegisterTab({ route }) {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => setUserTypeForm( UserTypes.Employee )}
+              onPress={() => handleChosen( UserTypes.Employee )}
               style={Styles.button}
             >
               <View>
@@ -67,7 +88,7 @@ function RegisterTab({ route }) {
                 <Text style={Styles.buttonTextSecondary}>Cliente</Text>
               </View>
             </TouchableOpacity>
-          </>
+          </View>
         )}
     </View>
   );

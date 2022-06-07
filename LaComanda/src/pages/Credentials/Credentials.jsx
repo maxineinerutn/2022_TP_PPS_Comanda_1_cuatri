@@ -1,8 +1,6 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/native';
 import theme from '../../config/theme';
 import LoginTab from './LoginTab/LoginTab';
 import RegisterTab from './RegisterTab/RegisterTab';
@@ -32,21 +30,7 @@ function renderTabBarIcon( route, size ) {
   );
 }
 
-function renderHeaderIcon( navigation ) {
-  return (
-    <TouchableOpacity onPress={() => handleBack( navigation )}>
-      <MaterialCommunityIcons name='arrow-left-circle' color={theme.colors.secondary} size={50} />
-    </TouchableOpacity>
-  );
-}
-
-const handleBack = ( navigation ) => {
-  navigation.replace( 'Credentials', { screen: 'Registrarse', displayFormOnType: UserTypes.None });
-};
-
 function Credentials() {
-  const navigation = useNavigation();
-
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -88,8 +72,7 @@ function Credentials() {
           headerTitleAlign: 'center',
           headerTitleStyle: {
             color: theme.colors.secondary
-          },
-          headerLeft: () => renderHeaderIcon( navigation )
+          }
         }}
       />
     </Tab.Navigator>

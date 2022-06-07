@@ -1,19 +1,12 @@
 import {
   Text, View, Image, ImageBackground
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { styles } from './styles';
-import SplashS from '../../../assets/SplashS.png';
+import SplashS from '../../../assets/splash.png';
 import Gifplay from '../../../assets/gifplay.gif';
 
 export default function SplashScreen() {
-  const [showSpinner, setShowSpinner] = useState( false );
-  useEffect(() => {
-    setTimeout(() => {
-      setShowSpinner( true );
-    }, 1500 );
-  }, []);
-
   return (
     <View
       style={styles.container}
@@ -24,28 +17,27 @@ export default function SplashScreen() {
         <ImageBackground
           style={styles.image}
           source={SplashS}
-          resizeMode='stretch'
+          resizeMode='cover'
         />
 
       </View>
 
+      <View style={styles.appName}>
+        <Text style={styles.appTitle}>Coman-Da</Text>
+      </View>
+
+      <View style={styles.gifContainer}>
+        <Image
+          style={styles.gif}
+          source={Gifplay}
+        />
+      </View>
+
       <View style={styles.names}>
         <Text style={styles.text}>Guido Clas</Text>
+        <Text style={styles.text}>&</Text>
+        <Text style={styles.text}>Lucas Barbosa</Text>
       </View>
-
-      <View style={styles.appName}>
-        <Text style={styles.appTitle}>Chateando</Text>
-      </View>
-
-      {showSpinner && (
-        <View style={styles.gifContainer}>
-          <Image
-            style={styles.gif}
-            source={Gifplay}
-          />
-        </View>
-      )}
-
     </View>
   );
 }

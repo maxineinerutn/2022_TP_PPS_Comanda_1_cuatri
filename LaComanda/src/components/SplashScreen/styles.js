@@ -1,4 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
+import theme from '../../config/theme';
 
 export const styles = StyleSheet.create({
   container: {
@@ -14,23 +15,30 @@ export const styles = StyleSheet.create({
     height: Dimensions.get( 'screen' ).height
   },
   names: {
-    position: 'absolute',
-    top: -280
+    alignContent: 'center',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: Dimensions.get( 'screen' ).width * 0.8,
+    height: Dimensions.get( 'screen' ).height * 0.2
   },
   text: {
-    fontSize: 26,
-    fontFamily: 'Roboto'
+    textShadowRadius: 3,
+    textShadowColor: theme.colors.primary,
+    fontSize: 36,
+    fontFamily: 'Roboto',
+    fontWeight: '700'
   },
   appName: {
-    position: 'absolute',
-    top: -180,
-    width: 300
+    width: Dimensions.get( 'screen' ).width * 0.8,
+    right: -10
   },
   appTitle: {
     textAlign: 'center',
     fontSize: 50,
     fontFamily: 'Roboto',
-    fontWeight: 'bold'
+    fontWeight: '800',
+    textShadowRadius: 5,
+    textShadowColor: theme.colors.primary
   },
   gifContainer: {
     position: 'relative',
@@ -40,5 +48,4 @@ export const styles = StyleSheet.create({
     width: 250,
     height: 250
   }
-
 });
