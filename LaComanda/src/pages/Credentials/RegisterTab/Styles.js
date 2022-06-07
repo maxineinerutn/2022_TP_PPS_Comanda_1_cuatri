@@ -9,6 +9,13 @@ const Styles = StyleSheet.create({
     height: Dimensions.get( 'screen' ).height,
     justifyContent: 'flex-start'
   },
+  containerChoose: {
+    flex: 1,
+    alignItems: 'center',
+    width: Dimensions.get( 'screen' ).width,
+    height: Dimensions.get( 'screen' ).height,
+    justifyContent: 'center'
+  },
   buttonText: {
     color: 'white',
     fontWeight: '700',
