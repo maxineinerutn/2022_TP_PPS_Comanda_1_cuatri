@@ -1,7 +1,10 @@
 import { createContext } from 'react';
 
 const GlobalContext = createContext({
-  email: '', setEmail: () => {}, password: '', setPassword: () => {}
+  user: {
+    name: '', surname: '', role: '', cuil: '', approved: false, email: '', dni: '', photo: ''
+  },
+  setUser: () => {}
 });
 
 export default GlobalContext;

@@ -71,7 +71,7 @@ function RegisterTab({ route }) {
         : (
           <View style={Styles.containerChoose}>
             <TouchableOpacity
-              onPress={() => handleChosen( UserTypes.Client )}
+              onPress={() => handleChosen( UserTypes.Guest )}
               style={Styles.button}
             >
               <View>
@@ -80,7 +80,7 @@ function RegisterTab({ route }) {
               </View>
             </TouchableOpacity>
             <TouchableOpacity
-              onPress={() => handleChosen( UserTypes.Employee )}
+              onPress={() => handleChosen( UserTypes.Client )}
               style={Styles.button}
             >
               <View>

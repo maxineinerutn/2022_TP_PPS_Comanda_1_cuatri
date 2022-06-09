@@ -6,16 +6,13 @@ import GlobalContext from './src/context/GlobalContext';
 
 export default function App() {
   const [isLoaded, setIsloaded] = useState( false );
-  const [email, setEmail] = useState( '' );
-  const [password, setPassword] = useState( '' );
+  const [user, setUser] = useState({});
   const memo = useMemo(
     () => ({
-      email,
-      setEmail,
-      password,
-      setPassword
+      user,
+      setUser
     }),
-    [email, password]
+    [user]
   );
 
   useEffect(() => {
