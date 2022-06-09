@@ -8,25 +8,51 @@ import {
   ActivityIndicator
 } from 'react-native';
 import React, { useContext, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles';
 import GlobalContext from '../../../context/GlobalContext';
-import { verifyUserIsApproved, handleLoginErrorMessage } from './utils';
+import { handleLoginErrorMessage } from './utils';
+import { app } from '../../../../firebase';
 import theme from '../../../config/theme';
 import { signInUser } from '../../../services/AuthService';
 import Gifplay from '../../../../assets/gifplayBig.gif';
 
 function LoginTab() {
   const {
-    email, setEmail, password, setPassword
+    setUser,
+    user
   } = useContext( GlobalContext );
-
+  const [email, setEmail] = useState( '' );
+  const [password, setPassword] = useState( '' );
   const [errorMessage, setErrorMessage] = useState( '' );
   const [error, setError] = useState( false );
   const [loading, setLoading] = useState( false );
 
-  const handleLogin = () => {
+  const navigation = useNavigation();
+
+  const handleLogin = async () => {
     setLoading( true );
-    if ( verifyUserIsApproved( email )) {
+
+    app.firestore().collection( 'users' ).where( 'email', '==', email ).onSnapshot(( querySnapshots ) => {
+      const miUsuario = querySnapshots.docs.map(( doc ) => doc.data())[0];
+      setUser({
+        name: miUsuario.name,
+        surname: miUsuario.surname,
+        approved: miUsuario.approved,
+        cuil: miUsuario.cuil,
+        dni: miUsuario.dni,
+        email: miUsuario.email,
+        photo: miUsuario.photo,
+        role: miUsuario.rol
+      });
+    }, ( err ) => {
+      console.log( err );
+    });
+
+    setTimeout(() => {
+    }, 500 );
+
+    if ( user && user.approved ) {
       signIn( email, password );
     } else {
       setErrorMessage( 'Su usuario todavía no fué aprobado' );
@@ -40,7 +66,7 @@ function LoginTab() {
       .then(( userCredential ) => {
         setLoading( false );
         console.log( 'User logged in with: ', userCredential.user.email );
-      // navigation.replace('HomeScreen');
+        navigation.replace( 'Home' );
       })
       .catch(( err ) => {
         setLoading( false );
@@ -52,7 +78,7 @@ function LoginTab() {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container}>
+    <KeyboardAvoidingView style={styles.container} behavior='height'>
 
       {loading && (
         <View style={styles.spinnerContainer}>

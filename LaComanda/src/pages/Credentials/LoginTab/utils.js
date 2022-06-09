@@ -1,5 +1,3 @@
-import { getUserByEmail } from '../../../services/FirestoreServices';
-
 export const handleLoginErrorMessage = ( code ) => {
   switch ( code ) {
     case 'auth/user-disabled': {
@@ -20,14 +18,3 @@ export const handleLoginErrorMessage = ( code ) => {
   }
 };
 
-export const verifyUserIsApproved = ( email ) => getUserByEmail(
-  'users',
-  email,
-  ( querySnapshot ) => {
-    const user = querySnapshot.docs.map(( doc ) => doc.data())[0];
-    return user ? user.approved : undefined;
-  },
-  () => {
-    console.log( err );
-  }
-);

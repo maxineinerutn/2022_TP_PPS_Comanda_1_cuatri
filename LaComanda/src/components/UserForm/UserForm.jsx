@@ -211,6 +211,7 @@ export default function UserForm( props ) {
         return null;
     }
   }
+
   function renderOption( option, selected, onSelect, index ) {
     const textStyle = selected ? Styles.textRadioButtonSelected : {};
     const containerStateStyle = selected ? Styles.radioBtnSelected : {};
@@ -223,9 +224,11 @@ export default function UserForm( props ) {
       </TouchableWithoutFeedback>
     );
   }
+
   function renderContainer( options ) {
     return <View style={Styles.containerRadioButton}>{options}</View>;
   }
+
   function validatePhoto() {
     if ( photo === '' ) {
       hasErrorPhoto({ message: 'La foto es requerida.', error: true });
@@ -234,6 +237,7 @@ export default function UserForm( props ) {
       hasErrorPhoto({ message: '', error: false });
     }
   }
+
   function validateEmail() {
     if ( email !== '-' ) {
       if ( email === '' ) {
@@ -247,6 +251,7 @@ export default function UserForm( props ) {
       }
     }
   }
+
   function validatePassword() {
     if ( password === '' ) {
       hasErrorPassword({ message: 'La clave es requerida.', error: true });
@@ -261,6 +266,7 @@ export default function UserForm( props ) {
       hasErrorPassword({ message: '', error: false });
     }
   }
+
   function validateName() {
     if ( name !== '-' ) {
       if ( name === '' ) {
@@ -277,6 +283,7 @@ export default function UserForm( props ) {
       }
     }
   }
+
   function validateSurname() {
     if ( surname !== '-' ) {
       if ( surname === '' ) {
@@ -299,6 +306,7 @@ export default function UserForm( props ) {
       }
     }
   }
+
   function validateDni() {
     if ( dni !== '-' ) {
       if ( dni === '' ) {
@@ -312,6 +320,7 @@ export default function UserForm( props ) {
       }
     }
   }
+
   function validateCuil() {
     if ( cuil !== '-' ) {
       if ( cuil === '' ) {
@@ -325,6 +334,7 @@ export default function UserForm( props ) {
       }
     }
   }
+
   function validateRol() {
     if ( rol !== '-' ) {
       if ( rol === '' ) {
@@ -335,6 +345,7 @@ export default function UserForm( props ) {
       }
     }
   }
+
   const handleSubmit = () => {
     Keyboard.dismiss();
     setFormValid( true );
