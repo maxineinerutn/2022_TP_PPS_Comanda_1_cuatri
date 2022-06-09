@@ -357,8 +357,9 @@ export default function UserForm( props ) {
         photo,
         email,
         password,
-        approved: false
+        approved: true
       };
+      if ( userType === UserTypes.Client ) { user.approved = false; }
       onSubmit( user );
     }
   };
