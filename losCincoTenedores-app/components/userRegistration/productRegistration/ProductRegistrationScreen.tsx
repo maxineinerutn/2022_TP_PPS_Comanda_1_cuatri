@@ -172,6 +172,7 @@ const ProductRegistration = () => {
         image1:fileRef1.fullPath,
         image2:fileRef2.fullPath,
         image3:fileRef3.fullPath,
+        qString: "producto"+"@"+values.name+"@"+values.description+"@"+values.elaborationTime+"@"+values.price+"@"+values.type+"@"+fileRef1.fullPath+"@"+fileRef2.fullPath+"@"+fileRef3.fullPath,
         creationDate:new Date()          
       });        
       Toast.showWithGravity(
