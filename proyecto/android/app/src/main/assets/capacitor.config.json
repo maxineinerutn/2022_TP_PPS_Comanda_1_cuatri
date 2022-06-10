@@ -1,0 +1,11 @@
+{
+	"appId": "io.ionic.adminusuarios",
+	"appName": "adminUsuariosApp",
+	"webDir": "www",
+	"bundledWebRuntime": false,
+	"plugins": {
+		"SplashScreen": {
+			"launchShowDuration": 3000
+		}
+	}
+}
