@@ -3,10 +3,13 @@ import { View } from 'react-native';
 import React from 'react';
 import ActionButton from 'react-native-action-button';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 import theme from '../../config/theme';
 
 export default function Fab( props ) {
   const { type } = props;
+
+  const navigation = useNavigation();
 
   const renderIcon = () => <MaterialCommunityIcons name='hammer-wrench' size={40} color='white' />;
 
@@ -22,7 +25,7 @@ export default function Fab( props ) {
             buttonColor={theme.colors.icons}
             position='left'
             degrees={0}
-            onPress={() => { console.log( 'sdas' ); }}
+            onPress={() => {}}
             renderIcon={renderIcon}
             style={{ zIndex: 9999, width: 120, height: 100 }}
           >
@@ -38,7 +41,7 @@ export default function Fab( props ) {
               }}
               style={{ zIndex: 9999 }}
               onPress={() => {
-                console.log( 'OJAWODW' );
+                navigation.navigate( 'Approvals' );
               }}
             >
               <MaterialCommunityIcons name='check-decagram' size={40} color='white' />

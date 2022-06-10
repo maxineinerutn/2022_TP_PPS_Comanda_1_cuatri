@@ -47,12 +47,12 @@ export default function UserForm( props ) {
 
   useEffect(() => {
     if ( userType === UserTypes.Guest ) {
-      setRol( UserTypes.Guest );
+      setRol( 'Invitado' );
       setSurname( '-' );
       setDni( '-' );
       setCuil( '-' );
     } else if ( userType === UserTypes.Client ) {
-      setRol( UserTypes.Client );
+      setRol( 'Cliente' );
       setCuil( '-' );
     }
   }, []);
