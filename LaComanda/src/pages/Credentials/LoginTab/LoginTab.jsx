@@ -65,7 +65,7 @@ function LoginTab() {
     await signInUser( userEmail, userPassword )
       .then(( userCredential ) => {
         setLoading( false );
-        console.log( 'User logged in with: ', userCredential.user.email );
+        console.log( 'User logged in with: ', userCredential.user.uid );
         navigation.replace( 'Home' );
       })
       .catch(( err ) => {
