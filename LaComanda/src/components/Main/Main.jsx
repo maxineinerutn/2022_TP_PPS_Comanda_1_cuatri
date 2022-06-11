@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Credentials from '../../pages/Credentials/Credentials';
 import Home from '../../pages/Home/Home';
 import theme from '../../config/theme';
+import Approvals from '../../pages/Approvals/Approvals';
 
 const Stack = createNativeStackNavigator();
 
@@ -49,6 +50,25 @@ export default function Main() {
             }}
             name='Home'
             component={Home}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: theme.colors.primary,
+                borderBottomWidth: 2,
+                borderBottomColor: theme.colors.neutral
+              },
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                color: theme.colors.secondary,
+                fontSize: 25,
+                fontWeight: '400'
+              },
+              headerTitle: 'Aprobaciones'
+            }}
+            name='Approvals'
+            component={Approvals}
           />
         </Stack.Navigator>
       </NavigationContainer>
