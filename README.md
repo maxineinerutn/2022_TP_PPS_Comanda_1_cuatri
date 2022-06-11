@@ -41,6 +41,14 @@ SINNOTT SEGURA GONZALO
 
 <img src="Documentos/mesa3.png" width="300"/><img src="Documentos/mesa4.png" width="300"/>
 
+#### QR's PROPINA
+
+<img src="Documentos/propina0.png" width="300"/><img src="Documentos/propina5.png" width="300"/>
+
+<img src="Documentos/propina10.png" width="300"/><img src="Documentos/propina15.png" width="300"/>
+
+<img src="Documentos/propina20.png" width="300"/>
+
 ## CINCO TENEDORES APP - SEMANA 1 (21/05 AL 27/05):
 | # | Tarea | Responsable | Estado | Rama |
 | :------: | :------: | :------: | :------: | :------: |
@@ -64,8 +72,9 @@ SINNOTT SEGURA GONZALO
 | :------: | :------: | :------: | :------: | :------: |
 | 06 | Qr ingreso al local | PEDRO | Terminado | Rama qrIngreso | 
 | 07 | Qr de la mesa | GONZALO | Terminado | Rama qrMesa |
-| 08 | Qr de propina  | CECILIA | En Proceso | Rama qrPropina |
-| 13 | Ingresar al local | GONZALO | En Proceso | Rama ingresoLocal |
+| 08 | Qr de propina  | CECILIA | Terminado | Rama qrPropina |
+| 09 | Encuesta cliente | GONZALO | Terminado | Rama encuestaClientes |
+| 13 | Ingresar al local | GONZALO | Terminado | Rama ingresoLocal |
 | 17 | Agregar cliente nuevo | GONZALO | En Proceso | Rama altaClientePush |
 
 ## CINCO TENEDORES APP - SEMANA 4 (11/06 AL 17/06):
@@ -94,14 +103,14 @@ SINNOTT SEGURA GONZALO
 | CODIGOS QR                      
 | 06 | Qr ingreso al local | PEDRO | Terminado | Rama qrIngreso | 
 | 07 | Qr de la mesa | GONZALO | Terminado | Rama qrMesa |
-| 08 | Qr de propina  | CECILIA | En Proceso | Rama qrPropina |
+| 08 | Qr de propina  | CECILIA | Terminado | Rama qrPropina |
 | ENCUESTAS                     
-| 09 | Encuesta cliente | CECILIA | - | Rama encuestaClientes |
+| 09 | Encuesta cliente | GONZALO | Terminado | Rama encuestaClientes |
 | 10 | Encuesta Empleado | PEDRO | - | Rama encuestaEmpleado |
-| 11 | Encuesta supervisor | GONZALO | - | Rama encuestaSupervisor |
+| 11 | Encuesta supervisor | CECILIA | - | Rama encuestaSupervisor |
 | GESTION 
 | 12 | Agregar un nuevo cliente registrado  | GONZALO | Terminado | Rama altaCliente |
-| 13 | Ingresar al local | GONZALO | En Proceso | Rama ingresoLocal |
+| 13 | Ingresar al local | GONZALO | Terminado | Rama ingresoLocal |
 | 14 | Realizar pedidos | PEDRO | - | Rama altaPedido | 
 | 15 | Confirmar pedidos | CECILIA | - | Rama confirmacionPedido | 
 | 16 | Generar reservas agendadas | PEDRO | - | Rama reservas |
