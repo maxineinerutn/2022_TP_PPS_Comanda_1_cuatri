@@ -27,9 +27,21 @@ SINNOTT SEGURA GONZALO
 
 <img src="Documentos/splash.gif" width="300"/><img src="Documentos/login.jpeg" width="245"/> <img src="Documentos/inicioRapido.jpeg" width="245"/>
 
-#### EJEMPLOS DE PANEL DE USUARIO Y DE ALTA
+#### PANEL DE CONTROL DE ADMINISTRADOR Y ALTA DE CLIENTE
 
-<img src="Documentos/ejemploPanelControl.jpeg" width="245"/><img src="Documentos/ejemploAlta.jpeg" width="245"/>
+<img src="Documentos/panelControlAdmin.jpeg" width="245"/><img src="Documentos/altaCliente.jpeg" width="245"/>
+
+#### INGRESO AL LOCAL Y PANEL DE CONTROL MESA
+
+<img src="Documentos/ingresoLocal.jpeg" width="245"/><img src="Documentos/panelControlMesa.jpeg" width="245"/>
+
+#### ENCUESTA CLIENTE Y RESULTADOS DE ENCUESTA
+
+<img src="Documentos/encuestaCliente.jpeg" width="245"/><img src="Documentos/resultadosEncuestas.jpeg" width="245"/>
+
+#### MAIL DE ALTA
+
+<img src="Documentos/mail.jpeg" width="500"/>
 
 #### QR INGRESO AL LOCAL
 
