@@ -226,7 +226,6 @@ const NewClientSurvey = () => {
 
   return (
     <View style={styles.container}>
-              <ScrollView>
 
       <ImageBackground
         source={backgroundImage}
@@ -236,8 +235,10 @@ const NewClientSurvey = () => {
       >
         {loading}
           <View style={styles.body}>
+          <ScrollView>
+
             <View style={styles.inputContainer}>
-              <View style={styles.buttonLayout}>
+              <View style={styles.sliderButtonLayout}>
                 <Text style={styles.inputText}>
                   ATENCION DE LOS MOZOS (0-100) {Math.round(sliderState * 100)}%
                 </Text>
@@ -252,7 +253,6 @@ const NewClientSurvey = () => {
                 <Text style={styles.inputText}>METODO DE PAGO PREFERIDO</Text>
               </View>
 
-              <View style={styles.inputFieldRowContainer}>
                 <View style={styles.inputFieldRadio}>
                   <RadioButton
                     value="Efectivo"
@@ -279,7 +279,6 @@ const NewClientSurvey = () => {
                   />
                   <Text style={styles.inputText}>CRÉDITO    </Text>
                 </View>
-              </View>
 
               <View style={styles.buttonLayout}>
                 <Text style={styles.inputText}>
@@ -287,7 +286,7 @@ const NewClientSurvey = () => {
                 </Text>
               </View>
 
-              <View style={styles.buttonLayout}>
+              <View style={styles.pickerButtonLayout}>
                 <Picker
                   style={styles.defaultPicker}
                   selectedValue={foodQuality}
@@ -316,11 +315,13 @@ const NewClientSurvey = () => {
 
               <View style={styles.buttonLayout}>
                 <Text style={styles.inputCheckBoxTitleText}>
-                  ELIJA LAS OPCIONES QUE MEJOR REPRESENTEN SU ESTADIA{" "}
+                  ELIJA LAS OPCIONES QUE
+                </Text>
+                <Text style={styles.inputCheckBoxTitleText}>
+                  MEJOR REPRESENTEN SU ESTADIA
                 </Text>
               </View>
 
-              <View style={styles.inputFieldCheckBoxRowContainer}>
                 <View style={styles.buttonCheckBoxLayout}>
                   <View style={styles.inputFieldCheckBoxRowContainer}>
                     <Checkbox
@@ -341,9 +342,7 @@ const NewClientSurvey = () => {
                     <Text style={styles.inputTextCheckBox}>LUGAR SUCIO</Text>
                   </View>
                 </View>
-              </View>
 
-              <View style={styles.inputFieldCheckBoxRowContainer}>
                 <View style={styles.buttonCheckBoxLayout}>
                   <View style={styles.inputFieldCheckBoxRowContainer}>
                     <Checkbox
@@ -351,10 +350,7 @@ const NewClientSurvey = () => {
                       value={quickDelivery}
                       onValueChange={setQuickDelivery}
                     />
-                    <View>
-                      <Text style={styles.inputTextCheckBox}>     LA ATENCION</Text>
-                      <Text style={styles.inputTextCheckBox}>     FUE RAPIDA</Text>
-                    </View>
+                      <Text style={styles.inputTextCheckBox}>LA ATENCION FUE RAPIDA</Text>
                   </View>
                 </View>
                 <View style={styles.buttonCheckBoxLayout}>
@@ -364,15 +360,10 @@ const NewClientSurvey = () => {
                       value={slowDelivery}
                       onValueChange={setSlowDelivery}
                     />
-                    <View>
-                      <Text style={styles.inputTextCheckBox}>     LA ATENCION</Text>
-                      <Text style={styles.inputTextCheckBox}>     FUE LENTA</Text>
-                    </View>
+                      <Text style={styles.inputTextCheckBox}>LA ATENCION FUE LENTA</Text>
                   </View>
                 </View>
-              </View>
 
-              <View style={styles.inputFieldCheckBoxRowContainer}>
                 <View style={styles.buttonCheckBoxLayout}>
                   <View style={styles.inputFieldCheckBoxRowContainer}>
                     <Checkbox
@@ -380,10 +371,7 @@ const NewClientSurvey = () => {
                       value={happy}
                       onValueChange={setHappy}
                     />
-                    <View>
-                      <Text style={styles.inputTextCheckBox}>     LA EXPERIENCA</Text>
-                      <Text style={styles.inputTextCheckBox}>     FUE AGRADABLE</Text>
-                    </View>
+                      <Text style={styles.inputTextCheckBox}>LA EXPERIENCA FUE AGRADABLE</Text>
                   </View>
                 </View>
                 <View style={styles.buttonCheckBoxLayout}>
@@ -393,13 +381,9 @@ const NewClientSurvey = () => {
                       value={sad}
                       onValueChange={setSad}
                     />
-                    <View>
-                      <Text style={styles.inputTextCheckBox}>     LA EXPERIENCIA</Text>
-                      <Text style={styles.inputTextCheckBox}>     FUE MALA</Text>
-                    </View>
+                      <Text style={styles.inputTextCheckBox}>LA EXPERIENCIA FUE MALA</Text>
                   </View>
                 </View>
-              </View>
 
               <View style={styles.inputField}>
                 <TextInput
@@ -411,11 +395,13 @@ const NewClientSurvey = () => {
               </View>
 
               <View style={styles.submitContainer}>
-                <TouchableOpacity onPress={onSubmit} style={styles.buttonLayout}>
+                <TouchableOpacity onPress={onSubmit} style={styles.submitButtonLayout}>
                   <Text style={styles.buttonText}>CARGAR ENCUESTA</Text>
                 </TouchableOpacity>
               </View>
             </View>
+            </ScrollView>
+
           </View>
 
         <View>
@@ -427,9 +413,10 @@ const NewClientSurvey = () => {
           >
             <RotatingLogo></RotatingLogo>
           </Modal>
+
         </View>
+
       </ImageBackground>
-      </ScrollView>
 
     </View>
   );

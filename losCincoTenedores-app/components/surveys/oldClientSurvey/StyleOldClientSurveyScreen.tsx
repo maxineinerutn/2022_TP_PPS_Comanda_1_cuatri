@@ -114,8 +114,8 @@ export default StyleSheet.create({
     buttonLayout: {
         backgroundColor: '#A4C3B2',
         borderColor: '#A4C3B2',
-        marginTop: 20,
-        margin: 5,
+        marginTop: 15,
+        marginBottom: 15,
         width: "90%",
         height: 60,
         padding: 15,
@@ -134,17 +134,9 @@ export default StyleSheet.create({
     chartConfig:{
         backgroundColor: "#A4C3B2",
         backgroundGradientFrom: "#A4C3B2",
-        backgroundGradientTo: "#A4C30",
+        backgroundGradientTo: "#A4C3B2",
         decimalPlaces: 1, // optional, defaults to 2dp
         color: () => `rgba(0, 0, 0, 0.5)`,
-        labelColor: () => `black`,
-        style: {
-          borderRadius: 25
-        },
-        propsForDots: {
-          r: "6",
-          strokeWidth: "2",
-          stroke: "white"
-        }
+        labelColor: () => `black`,        
     },
 });

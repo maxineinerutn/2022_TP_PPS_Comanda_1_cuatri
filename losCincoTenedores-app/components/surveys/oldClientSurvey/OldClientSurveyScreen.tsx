@@ -16,6 +16,7 @@ import {
 } from "react-native-chart-kit";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "../../../App";
+import { Badge } from "react-native-paper";
 
 
 const OldClientSurvey = () => {
@@ -40,6 +41,9 @@ const OldClientSurvey = () => {
   const win = Dimensions.get("window");
 
   //CONFIG DE GRAFICOS
+
+  const fill = 'rgb(134, 65, 244)'
+  const barData = [paymentMethodEfectivo, paymentMethodDebito, paymentMethodCredito]
   
 
   const paymentMethodsBarChartData = {
@@ -75,19 +79,50 @@ const OldClientSurvey = () => {
     },
   ]
 
-  const clientsOpinionsProggressRingData = {
-    labels: ["LUGAR LIMPIO", 
-             "LUGAR SUCIO", 
-             "ATENCION RAPIDA", 
-             "ATENCION LENTA", 
-             "ESTADIA AGRADABLE", 
-             "ESTADIA MALA"],
-    datasets: [
-      {
-        data: [clean, dirty, quickDelivery, slowDelivery, happy, sad]
-      }
-    ]    
-  };
+  const clientsOpinionsProggressRingData = [
+    {
+      name: "Lugar Limpio",
+      amount: clean,
+      color: "green",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 13
+    },
+    {
+      name: "Lugar Sucio",
+      amount: dirty,
+      color: "yellow",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 13
+    },
+    {
+      name: "Atención Rapida",
+      amount: quickDelivery,
+      color: "red",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 13
+    },
+    {
+      name: "Atencón Lenta",
+      amount: slowDelivery,
+      color: "blue",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 13
+    },
+    {
+      name: "Estadia Agradable",
+      amount: happy,
+      color: "brown",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 13
+    },
+    {
+      name: "Estadia Mala",
+      amount: sad,
+      color: "orange",
+      legendFontColor: "#7F7F7F",
+      legendFontSize: 13
+    }
+  ]
 
   //RETURN
   const handleReturn = () => {
@@ -205,45 +240,52 @@ const OldClientSurvey = () => {
       <ScrollView>
       <View style={styles.body}>
         
-          <View style={styles.buttonLayout}>
-            <Text style={styles.inputText}>MEDIOS DE PAGO PREFERIDOS</Text>
-          </View>
+        <View style={styles.buttonLayout}>
+          <Text style={styles.inputText}>CALIDAD DE LA COMIDA</Text>
+        </View>
 
-          <BarChart
-            data={paymentMethodsBarChartData}
-            yAxisLabel=""
-            yAxisSuffix=""
-            width={win.width * 0.8}
-            height={win.width / 2}
-            chartConfig={styles.chartConfig}
-          />
+        <PieChart
+          data={foodQualityPieChartData}
+          width={win.width * 0.8}
+          height={win.width / 2}
+          chartConfig={styles.chartConfig}
+          accessor={"amount"}
+          backgroundColor={"#A4C3B2"}
+          paddingLeft={"0"}
+          center={[10, 0]}
+          absolute
+        />
 
-          <View style={styles.buttonLayout}>
-            <Text style={styles.inputText}>CALIDAD DE LA COMIDA</Text>
-          </View>
+        <View style={styles.buttonLayout}>
+          <Text style={styles.inputText}>MEDIOS DE PAGO PREFERIDOS</Text>
+        </View>
 
-          <PieChart
-            data={foodQualityPieChartData}
-            width={win.width * 0.8}
-            height={win.width / 2}
-            chartConfig={styles.chartConfig}
-            accessor={"amount"}
-            backgroundColor={"#A4C3B2"}
-            paddingLeft={"0"}
-            center={[10, 0]}
-            absolute
-          />
+        <BarChart
+          data={paymentMethodsBarChartData}
+          yAxisLabel=""
+          yAxisSuffix=""
+          width={win.width * 0.8}
+          height={win.width / 2}
+          chartConfig={styles.chartConfig}
+        />
 
-          <View style={styles.buttonLayout}>
-            <Text style={styles.inputText}>PRODEDIO CALIDAD ATENCION DE MOZOS</Text>
-          </View>
 
-          <View style={styles.buttonLayout}>
-            <Text style={styles.inputText}>{Math.round(averageWaiterEvaluation)} %</Text>
-          </View>
+        <View style={styles.buttonLayout}>
+          <Text style={styles.inputText}>PROMEDIO CALIDAD ATENCION DE MOZOS</Text>
+          <Text style={styles.inputText}>{Math.round(averageWaiterEvaluation)} %</Text>
+        </View>
 
-       
-          
+        <PieChart
+          data={clientsOpinionsProggressRingData}
+          width={win.width * 0.9}
+          height={win.width / 2}
+          chartConfig={styles.chartConfig}
+          accessor={"amount"}
+          backgroundColor={"#A4C3B2"}
+          paddingLeft={"0"}
+          center={[10, 0]}
+          absolute
+        />          
       </View> 
       </ScrollView>
 
