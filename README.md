@@ -11,12 +11,16 @@ Mínimo: 2 integrantes
 # Integrantes
 
 ### Alpha Lucas Barbosa
-- Alta de Cliente [En curso]
-- Alta de Dueño/Supervisor
-- Alta de Empleado
-- Alta de Invitado
+- Alta de Cliente [Completada]
+- Alta de Dueño/Supervisor [Completada]
+- Alta de Empleado [Completada]
+- Alta de Invitado [Completada]
+- Alta de Mesa [Completada]
+- Alta de Producto [Completada]
 
 ### Beta Guido Clas
-- Creacion de Splash screen
+- Creacion de Splash screen [Completada]
 - Creacion del logo [Completada]
-- Creacion de la pantalla de login [En curso]
+- Creacion de la pantalla de login [Completada]
+- Creacion de la pantalla de home [Completada]
+- Creacion de la pantalla de aprobación de clientes [Completada]
