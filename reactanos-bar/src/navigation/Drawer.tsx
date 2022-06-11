@@ -39,7 +39,6 @@ const DrawerStack = () => {
           <Drawer.Screen name={Screens.ADD_CLIENT} component={AddClientScreen} />
           <Drawer.Screen name={Screens.ADD_EMPLOYEE} component={AddEmployeeScreen} />
           <Drawer.Screen name={Screens.CLIENT_LIST} component={ClientListScreen} />
-          <Drawer.Screen name={Screens.QR_BUTTON} component={QRStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.CLIENT_HOME} component={ClientHomeStack} options={{headerShown:false}} />
         </Drawer.Navigator>
     );
