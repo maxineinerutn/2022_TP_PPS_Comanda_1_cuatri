@@ -3,24 +3,21 @@ import {
   Text,
   View,
   TextInput,
-  Button,
+  TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
   Image,
-  ScrollView,
-  TouchableOpacity
+  ScrollView
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
 import { RadioButtons } from 'react-native-radio-buttons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Styles from './Styles';
 import userImgDefault from '../../../assets/iconoCamara.png';
 import CamaraView from '../CameraView/CamaraView';
-import theme from '../../config/theme';
 import { ConstantsSystem } from '../../config/constantsSystem';
 
 export default function TableForm( props ) {
-  const { onSubmit, onCancel } = props;
+  const { onSubmit } = props;
   const [formValid, setFormValid] = useState( false );
 
   const [number, setNumber] = useState( '' );
@@ -208,20 +205,14 @@ export default function TableForm( props ) {
       )
         : (
           <View style={Styles.container}>
-            <TouchableOpacity
-              onPress={() => onCancel()}
-              style={Styles.buttonCancelRegistration}
-            >
-              <MaterialCommunityIcons name='close-circle' color={theme.colors.primary} size={50} />
-            </TouchableOpacity>
             <ScrollView>
               <View style={Styles.containerForm}>
                 {renderSpecificFormControl()}
               </View>
             </ScrollView>
-            <View style={Styles.containerActionButtons}>
-              <Button title='Crear' onPress={() => handleSubmit()} />
-            </View>
+            <TouchableOpacity style={Styles.button} onPress={() => handleSubmit()}>
+              <Text style={Styles.buttonText}>Registrar Mesa</Text>
+            </TouchableOpacity>
           </View>
         )}
     </View>

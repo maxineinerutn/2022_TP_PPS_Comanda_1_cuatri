@@ -1,12 +1,14 @@
 /* eslint-disable no-param-reassign */
 import { View } from 'react-native';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 import Styles from './Styles';
 import ProductForm from '../../components/ProductForm/ProductForm';
 import { saveItemInCollection } from '../../services/FirestoreServices';
 import { saveImageInStorage } from '../../services/StorageServices';
 
 export default function CreateProduct() {
+  const navigation = useNavigation();
   const handlesubmit = ( formData ) => {
     saveProduct( formData );
   };
@@ -33,8 +35,10 @@ export default function CreateProduct() {
                   photos: uris
                 };
                 saveItemInCollection( 'products', newProduct.name, newProduct ).then(() => {
-                  // redireccionar success
-                }).catch(() => { /* redireccionar error*/ });
+                  navigation.navigate( 'Home' );
+                }).catch(() => {
+                  navigation.navigate( 'Home' );// mostrar el error
+                });
               });
             });
           });

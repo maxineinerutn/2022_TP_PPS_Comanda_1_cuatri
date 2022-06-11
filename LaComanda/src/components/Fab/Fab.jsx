@@ -56,7 +56,7 @@ export default function Fab( props ) {
               }}
               style={{ zIndex: 9999 }}
               onPress={() => {
-                console.log( 'OJAWODW' );
+                navigation.navigate( 'Additions' );
               }}
             >
               <MaterialCommunityIcons name='account-plus' size={40} color='white' />

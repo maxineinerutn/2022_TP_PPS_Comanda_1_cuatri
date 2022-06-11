@@ -3,22 +3,20 @@ import {
   Text,
   View,
   TextInput,
-  Button,
+  TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
   Image,
-  ScrollView,
-  TouchableOpacity
+  ScrollView
+
 } from 'react-native';
 import React, { useState, useEffect } from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Styles from './Styles';
 import userImgDefault from '../../../assets/iconoCamara.png';
 import CamaraView from '../CameraView/CamaraView';
-import theme from '../../config/theme';
 
 export default function ProductForm( props ) {
-  const { onSubmit, onCancel } = props;
+  const { onSubmit } = props;
   const [formValid, setFormValid] = useState( false );
 
   const [name, setName] = useState( '' );
@@ -82,7 +80,7 @@ export default function ProductForm( props ) {
               )}
             </TouchableWithoutFeedback>
             {errorFirstPhoto.error && (
-              <Text style={Styles.textError}>{errorFirstPhoto.message}</Text>
+              <Text style={Styles.textPhotoError}>{errorFirstPhoto.message}</Text>
             )}
           </View>
           <View style={Styles.formControlPhoto}>
@@ -102,7 +100,7 @@ export default function ProductForm( props ) {
               )}
             </TouchableWithoutFeedback>
             {errorSecondPhoto.error && (
-              <Text style={Styles.textError}>{errorSecondPhoto.message}</Text>
+              <Text style={Styles.textPhotoError}>{errorSecondPhoto.message}</Text>
             )}
           </View>
           <View style={Styles.formControlPhoto}>
@@ -122,7 +120,7 @@ export default function ProductForm( props ) {
               )}
             </TouchableWithoutFeedback>
             {errorThirdPhoto.error && (
-              <Text style={Styles.textError}>{errorThirdPhoto.message}</Text>
+              <Text style={Styles.textPhotoError}>{errorThirdPhoto.message}</Text>
             )}
           </View>
         </View>
@@ -308,20 +306,14 @@ export default function ProductForm( props ) {
       )
         : (
           <View style={Styles.container}>
-            <TouchableOpacity
-              onPress={() => onCancel()}
-              style={Styles.buttonCancelRegistration}
-            >
-              <MaterialCommunityIcons name='close-circle' color={theme.colors.primary} size={50} />
-            </TouchableOpacity>
             <ScrollView>
               <View style={Styles.containerForm}>
                 {renderSpecificFormControl()}
               </View>
             </ScrollView>
-            <View style={Styles.containerActionButtons}>
-              <Button title='Crear' onPress={() => handleSubmit()} />
-            </View>
+            <TouchableOpacity style={Styles.button} onPress={() => handleSubmit()}>
+              <Text style={Styles.buttonText}>Registrar Producto</Text>
+            </TouchableOpacity>
           </View>
         )}
     </View>

@@ -35,22 +35,21 @@ function LoginTab() {
 
     app.firestore().collection( 'users' ).where( 'email', '==', email ).onSnapshot(( querySnapshots ) => {
       const miUsuario = querySnapshots.docs.map(( doc ) => doc.data())[0];
-      setUser({
-        name: miUsuario.name,
-        surname: miUsuario.surname,
-        approved: miUsuario.approved,
-        cuil: miUsuario.cuil,
-        dni: miUsuario.dni,
-        email: miUsuario.email,
-        photo: miUsuario.photo,
-        role: miUsuario.rol
-      });
+      setTimeout(() => {
+        setUser({
+          name: miUsuario.name,
+          surname: miUsuario.surname,
+          approved: miUsuario.approved,
+          cuil: miUsuario.cuil,
+          dni: miUsuario.dni,
+          email: miUsuario.email,
+          photo: miUsuario.photo,
+          role: miUsuario.rol
+        });
+      }, 500 );
     }, ( err ) => {
       console.log( err );
     });
-
-    setTimeout(() => {
-    }, 500 );
 
     if ( user && user.approved ) {
       signIn( email, password );
@@ -118,6 +117,15 @@ function LoginTab() {
             style={styles.button}
           >
             <Text style={styles.buttonText}>Ingresar</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              setEmail( 'guido@clas.com.ar' );
+              setPassword( '12345678' );
+            }}
+            style={{}}
+          >
+            <Text>Rapido</Text>
           </TouchableOpacity>
 
         </View>

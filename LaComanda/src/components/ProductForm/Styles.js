@@ -55,6 +55,10 @@ const Styles = StyleSheet.create({
     position: 'relative',
     color: theme.colors.error
   },
+  textPhotoError: {
+    position: 'relative',
+    color: theme.colors.error
+  },
   textRadioButtonSelected: {
     fontWeight: 'bold'
   },
@@ -99,6 +103,19 @@ const Styles = StyleSheet.create({
     padding: 0,
     justifyContent: 'flex-start',
     alignSelf: 'flex-end'
+  },
+  button: {
+    backgroundColor: theme.colors.primary,
+    width: Dimensions.get( 'screen' ).width * 0.5,
+    height: Dimensions.get( 'screen' ).height * 0.08,
+    borderRadius: 15,
+    justifyContent: 'space-evenly'
+  },
+  buttonText: {
+    color: 'white',
+    fontWeight: '500',
+    fontSize: 24,
+    textAlign: 'center'
   }
 });
 export default Styles;
