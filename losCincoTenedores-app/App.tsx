@@ -31,6 +31,7 @@ import TablePanel from './components/controlPanels/tablePanel/TablePanelScreen';
 import NewClientSurvey from './components/surveys/clientSurvey/ClientSurveyScreen';
 import AdminSurvey from './components/surveys/adminSurvey/AdminSurveyScreen';
 import EmployeeSurvey from './components/surveys/employeeSurvey/EmployeeSurveyScreen';
+import OldClientSurvey from './components/surveys/oldClientSurvey/OldClientSurveyScreen';
 
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
@@ -84,6 +85,7 @@ export default () => {
         <Stack.Screen options =  {{ headerShown: true }}  name="ClientManagment" component={ClientManagment} />
         <Stack.Screen options =  {{ headerShown: true }}  name="WaitingListManagment" component={WaitingListManagment} />
         <Stack.Screen options =  {{ headerShown: true }}  name="NewClientSurvey" component={NewClientSurvey} />
+        <Stack.Screen options =  {{ headerShown: true }}  name="OldClientSurvey" component={OldClientSurvey} />
         <Stack.Screen options =  {{ headerShown: true }}  name="AdminSurvey" component={AdminSurvey} />
         <Stack.Screen options =  {{ headerShown: true }}  name="EmployeeSurvey" component={EmployeeSurvey} />
         
