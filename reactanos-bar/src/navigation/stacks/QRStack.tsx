@@ -1,8 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { Screens } from '../Screens';
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Feather } from '@expo/vector-icons'; 
 import QRButtonScreen from '../../components/screens/QRButtonScreen/QRButtonScreen.component';
 import QRScannerScreen from '../../components/screens/QRScannerScreen/QRScannerScreen.component';
 
@@ -14,14 +12,11 @@ const Stack = createStackNavigator<AddProductStackParamList>();
 
 const QRStack = () => {
   return (
-    <Stack.Navigator initialRouteName={Screens.QR_BUTTON} >
+    <Stack.Navigator initialRouteName={Screens.QR_BUTTON} screenOptions={{headerShown:false}}  >
         <Stack.Screen name={Screens.QR_BUTTON} component={QRButtonScreen} options={({navigation}) => ({
-        headerLeft:()=><TouchableOpacity style={{marginHorizontal:14}}
-          onPress={() => navigation.openDrawer()}>
-            <Feather name="menu" size={24} color="black" />
-          </TouchableOpacity>
+          headerShown:true,
       })} />
-        <Stack.Screen name={Screens.QR_SCANNER} component={QRScannerScreen} />
+        <Stack.Screen name={Screens.QR_SCANNER} component={QRScannerScreen} options={{headerShown:true, headerTitle:"Escanear QR"}} />
     </Stack.Navigator>
   );
 }

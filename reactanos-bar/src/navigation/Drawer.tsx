@@ -12,6 +12,8 @@ import AddClientScreen from '../components/screens/AddClient/AddClientScreen.com
 import AddEmployeeScreen from '../components/screens/AddEmployee/AddEmployeeScreen.component';
 import ClientListScreen from '../components/screens/ClientListScreen/ClientListScreen.component';
 import QRStack from './stacks/QRStack';
+import ClientHomeScreen from '../components/screens/ClientHomeScreen/ClientHomeScreen.component';
+import ClientHomeStack from './stacks/ClientHomeStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -30,13 +32,7 @@ function CustomDrawerContent(props:any) {
 
 const DrawerStack = () => {
     return (
-        <Drawer.Navigator initialRouteName={Screens.ADD_PRODUCTS} drawerContent={props => <CustomDrawerContent {...props} />} 
-        screenOptions={({navigation}) => ({
-          headerLeft:()=><TouchableOpacity style={{marginHorizontal:14}}
-            onPress={() => navigation.openDrawer()}>
-              <Feather name="menu" size={24} color="black" />
-            </TouchableOpacity>
-        })}>
+        <Drawer.Navigator initialRouteName={Screens.ADD_PRODUCTS} drawerContent={props => <CustomDrawerContent {...props} />}> 
           <Drawer.Screen name={Screens.ADD_PRODUCTS} component={AddProductStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.ADD_ADMINS} component={AddAdminsScreen} />
           <Drawer.Screen name={Screens.ADD_TABLE} component={AddTableStack} options={{headerShown:false}} />
@@ -44,6 +40,7 @@ const DrawerStack = () => {
           <Drawer.Screen name={Screens.ADD_EMPLOYEE} component={AddEmployeeScreen} />
           <Drawer.Screen name={Screens.CLIENT_LIST} component={ClientListScreen} />
           <Drawer.Screen name={Screens.QR_BUTTON} component={QRStack} options={{headerShown:false}} />
+          <Drawer.Screen name={Screens.CLIENT_HOME} component={ClientHomeStack} options={{headerShown:false}} />
         </Drawer.Navigator>
     );
 }
