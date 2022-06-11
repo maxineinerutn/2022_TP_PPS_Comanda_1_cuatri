@@ -9,5 +9,6 @@ export enum Screens{
     ADD_EMPLOYEE='Agregar empleado',
     CLIENT_LIST='Lista de clientes',
     QR_BUTTON='Escanear QR',
-    QR_SCANNER="QRScannerScreen"
+    QR_SCANNER="QRScannerScreen",
+    CHAT='Hablá con nosotros',
 }

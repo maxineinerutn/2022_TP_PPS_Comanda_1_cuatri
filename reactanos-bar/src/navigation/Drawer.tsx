@@ -11,6 +11,7 @@ import AddProductStack from './stacks/AddProductStack';
 import AddClientScreen from '../components/screens/AddClient/AddClientScreen.component';
 import AddEmployeeScreen from '../components/screens/AddEmployee/AddEmployeeScreen.component';
 import ClientListScreen from '../components/screens/ClientListScreen/ClientListScreen.component';
+import ChatScreen from '../components/screens/ChatScreen/ChatScreen.component';
 import QRStack from './stacks/QRStack';
 
 const Drawer = createDrawerNavigator();
@@ -43,6 +44,7 @@ const DrawerStack = () => {
           <Drawer.Screen name={Screens.ADD_CLIENT} component={AddClientScreen} />
           <Drawer.Screen name={Screens.ADD_EMPLOYEE} component={AddEmployeeScreen} />
           <Drawer.Screen name={Screens.CLIENT_LIST} component={ClientListScreen} />
+          <Drawer.Screen name={Screens.CHAT} component={ChatScreen} />
           <Drawer.Screen name={Screens.QR_BUTTON} component={QRStack} options={{headerShown:false}} />
         </Drawer.Navigator>
     );
