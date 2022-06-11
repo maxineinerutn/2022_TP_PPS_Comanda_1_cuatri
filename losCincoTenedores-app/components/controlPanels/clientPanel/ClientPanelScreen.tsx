@@ -41,7 +41,9 @@ const ClientPanel = () => {
       const query2 = query(collection(db, "waitingList"), where("user", "==", auth.currentUser?.email), where("status", "==", "assigned"));
       const querySnapshot2 = await getDocs(query2);
       if(querySnapshot2.size > 0){
+        console.log("entro");
         navigation.replace("TableControlPanel");
+        return;
       }      
     }      
   

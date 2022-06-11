@@ -147,6 +147,11 @@ const TablePanel = () => {
     //NAVIGATION
     const handleNewClientSurvey= () => {
       navigation.replace("NewClientSurvey")
+    }
+    
+    //NAVIGATION
+    const handleOldClientSurvey= () => {
+      navigation.replace("OldClientSurvey")
     }  
     
     return (
@@ -175,7 +180,7 @@ const TablePanel = () => {
                   </TouchableOpacity>
                 </View>
 
-                <TouchableOpacity style={styles.buttonLayout}>
+                <TouchableOpacity onPress={handleOldClientSurvey} style={styles.buttonLayout}>
                   <View style={styles.tableButtonLayout}>
                     <Image source={surveyResultIcon} style={styles.buttonImage} />
                     <Text style={styles.buttonText}>VER ENCUESTAS DE OTROS CLIENTES</Text>              
