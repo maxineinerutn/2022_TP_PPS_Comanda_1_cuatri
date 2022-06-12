@@ -7,21 +7,21 @@ import {
   Image,
   ActivityIndicator
 } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, {
+  useContext, useState
+} from 'react';
+import * as Notifications from 'expo-notifications';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from './styles';
 import GlobalContext from '../../../context/GlobalContext';
 import { handleLoginErrorMessage } from './utils';
-import { app } from '../../../../firebase';
 import theme from '../../../config/theme';
 import { signInUser } from '../../../services/AuthService';
 import Gifplay from '../../../../assets/gifplayBig.gif';
+import { getUserByEmail, updateItem } from '../../../services/FirestoreServices';
 
 function LoginTab() {
-  const {
-    setUser,
-    user
-  } = useContext( GlobalContext );
+  const { setUser } = useContext( GlobalContext );
   const [email, setEmail] = useState( '' );
   const [password, setPassword] = useState( '' );
   const [errorMessage, setErrorMessage] = useState( '' );
@@ -31,39 +31,43 @@ function LoginTab() {
   const navigation = useNavigation();
 
   const handleLogin = async () => {
-    setLoading( true );
-
-    app.firestore().collection( 'users' ).where( 'email', '==', email ).onSnapshot(( querySnapshots ) => {
-      const miUsuario = querySnapshots.docs.map(( doc ) => doc.data())[0];
-      setTimeout(() => {
-        setUser({
-          name: miUsuario.name,
-          surname: miUsuario.surname,
-          approved: miUsuario.approved,
-          cuil: miUsuario.cuil,
-          dni: miUsuario.dni,
-          email: miUsuario.email,
-          photo: miUsuario.photo,
-          role: miUsuario.rol
-        });
-      }, 500 );
-    }, ( err ) => {
-      console.log( err );
-    });
-
-    if ( user && user.approved ) {
-      signIn( email, password );
-    } else {
-      setErrorMessage( 'Su usuario todavía no fué aprobado' );
+    if ( email.length === 0 || password.length === 0 ) {
       setError( true );
-      setLoading( false );
+      setErrorMessage( 'Todos los campos son obligatorios' );
+      return;
     }
+    setLoading( true );
+    getUserByEmail( 'users', email, ( data ) => {
+      if ( data ) {
+        const respuesta = data.docs.map(( doc ) => doc.data())[0];
+        if ( respuesta && respuesta.approved ) {
+          setUser({
+            name: respuesta.name,
+            surname: respuesta.surname,
+            approved: respuesta.approved,
+            cuil: respuesta.cuil,
+            dni: respuesta.dni,
+            email: respuesta.email,
+            photo: respuesta.photo,
+            role: respuesta.rol
+          });
+          signIn( respuesta.email, respuesta.password );
+        } else {
+          setErrorMessage( 'Su usuario todavía no fué aprobado' );
+          setError( true );
+          setLoading( false );
+        }
+      } else {
+        setError( 'Usuario no encontrado' );
+      }
+    }, ( err ) => { console.log( err ); });
   };
 
   const signIn = async ( userEmail, userPassword ) => {
     await signInUser( userEmail, userPassword )
-      .then(( userCredential ) => {
+      .then( async ( userCredential ) => {
         setLoading( false );
+        await registerForPushNotificationAsync( userCredential );
         console.log( 'User logged in with: ', userCredential.user.uid );
         navigation.replace( 'Home' );
       })
@@ -74,6 +78,21 @@ function LoginTab() {
         console.log( err.code );
         console.log( err.message );
       });
+  };
+
+  const registerForPushNotificationAsync = async ( user ) => {
+    const { status: existingStatus } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if ( existingStatus !== 'granted' ) {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if ( finalStatus !== 'granted' ) {
+      alert( 'Failed to get push token for push notification!' );
+      return;
+    }
+    const token = ( await Notifications.getExpoPushTokenAsync()).data;
+    updateItem( 'users', user.user.uid, { pushToken: token });
   };
 
   return (

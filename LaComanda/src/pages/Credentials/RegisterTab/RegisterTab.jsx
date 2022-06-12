@@ -9,8 +9,9 @@ import { UserTypes } from '../../../util/Enums';
 import Styles from './Styles';
 import { createUserWithEmailAndPassword, signOutUser } from '../../../services/AuthService';
 import { saveImageInStorage } from '../../../services/StorageServices';
-import { saveItemInCollection } from '../../../services/FirestoreServices';
+import { getAllAprrovedUsers, saveItemInCollection } from '../../../services/FirestoreServices';
 import theme from '../../../config/theme';
+import { sendPushNotification } from '../../../services/PushNotificationService';
 
 function RegisterTab({ route }) {
   const { displayFormOnType } = route.params;
@@ -31,6 +32,11 @@ function RegisterTab({ route }) {
           .catch(( error ) => console.log( error ));
       }).catch(( error ) => { console.log( error ); });
     }).then(() => {
+      getAllAprrovedUsers(( data ) => {
+        const response = data.docs.map(( doc ) => doc.data());
+        const usersToken = response.filter(( u ) => u.role === 'Dueño' || u.role === 'Supervisor' ).map(( u ) => u.pushToken );
+        sendPushNotification( usersToken, 'Nuevo Registro', 'Se ha registrado un nuevo cliente, no olvides aprobarlo' );
+      }, ( err ) => { console.log( err ); });
       signOutUser();
       navigation.navigate( 'Ingresar' );
     });
