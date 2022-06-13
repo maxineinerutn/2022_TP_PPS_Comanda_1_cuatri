@@ -51,4 +51,7 @@ export const updateItem = async ( collection, docName, updatedItem ) => await fi
 export const getAllNotApprovedClients = async ( collection, onResult, onError ) => {
   await firestore.collection( collection ).where( 'rol', '==', 'Cliente' ).where( 'approved', '==', false ).onSnapshot( onResult, onError );
 };
+export const getAllAprrovedUsers = async ( onResult, onError ) => {
+  await firestore.collection( 'users' ).where( 'approved', '==', true ).onSnapshot( onResult, onError );
+};
 
