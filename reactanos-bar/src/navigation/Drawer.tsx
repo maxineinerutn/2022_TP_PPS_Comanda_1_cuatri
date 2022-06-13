@@ -14,6 +14,8 @@ import ClientListScreen from '../components/screens/ClientListScreen/ClientListS
 import QRStack from './stacks/QRStack';
 import ClientHomeScreen from '../components/screens/ClientHomeScreen/ClientHomeScreen.component';
 import ClientHomeStack from './stacks/ClientHomeStack';
+import WaitingClientListScreen from '../components/screens/WaitingClientListScreen/WaitingClientListScreen.component';
+import WaitingClientListStack from './stacks/WaitingClientListStack';
 
 const Drawer = createDrawerNavigator();
 
@@ -40,6 +42,7 @@ const DrawerStack = () => {
           <Drawer.Screen name={Screens.ADD_EMPLOYEE} component={AddEmployeeScreen} />
           <Drawer.Screen name={Screens.CLIENT_LIST} component={ClientListScreen} />
           <Drawer.Screen name={Screens.CLIENT_HOME} component={ClientHomeStack} options={{headerShown:false}} />
+          <Drawer.Screen name={Screens.WAITING_CLIENT_LIST} component={WaitingClientListStack} options={{headerShown:false}} />
         </Drawer.Navigator>
     );
 }

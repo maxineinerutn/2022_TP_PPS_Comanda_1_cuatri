@@ -10,5 +10,6 @@ export enum Screens{
     CLIENT_LIST='Lista de clientes',
     QR_BUTTON='Escanear QR',
     QR_SCANNER="QRScannerScreen",
-    CLIENT_HOME="Principal Clientes"
+    CLIENT_HOME="Principal Clientes",
+    WAITING_CLIENT_LIST="Lista de espera"
 }

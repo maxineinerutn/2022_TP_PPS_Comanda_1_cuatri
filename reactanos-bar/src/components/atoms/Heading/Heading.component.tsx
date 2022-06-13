@@ -11,7 +11,7 @@ interface HeadingProps extends TextProps {
 
 const Heading: FC<HeadingProps> = ({
     children,
-    color = "primary",
+    color = "black",
     textAlign = "center",
     bold = false,
     level = "M",

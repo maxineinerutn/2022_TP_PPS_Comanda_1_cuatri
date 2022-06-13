@@ -7,9 +7,9 @@ interface CardButtonProps extends TouchableOpacityProps{
     children:string;
 }
 
-const CardButton:FC<CardButtonProps> = ({children, onPress}) => {
+const CardButton:FC<CardButtonProps> = ({children, onPress, ...props}) => {
   return (
-    <StyledView onPress={onPress}>
+    <StyledView onPress={onPress} {...props}>
         <Heading textAlign='left' level='L'>{children}</Heading>
     </StyledView>
   )
