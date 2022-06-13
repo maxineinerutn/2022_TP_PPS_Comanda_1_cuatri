@@ -10,8 +10,6 @@ import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { handleLogin } from "../../../redux/authReducer";
 import { FormData } from "../../../models/login/formData.types";
-import Button from "../../atoms/Button/Button.component";
-import { sendPushNotification } from "../../../utils/pushNotifications";
 import { validateInputs } from '../../../utils/utils';
 import { errorHandler } from '../../../utils/ErrorsHandler';
 

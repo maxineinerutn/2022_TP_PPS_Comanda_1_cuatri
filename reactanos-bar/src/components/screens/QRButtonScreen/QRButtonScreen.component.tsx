@@ -5,18 +5,17 @@ import Heading from "../../atoms/Heading/Heading.component";
 import Paragraph from "../../atoms/Paragraph/Paragraph.component";
 import { Screens } from "../../../navigation/Screens";
 
-const QRButtonScreen = ({navigation}:any) => {
+const QRButtonScreen = ({ navigation, route }: any) => {
+    const { params } = route;
 
-    const [data, setData] = useState("");
-
-    const goBack = (data:any) => {
-        alert(data)
-        setData(data);
-    }
+    const goBack = (data: any) => {
+        params.goBack(data);
+        navigation.goBack();
+    };
 
     const handlePressQR = () => {
-        navigation.navigate(Screens.QR_SCANNER, {goBack})
-    }
+        navigation.navigate(Screens.QR_SCANNER, { goBack });
+    };
 
     return (
         <StyledView colors={["#6190E8", "#A7BFE8"]}>
@@ -24,10 +23,13 @@ const QRButtonScreen = ({navigation}:any) => {
                 Escanea el código QR
             </Heading>
             <Paragraph level="L" color="white">
-                Al escanear el código QR correspondiente vas a poder acceder al
-                servicio solicitado
+                {params?.description ||
+                    "Al escanear el código QR correspondiente vas a poder acceder al servicio solicitado"}
             </Paragraph>
-            <ImageButton source={require("../../../../assets/read-qr.png")} onPress={handlePressQR} />
+            <ImageButton
+                source={require("../../../../assets/read-qr.png")}
+                onPress={handlePressQR}
+            />
         </StyledView>
     );
 };
