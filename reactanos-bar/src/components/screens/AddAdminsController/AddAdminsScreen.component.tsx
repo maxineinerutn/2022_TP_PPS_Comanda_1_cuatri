@@ -129,7 +129,7 @@ const AddAdminsScreen = ({navigation}) => {
                 return;
             }
         })
-        if (!verifyCuit(values.cuil)) {
+        if (!verifyCuil(values.cuil)) {
             showMessage({ type: "danger", message: "Error", description: "CUIL INVAlIDO" });
             return;
         }
