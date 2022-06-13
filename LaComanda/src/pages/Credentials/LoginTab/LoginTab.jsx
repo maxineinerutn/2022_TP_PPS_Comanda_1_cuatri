@@ -21,7 +21,7 @@ import Gifplay from '../../../../assets/gifplayBig.gif';
 import { getUserByEmail, updateItem } from '../../../services/FirestoreServices';
 
 function LoginTab() {
-  const { setUser } = useContext( GlobalContext );
+  const { user, setUser } = useContext( GlobalContext );
   const [email, setEmail] = useState( '' );
   const [password, setPassword] = useState( '' );
   const [errorMessage, setErrorMessage] = useState( '' );
@@ -49,9 +49,9 @@ function LoginTab() {
             dni: respuesta.dni,
             email: respuesta.email,
             photo: respuesta.photo,
-            role: respuesta.rol
+            role: respuesta.rol,
+            password: respuesta.password
           });
-          signIn( respuesta.email, respuesta.password );
         } else {
           setErrorMessage( 'Su usuario todavía no fué aprobado' );
           setError( true );
@@ -61,6 +61,10 @@ function LoginTab() {
         setError( 'Usuario no encontrado' );
       }
     }, ( err ) => { console.log( err ); });
+    setTimeout(() => {
+      console.log( user );
+      signIn( user.email, user.password );
+    }, 3000 );
   };
 
   const signIn = async ( userEmail, userPassword ) => {
@@ -80,7 +84,7 @@ function LoginTab() {
       });
   };
 
-  const registerForPushNotificationAsync = async ( user ) => {
+  const registerForPushNotificationAsync = async ( _user ) => {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
     if ( existingStatus !== 'granted' ) {
@@ -92,7 +96,7 @@ function LoginTab() {
       return;
     }
     const token = ( await Notifications.getExpoPushTokenAsync()).data;
-    updateItem( 'users', user.user.uid, { pushToken: token });
+    updateItem( 'users', _user.user.uid, { pushToken: token });
   };
 
   return (
