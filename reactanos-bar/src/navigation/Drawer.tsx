@@ -16,6 +16,7 @@ import ClientHomeScreen from '../components/screens/ClientHomeScreen/ClientHomeS
 import ClientHomeStack from './stacks/ClientHomeStack';
 import WaitingClientListScreen from '../components/screens/WaitingClientListScreen/WaitingClientListScreen.component';
 import WaitingClientListStack from './stacks/WaitingClientListStack';
+import AddPollScreen from '../components/screens/AddPollScreen/AddPollScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -43,6 +44,7 @@ const DrawerStack = () => {
           <Drawer.Screen name={Screens.CLIENT_LIST} component={ClientListScreen} />
           <Drawer.Screen name={Screens.CLIENT_HOME} component={ClientHomeStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.WAITING_CLIENT_LIST} component={WaitingClientListStack} options={{headerShown:false}} />
+          <Drawer.Screen name={Screens.ADD_POLL} component={AddPollScreen} />
         </Drawer.Navigator>
     );
 }
