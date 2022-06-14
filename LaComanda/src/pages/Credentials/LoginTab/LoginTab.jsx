@@ -8,7 +8,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import React, {
-  useContext, useState
+  useContext, useState, useEffect
 } from 'react';
 import * as Notifications from 'expo-notifications';
 import { useNavigation } from '@react-navigation/native';
@@ -16,52 +16,23 @@ import { styles } from './styles';
 import GlobalContext from '../../../context/GlobalContext';
 import { handleLoginErrorMessage } from './utils';
 import theme from '../../../config/theme';
-import { signInUser, signOutUser } from '../../../services/AuthService';
+import { signInUser } from '../../../services/AuthService';
 import Gifplay from '../../../../assets/gifplayBig.gif';
 import { getUserByEmail, updateItem } from '../../../services/FirestoreServices';
 
 function LoginTab() {
-  const { user, setUser } = useContext( GlobalContext );
+  const { setUser } = useContext( GlobalContext );
   const [email, setEmail] = useState( '' );
   const [password, setPassword] = useState( '' );
   const [errorMessage, setErrorMessage] = useState( '' );
   const [error, setError] = useState( false );
   const [loading, setLoading] = useState( false );
-
   const navigation = useNavigation();
+  const [getData, getUserData] = useState( false );
 
-  const handleLogin = async () => {
-    if ( email.length === 0 || password.length === 0 ) {
-      setError( true );
-      setErrorMessage( 'Todos los campos son obligatorios' );
-      return;
-    }
-    setLoading( true );
-    signIn( email, password );
-  };
-
-  const signIn = async ( userEmail, userPassword ) => {
-    await signInUser( userEmail, userPassword )
-      .then( async ( userCredential ) => {
-        setLoading( false );
-        await registerForPushNotificationAsync( userCredential );
-        await getUserData( userCredential );
-        console.log( 'User logged in with: ', userCredential.user.uid );
-        if ( user.approved ) {
-          navigation.replace( 'Home' );
-        }
-      })
-      .catch(( err ) => {
-        setLoading( false );
-        setError( true );
-        setErrorMessage( handleLoginErrorMessage( err.code ));
-        console.log( err.code );
-        console.log( err.message );
-      });
-  };
-  const getUserData = ( userCredential ) => {
-    if ( userCredential ) {
-      getUserByEmail( 'users', userCredential.user.email, ( data ) => {
+  useEffect(() => {
+    if ( email && password ) {
+      getUserByEmail( 'users', email, ( data ) => {
         if ( data ) {
           const respuesta = data.docs.map(( doc ) => doc.data())[0];
           if ( respuesta && respuesta.approved ) {
@@ -76,19 +47,49 @@ function LoginTab() {
               role: respuesta.rol,
               password: respuesta.password
             });
+          } else {
+            setErrorMessage( 'Su usuario todavía no fué aprobado' );
+            setError( true );
+            setLoading( false );
           }
-          signOutUser();
-          setErrorMessage( 'Su usuario todavía no fué aprobado' );
-          setError( true );
-          setLoading( false );
         } else {
           setError( 'Usuario no encontrado' );
         }
       }, ( err ) => { console.log( err ); });
+      setTimeout(() => {
+        signIn( email, password );
+      }, 5000 );
     }
-    return Promise.all([getUserByEmail]);
+  }, [getData]);
+
+  const handleLogin = async () => {
+    if ( email.length === 0 || password.length === 0 ) {
+      setError( true );
+      setErrorMessage( 'Todos los campos son obligatorios' );
+      return;
+    }
+    setLoading( true );
+    getUserData( true );
   };
-  const registerForPushNotificationAsync = async ( _user ) => {
+
+  const signIn = async ( userEmail, userPassword ) => {
+    await signInUser( userEmail, userPassword )
+      .then( async ( userCredential ) => {
+        setLoading( false );
+        await registerForPushNotificationAsync( userCredential );
+        console.log( 'User logged in with: ', userCredential.user.uid );
+        navigation.replace( 'Home' );
+      })
+      .catch(( err ) => {
+        setLoading( false );
+        setError( true );
+        setErrorMessage( handleLoginErrorMessage( err.code ));
+        console.log( err.code );
+        console.log( err.message );
+      });
+  };
+
+  const registerForPushNotificationAsync = async ( user ) => {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
     if ( existingStatus !== 'granted' ) {
@@ -100,7 +101,7 @@ function LoginTab() {
       return;
     }
     const token = ( await Notifications.getExpoPushTokenAsync()).data;
-    updateItem( 'users', _user.user.uid, { pushToken: token });
+    updateItem( 'users', user.user.uid, { pushToken: token });
   };
 
   return (
@@ -147,8 +148,8 @@ function LoginTab() {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setEmail( 'Lucasbarbosa@gmail.com' );
-              setPassword( '11111111' );
+              setEmail( 'guido@clas.com.ar' );
+              setPassword( '12345678' );
             }}
             style={{}}
           >
