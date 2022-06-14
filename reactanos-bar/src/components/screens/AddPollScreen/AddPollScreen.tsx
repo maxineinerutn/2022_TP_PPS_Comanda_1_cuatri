@@ -99,7 +99,7 @@ const AddPollScreen = ({ navigation }: any) => {
             //         "La mesa ya está cargado en nuestras bases de datos, de todas formas asegurate de guardar el código QR que te brindamos",
             //     code: JSON.stringify({tableCode:values.tableNumber.toString()}),
             // });
-            reset();
+            reset(); 
             OtherReset();
         } catch (e: any) {
             console.log(e);

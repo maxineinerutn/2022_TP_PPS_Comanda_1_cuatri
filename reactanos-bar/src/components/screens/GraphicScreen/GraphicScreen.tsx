@@ -9,7 +9,7 @@ import { AuthTypes } from "../../../redux/authReducer";
 import { IStore } from "../../../redux/store";
 import { StyledParagraph } from "../../atoms/Paragraph/Paragraph.styled";
 
-const GraphicScreen = ({ navigation }: any) => {
+const GraphicScreen = ({ navigation }: any) => { 
 
     const data: AuthTypes = useSelector<IStore, any>(store => store.auth);
     const dispatch = useDispatch();
