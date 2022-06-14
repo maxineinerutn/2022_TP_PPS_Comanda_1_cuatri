@@ -1,12 +1,12 @@
+/* eslint-disable react/no-unstable-nested-components */
 /* eslint-disable react/prop-types */
 import {
-  View, Text, TouchableOpacity, ScrollView, Image
+  View, Text, TouchableOpacity, FlatList, Image
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { app } from '../../../firebase';
 import { styles } from './styles';
-import { updateItem } from '../../services/FirestoreServices';
 import theme from '../../config/theme';
 
 export default function Approvals() {
@@ -29,13 +29,13 @@ export default function Approvals() {
   };
 
   return (
-    <ScrollView>
-      <View style={styles.container}>
-        <View style={styles.cardContainer}>
-          {clients.map(( c ) => <ClientCard data={c.data} id={c.id} handleApproval={handleApproval} /> )}
-        </View>
-      </View>
-    </ScrollView>
+    <View style={styles.container}>
+      <FlatList
+        data={clients}
+        ItemSeparatorComponent={() => <Text> </Text>}
+        renderItem={(({ item: c }) => <ClientCard data={c.data} id={c.id} handleApproval={handleApproval} /> )}
+      />
+    </View>
   );
 }
 

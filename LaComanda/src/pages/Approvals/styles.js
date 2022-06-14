@@ -11,8 +11,8 @@ export const styles = StyleSheet.create({
     width: Dimensions.get( 'screen' ).width
   },
   clientCard: {
-    flex: 1,
-    height: Dimensions.get( 'screen' ).height * 0.3,
+    width: Dimensions.get( 'screen' ).width * 0.8,
+    height: Dimensions.get( 'screen' ).height * 0.35,
     borderRadius: 10,
     borderWidth: 3,
     borderColor: theme.colors.primary,
@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   textName: {
     color: theme.colors.icons,
     fontWeight: '700',
-    fontSize: 24
+    fontSize: 20
   }
 
 });

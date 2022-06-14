@@ -16,7 +16,7 @@ import { styles } from './styles';
 import GlobalContext from '../../../context/GlobalContext';
 import { handleLoginErrorMessage } from './utils';
 import theme from '../../../config/theme';
-import { signInUser } from '../../../services/AuthService';
+import { signInUser, signOutUser } from '../../../services/AuthService';
 import Gifplay from '../../../../assets/gifplayBig.gif';
 import { getUserByEmail, updateItem } from '../../../services/FirestoreServices';
 
@@ -37,34 +37,7 @@ function LoginTab() {
       return;
     }
     setLoading( true );
-    getUserByEmail( 'users', email, ( data ) => {
-      if ( data ) {
-        const respuesta = data.docs.map(( doc ) => doc.data())[0];
-        if ( respuesta && respuesta.approved ) {
-          setUser({
-            name: respuesta.name,
-            surname: respuesta.surname,
-            approved: respuesta.approved,
-            cuil: respuesta.cuil,
-            dni: respuesta.dni,
-            email: respuesta.email,
-            photo: respuesta.photo,
-            role: respuesta.rol,
-            password: respuesta.password
-          });
-        } else {
-          setErrorMessage( 'Su usuario todavía no fué aprobado' );
-          setError( true );
-          setLoading( false );
-        }
-      } else {
-        setError( 'Usuario no encontrado' );
-      }
-    }, ( err ) => { console.log( err ); });
-    setTimeout(() => {
-      console.log( user );
-      signIn( user.email, user.password );
-    }, 3000 );
+    signIn( email, password );
   };
 
   const signIn = async ( userEmail, userPassword ) => {
@@ -72,8 +45,11 @@ function LoginTab() {
       .then( async ( userCredential ) => {
         setLoading( false );
         await registerForPushNotificationAsync( userCredential );
+        await getUserData( userCredential );
         console.log( 'User logged in with: ', userCredential.user.uid );
-        navigation.replace( 'Home' );
+        if ( user.approved ) {
+          navigation.replace( 'Home' );
+        }
       })
       .catch(( err ) => {
         setLoading( false );
@@ -83,7 +59,35 @@ function LoginTab() {
         console.log( err.message );
       });
   };
-
+  const getUserData = ( userCredential ) => {
+    if ( userCredential ) {
+      getUserByEmail( 'users', userCredential.user.email, ( data ) => {
+        if ( data ) {
+          const respuesta = data.docs.map(( doc ) => doc.data())[0];
+          if ( respuesta && respuesta.approved ) {
+            setUser({
+              name: respuesta.name,
+              surname: respuesta.surname,
+              approved: respuesta.approved,
+              cuil: respuesta.cuil,
+              dni: respuesta.dni,
+              email: respuesta.email,
+              photo: respuesta.photo,
+              role: respuesta.rol,
+              password: respuesta.password
+            });
+          }
+          signOutUser();
+          setErrorMessage( 'Su usuario todavía no fué aprobado' );
+          setError( true );
+          setLoading( false );
+        } else {
+          setError( 'Usuario no encontrado' );
+        }
+      }, ( err ) => { console.log( err ); });
+    }
+    return Promise.all([getUserByEmail]);
+  };
   const registerForPushNotificationAsync = async ( _user ) => {
     const { status: existingStatus } = await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
@@ -143,8 +147,8 @@ function LoginTab() {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setEmail( 'guido@clas.com.ar' );
-              setPassword( '12345678' );
+              setEmail( 'Lucasbarbosa@gmail.com' );
+              setPassword( '11111111' );
             }}
             style={{}}
           >
