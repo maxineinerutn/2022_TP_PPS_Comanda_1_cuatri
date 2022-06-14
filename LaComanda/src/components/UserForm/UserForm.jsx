@@ -389,14 +389,18 @@ export default function UserForm( props ) {
     setCameraActivate( true );
   }
 
-  function handleScannerResult( result ) {
+  function handleScannerResult( _result ) {
+    const result = processData( _result );
     setScannerActivate( false );
     setCameraActivate( false );
     setName( result.name );
     setSurname( result.surname );
     setDni( result.dni );
   }
-
+  function processData( qrData ) {
+    const datos = qrData.split( '@' );
+    return { surname: datos[1], name: datos[2], dni: datos[4] };
+  }
   return (
     <View>
       { cameraActivated ? (

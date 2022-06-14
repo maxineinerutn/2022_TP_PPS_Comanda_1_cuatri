@@ -108,6 +108,25 @@ export default function Main() {
             name='Additions'
             component={Addition}
           />
+          <Stack.Screen
+            options={{
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: theme.colors.primary,
+                borderBottomWidth: 2,
+                borderBottomColor: theme.colors.neutral
+              },
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                color: theme.colors.secondary,
+                fontSize: 25,
+                fontWeight: '400'
+              },
+              headerTitle: 'Inicio'
+            }}
+            name='ClientsHome'
+            component={Addition}
+          />
         </Stack.Navigator>
       </NavigationContainer>
     </View>

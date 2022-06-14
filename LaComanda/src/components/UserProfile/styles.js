@@ -3,9 +3,9 @@ import theme from '../../config/theme';
 
 const styles = StyleSheet.create({
   container: {
-    height: Dimensions.get( 'screen' ).height * 0.9,
+    height: Dimensions.get( 'screen' ).height * 0.78,
     width: Dimensions.get( 'screen' ).width,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center'
   },
   formControl: {
@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get( 'screen' ).height * 0.167,
     borderRadius: 10,
     borderWidth: 4,
-    marginBottom: 40,
+    marginBottom: 10,
     marginTop: 5
   },
   formControlPhotoWithPhoto: {

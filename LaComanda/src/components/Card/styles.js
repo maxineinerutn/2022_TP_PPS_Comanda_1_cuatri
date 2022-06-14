@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
     borderColor: theme.colors.primary,
     fontSize: 28
-  }
+  },
+  smallTitle: { fontSize: 22 }
 });
 export default styles;

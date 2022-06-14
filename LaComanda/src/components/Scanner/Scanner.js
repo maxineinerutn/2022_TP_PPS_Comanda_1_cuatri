@@ -29,13 +29,10 @@ export default function Scanner( props ) {
   };
 
   const validateBarCode = ( qrData ) => {
-    onScan( processData( qrData ));
+    onScan( qrData );
     setScanned( false );
   };
-  function processData( qrData ) {
-    const datos = qrData.split( '@' );
-    return { surname: datos[1], name: datos[2], dni: datos[4] };
-  }
+
   if ( hasPermission === null ) {
     return (
       <View style={Styles.containerScanner}>
@@ -54,7 +51,7 @@ export default function Scanner( props ) {
       {isFocused && (
         <View style={Styles.containerScanner}>
           <BarCodeScanner
-            barCodeTypes={[BarCodeScanner.Constants.BarCodeType.pdf417]}
+            barCodeTypes={[BarCodeScanner.Constants.BarCodeType.pdf417, BarCodeScanner.Constants.BarCodeType.qr]}
             onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
             style={Styles.wrapper}
           />

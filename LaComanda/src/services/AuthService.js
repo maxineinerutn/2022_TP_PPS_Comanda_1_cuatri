@@ -1,4 +1,5 @@
 import { auth } from '../../firebase';
+import { updateItem } from './FirestoreServices';
 
 /**
  * Create new user with email and password with firebase
@@ -22,6 +23,7 @@ export const signInUser = ( email, password ) => auth
  * @returns
  */
 export const signOutUser = () => {
+  updateItem( 'users', auth.currentUser.uid, { pushToken: '' });
   auth.signOut();
 };
 

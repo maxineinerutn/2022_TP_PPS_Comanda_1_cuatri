@@ -1,4 +1,6 @@
-import { View, Image } from 'react-native';
+import {
+  View, Image
+} from 'react-native';
 import React, { useContext } from 'react';
 import GlobalContext from '../../context/GlobalContext';
 import styles from './styles';
@@ -6,7 +8,6 @@ import Card from '../Card/Card';
 
 export default function UserProfile() {
   const { user } = useContext( GlobalContext );
-
   return (
     <View style={styles.container}>
       <View style={styles.formControlPhoto}>
@@ -22,6 +23,7 @@ export default function UserProfile() {
         <Card text={user.role} />
         {user.email && <Card text={user.email} />}
       </View>
+
     </View>
   );
 }
