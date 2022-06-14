@@ -23,9 +23,7 @@ import Button from "../../atoms/Button/Button.component";
 import { StyledParagraph } from "../../atoms/Paragraph/Paragraph.styled";
 import ControlledInput from "../../molecules/ControlledInput/ControlledInput.component";
 import Select from "../../molecules/Select/Select.component";
-import { RadioButton } from "react-native-paper";
-import { Box, Slider } from "native-base";
-import { Checkbox } from 'react-native-paper';
+import { Box, Slider, Checkbox, Radio } from "native-base";
 import { Screens } from "../../../navigation/Screens";
 
 interface PollData {
@@ -40,13 +38,13 @@ const AddPollScreen = ({ navigation }: any) => {
     const { control, getValues, reset, handleSubmit } = useForm<PollData>();
     const [attention, setAttention] = useState("");
     const opinion: MutableRefObject<any> = useRef();
-    const [price, setPollsPrice] = React.useState('');
+    const [price, setPollsPrice] = useState('');
     const data: AuthTypes = useSelector<IStore, any>(store => store.auth);
     const dispatch = useDispatch();
-    const [onChangeSliderValue, setOnChangeSliderValue] = React.useState(70); //slider value
-    const [cleaning, setCleaning] = React.useState(false);
-    const [deliverySpeed, setDeliverySpeed] = React.useState(false);
-    const [VarietyOfFood, setVarietyOfFood] = React.useState(false);
+    const [onChangeSliderValue, setOnChangeSliderValue] = useState(70); //slider value
+    const [cleaning, setCleaning] = useState(false);
+    const [deliverySpeed, setDeliverySpeed] = useState(false);
+    const [VarietyOfFood, setVarietyOfFood] = useState(false);
 
     const dataAttention = [
         { label: "Insatisfecho", value: "dissatisfied" },
@@ -61,12 +59,12 @@ const AddPollScreen = ({ navigation }: any) => {
         setCleaning(false);
         setDeliverySpeed(false);
         setVarietyOfFood(false);
+        setPollsPrice("");
     }
 
     const handleSelectAttention = (value: string) => {
         setAttention(value);
     }
-
     useFocusEffect(
         useCallback(() => {
             reset();
@@ -75,6 +73,7 @@ const AddPollScreen = ({ navigation }: any) => {
     );
 
     const uploadPoll = async () => {
+
         try {
             dispatch(fetchLoadingStart());
             const values = getValues();
@@ -86,7 +85,6 @@ const AddPollScreen = ({ navigation }: any) => {
                 PollAttention: attention,
                 PollPrice: price,
                 PollTasteFood: onChangeSliderValue,
-                PollOpinion: opinion.current,
                 PollCleaning: cleaning,
                 PollVarietyOfFood: VarietyOfFood,
                 PollDeliverySpeed: deliverySpeed,
@@ -110,7 +108,7 @@ const AddPollScreen = ({ navigation }: any) => {
             dispatch(fetchLoadingFinish());
         }
     };
-
+ 
     const handleCamera = async () => {
         let result: any = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -176,35 +174,22 @@ const AddPollScreen = ({ navigation }: any) => {
                     </StyledMargin>
 
                     <StyledMargin>
-                        <RadioButton.Group
-                            onValueChange={value => setPollsPrice(value)}
+                        <Radio.Group
+                            name="myRadioGroup"
                             value={price}
-                            control={control}
-                        >
-                            <RadioButton.Item
-                                label="Insatisfecho"
-                                value="dissatisfied"
-                                position="leading"
-                                style={{
-                                    marginRight: 180,
-                                }}
-                            />
-                            <RadioButton.Item
-                                label="Satisfecho"
-                                value="satisfied"
-                                position="leading"
-                                style={{ marginRight: 193 }}
-
-                            />
-                            <RadioButton.Item
-                                label="Normal"
-                                value="normal"
-                                position="leading"
-                                style={{
-                                    marginRight: 215,
-                                }}
-                            />
-                        </RadioButton.Group>
+                            onChange={(price) => {
+                                setPollsPrice(price);
+                            }}>
+                            <Radio value="dissatisfied">
+                                Insatisfecho
+                            </Radio>
+                            <Radio value="satisfied">
+                                Satisfecho
+                            </Radio>
+                            <Radio value="normal" >
+                                Normal
+                            </Radio>
+                        </Radio.Group>
                     </StyledMargin>
 
                     <StyledMargin>
@@ -247,43 +232,38 @@ const AddPollScreen = ({ navigation }: any) => {
                         </StyledParagraph>
                     </StyledMargin>
 
-                    <Checkbox.Item
-                        label="Limpieza"
-                        position="leading"
-                        status={cleaning ? 'checked' : 'unchecked'}
-                        onPress={() => {
-                            setCleaning(!cleaning);
-                        }}
-                        style={{
-                            marginRight: 195,
-                        }}
-                    />
+                    <Checkbox
+                        value={"cleaning"}
+                        onChange={() => {
+                          setCleaning(!cleaning);
+                        }} 
+                        isChecked={cleaning} 
+                    > 
+                        Limpieza
+                    </Checkbox> 
 
-                    <Checkbox.Item
-                        label="Velocidad de entrega"
-                        position="leading"
-                        status={deliverySpeed ? 'checked' : 'unchecked'}
-                        onPress={() => {
+                    <Checkbox 
+                        value={"deliverySpeed"}
+                        onChange={() => { 
                             setDeliverySpeed(!deliverySpeed);
                         }}
-                        style={{
-                            marginRight: 110,
-                        }}
-                    />
-                    <Checkbox.Item
-                        label="Variedad de comida"
-                        position="leading"
-                        status={VarietyOfFood ? 'checked' : 'unchecked'}
-                        onPress={() => {
+                        isChecked={deliverySpeed}
+                    >
+                        Velocidad de entrega 
+                    </Checkbox> 
+                    <Checkbox
+                        value={"VarietyOfFood"} 
+                        onChange={() => {
                             setVarietyOfFood(!VarietyOfFood);
                         }}
-                        style={{
-                            marginRight: 120,
-                        }}
-                    />
+                        isChecked={VarietyOfFood}
+                    >
+                        Variedad de comida
+                    </Checkbox>
+  
                     <StyledMargin>
                         <StyledParagraph
-                            level="L"
+                            level="L"    
                             color="white"
                             bold={true}
                             textAlign="left"
@@ -291,15 +271,16 @@ const AddPollScreen = ({ navigation }: any) => {
                             •  Dejanos tu opinion sobre el servicio
                         </StyledParagraph>
                     </StyledMargin>
+
                     <StyledMargin>
                         <ControlledInput onSubmitEditing={() => opinion.current.focus()} placeholder="Tu respuesta nos ayuda a mejorar" variant="rounded" control={control} name="PollsOpinion" />
                     </StyledMargin>
-                    <StyledMargin>
                         <Button onPress={handleSubmit(uploadPoll)}>Enviar</Button>
-                    </StyledMargin>
                 </StyledView>
             </StyledView>
         </StyledLinearGradient>
     );
 };
 export default AddPollScreen;
+
+
