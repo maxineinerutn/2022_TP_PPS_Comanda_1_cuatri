@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { app } from '../../../firebase';
 import { styles } from './styles';
+import { saveItemInCollection, updateItem } from '../../services/FirestoreServices';
 import theme from '../../config/theme';
 
 export default function Approvals() {
@@ -22,9 +23,15 @@ export default function Approvals() {
       });
   }, []);
 
-  const handleApproval = ( id ) => {
+  const handleApproval = ( id, email ) => {
     updateItem( 'users', id, { approved: true })
-      .then(() => console.log( 'aprobado' ))
+      .then(() => {
+        const emailTemplate = {
+          from: 'approvals',
+          email
+        };
+        saveItemInCollection( 'mails', email, emailTemplate );
+      })
       .catch(( err ) => { console.log( err ); });
   };
 
@@ -54,7 +61,7 @@ function ClientCard( props ) {
         />
       </View>
       <View>
-        <TouchableOpacity style={styles.button} onPress={() => handleApproval( id )}>
+        <TouchableOpacity style={styles.button} onPress={() => handleApproval( id, data.email )}>
           <Text style={styles.text}>Aprobar</Text>
           <MaterialCommunityIcons name='check-decagram' size={40} color={theme.colors.primary} />
         </TouchableOpacity>

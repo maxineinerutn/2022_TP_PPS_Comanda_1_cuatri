@@ -3,7 +3,6 @@ import theme from '../../config/theme';
 
 export const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: 'Roboto',
@@ -19,10 +18,10 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignContent: 'center',
     alignItems: 'center',
-    marginBottom: 15
+    marginBottom: 0
   },
   cardContainer: {
-    width: Dimensions.get( 'screen' ).width * 0.95,
+    width: Dimensions.get( 'screen' ).width * 0.90,
     height: Dimensions.get( 'screen' ).height,
     padding: 5
   },
