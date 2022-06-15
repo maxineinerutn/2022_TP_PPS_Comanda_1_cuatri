@@ -10,6 +10,7 @@ import Approvals from '../../pages/Approvals/Approvals';
 import Addition from '../../pages/Addition/Addition';
 import { signOutUser } from '../../services/AuthService';
 import { navigationRef, navigate } from '../../config/RootNavigation';
+import ClientsOnHold from '../../pages/ClientsOnHold/ClientsOnHold';
 
 const Stack = createNativeStackNavigator();
 
@@ -107,6 +108,25 @@ export default function Main() {
             }}
             name='Additions'
             component={Addition}
+          />
+          <Stack.Screen
+            options={{
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: theme.colors.primary,
+                borderBottomWidth: 2,
+                borderBottomColor: theme.colors.neutral
+              },
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                color: theme.colors.secondary,
+                fontSize: 25,
+                fontWeight: '400'
+              },
+              headerTitle: 'Clientes en espera'
+            }}
+            name='ClientsOnHold'
+            component={ClientsOnHold}
           />
         </Stack.Navigator>
       </NavigationContainer>

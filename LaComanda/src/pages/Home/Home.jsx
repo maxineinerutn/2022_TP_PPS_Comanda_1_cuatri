@@ -24,7 +24,7 @@ export default function Home() {
         Notifications.addNotificationResponseReceivedListener( handleNotificationResponse );
         break;
       case 'Metre':
-        Notifications.addNotificationResponseReceivedListener( handleNotificationResponse );
+        // Notifications.addNotificationResponseReceivedListener( handleNotificationResponse );
         break;
       default:
         break;
@@ -34,6 +34,7 @@ export default function Home() {
   const handleNotificationResponseOwnerSupervisor = () => {
     navigation.navigate( 'Approvals' );
   };
+
   return (
     <View style={styles.container}>
       <Fab
