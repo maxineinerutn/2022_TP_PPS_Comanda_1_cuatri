@@ -7,10 +7,14 @@ import Fab from '../../components/Fab/Fab';
 import GlobalContext from '../../context/GlobalContext';
 import Scanner from '../../components/Scanner/Scanner';
 import Styles from './styles';
-import { getUserByEmail, saveItemInCollection } from '../../services/FirestoreServices';
+import {
+  getAllMetres, getClientByEmail, getUserByEmail, saveItemInCollection
+} from '../../services/FirestoreServices';
+import { OrderStatus } from '../../util/Enums';
+import { sendPushNotification } from '../../services/PushNotificationService';
 
 export default function Home() {
-  const { user } = useContext( GlobalContext );
+  const { user, client, setClient } = useContext( GlobalContext );
   const [scanner, setScanner] = useState( false );
   const [btnScannerText, setBtnScannerText] = useState( 'Ingresar' );
   const navigation = useNavigation();
@@ -28,10 +32,16 @@ export default function Home() {
         Notifications.addNotificationResponseReceivedListener( handleNotificationResponse );
         break;
       case 'Metre':
-        Notifications.addNotificationResponseReceivedListener( handleNotificationResponse );
+        Notifications.addNotificationResponseReceivedListener( handleNotificationResponseMetre );
         break;
       case 'Cliente':
       case 'Invitado':
+        getClientByEmail( user.email, ( data ) => {
+          const response = data.docs.map(( doc ) => doc.data())[0];
+          if ( response ) {
+            setClient( response );
+          }
+        }, ( error ) => console.log( error ));
         break;
       default:
         break;
@@ -59,6 +69,9 @@ export default function Home() {
   const handleNotificationResponseOwnerSupervisor = () => {
     navigation.navigate( 'Approvals' );
   };
+  const handleNotificationResponseMetre = () => {
+    // navigation.navigate( 'Approvals' );
+  };
   const renderButtonScanner = () => {
     if ( user.role === 'Cliente' || user.role === 'Invitado' ) {
       return (
@@ -75,10 +88,25 @@ export default function Home() {
   const handleScannerResult = ( scannerResult ) => {
     if ( scannerResult === 'ingreso' ) {
       setScanner( false );
-      saveItemInCollection( 'clients', user.email, {
-        name: user.name, email: user.email, role: user.role, surname: user.surname
+      const newClient = {
+        name: user.name,
+        email: user.email,
+        role: user.role,
+        surname: user.surname,
+        orderState: OrderStatus.WaitingList
+      };
+      saveItemInCollection( 'clients', user.email, newClient ).then(() => {
+        setClient( newClient );
+        getAllMetres(( data ) => {
+          const response = data.docs.map(( doc ) => doc.data());
+          const usersToken = response.map(( u ) => u.pushToken );
+          sendPushNotification( usersToken, 'Nuevo Ingreso', 'Ha ingresado un cliente a la lista de espera' );
+        }, ( err ) => { console.log( err ); });
       });
-      navigation.navigate( 'ClientsHome' );
+      console.log( client );
+      setTimeout(() => {
+        navigation.navigate( 'ClientsHome' );
+      }, 2000 );
     }
   };
   return (

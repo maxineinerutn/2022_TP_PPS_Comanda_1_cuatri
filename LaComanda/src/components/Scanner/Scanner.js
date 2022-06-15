@@ -36,7 +36,7 @@ export default function Scanner( props ) {
   if ( hasPermission === null ) {
     return (
       <View style={Styles.containerScanner}>
-        <ActivityIndicator size={180} color={theme.colors.details} />
+        <ActivityIndicator size={180} color={theme.colors.primary} />
       </View>
     );
   }

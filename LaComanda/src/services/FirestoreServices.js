@@ -54,4 +54,10 @@ export const getAllNotApprovedClients = async ( collection, onResult, onError ) 
 export const getAllAprrovedUsers = async ( onResult, onError ) => {
   await firestore.collection( 'users' ).where( 'approved', '==', true ).onSnapshot( onResult, onError );
 };
+export const getAllMetres = async ( onResult, onError ) => {
+  await firestore.collection( 'users' ).where( 'rol', '==', 'Metre' ).where( 'approved', '==', true ).onSnapshot( onResult, onError );
+};
+export const getClientByEmail = async ( email, onResult, onError ) => {
+  await firestore.collection( 'clients' ).where( 'email', '==', email ).onSnapshot( onResult, onError );
+};
 

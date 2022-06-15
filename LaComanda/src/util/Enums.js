@@ -7,3 +7,8 @@ export const UserTypes = {
   Product: 6,
   None: 0
 };
+export const OrderStatus = {
+  WaitingList: '1',
+  WaitingForScanTable: '2',
+  None: '0'
+};
