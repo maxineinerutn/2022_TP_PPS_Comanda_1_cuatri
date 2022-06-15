@@ -17,6 +17,7 @@ import ClientHomeStack from './stacks/ClientHomeStack';
 import WaitingClientListScreen from '../components/screens/WaitingClientListScreen/WaitingClientListScreen.component';
 import WaitingClientListStack from './stacks/WaitingClientListStack';
 import AddPollScreen from '../components/screens/AddPollScreen/AddPollScreen';
+import GraphicScreen from '../components/screens/GraphicScreen/GraphicScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -35,7 +36,9 @@ function CustomDrawerContent(props:any) {
 
 const DrawerStack = () => {
     return (
-        <Drawer.Navigator initialRouteName={Screens.ADD_PRODUCTS} drawerContent={props => <CustomDrawerContent {...props} />}> 
+        <Drawer.Navigator initialRouteName={Screens.GRAPHIC_SCREEN} drawerContent={props => <CustomDrawerContent {...props} />}> 
+         {/* <Drawer.Navigator initialRouteName={Screens.ADD_PRODUCTS} drawerContent={props => <CustomDrawerContent {...props} />}>  */}
+         <Drawer.Screen name={Screens.GRAPHIC_SCREEN} component={GraphicScreen} />
           <Drawer.Screen name={Screens.ADD_PRODUCTS} component={AddProductStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.ADD_ADMINS} component={AddAdminsScreen} />
           <Drawer.Screen name={Screens.ADD_TABLE} component={AddTableStack} options={{headerShown:false}} />
@@ -45,8 +48,9 @@ const DrawerStack = () => {
           <Drawer.Screen name={Screens.CLIENT_HOME} component={ClientHomeStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.WAITING_CLIENT_LIST} component={WaitingClientListStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.ADD_POLL} component={AddPollScreen} />
+         
         </Drawer.Navigator>
     );
-}
+} 
 
 export default DrawerStack

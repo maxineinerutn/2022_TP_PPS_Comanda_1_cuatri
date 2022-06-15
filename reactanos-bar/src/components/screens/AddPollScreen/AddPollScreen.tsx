@@ -36,34 +36,34 @@ const AddPollScreen = ({ navigation }: any) => {
     const [images, setImages] = useState<string[]>([]);
     const [modalVisible, setModalVisible] = useState<boolean>(false);
     const { control, getValues, reset, handleSubmit } = useForm<PollData>();
-    const [attention, setAttention] = useState("");
+    const [foodQuality, setFoodQuality] = useState("");
     const opinion: MutableRefObject<any> = useRef();
     const [price, setPollsPrice] = useState('');
     const data: AuthTypes = useSelector<IStore, any>(store => store.auth);
     const dispatch = useDispatch();
     const [onChangeSliderValue, setOnChangeSliderValue] = useState(70); //slider value
-    const [cleaning, setCleaning] = useState(false);
-    const [deliverySpeed, setDeliverySpeed] = useState(false);
-    const [VarietyOfFood, setVarietyOfFood] = useState(false);
+    const [creditOrDebit, setcreditOrDebit] = useState(false);
+    const [cash, setcash] = useState(false);
+    const [other, setother] = useState(false);
 
     const dataAttention = [
-        { label: "Insatisfecho", value: "dissatisfied" },
-        { label: "Satisfecho", value: "satisfied" },
-        { label: "Normal", value: "normal" },
+        { label: "Muy buena", value: "great" },
+        { label: "Buena", value: "good" },
+        { label: "Mala", value: "bad" },
     ]
 
     const OtherReset = () => {
-        setAttention("");
+        setFoodQuality("");
         opinion.current = "";
         setOnChangeSliderValue(70);
-        setCleaning(false);
-        setDeliverySpeed(false);
-        setVarietyOfFood(false);
+        setcreditOrDebit(false);
+        setcash(false);
+        setother(false);
         setPollsPrice("");
     }
 
     const handleSelectAttention = (value: string) => {
-        setAttention(value);
+        setFoodQuality(value);
     }
     useFocusEffect(
         useCallback(() => {
@@ -82,12 +82,12 @@ const AddPollScreen = ({ navigation }: any) => {
             const docRef = await addDoc(collection(db, "polls"), {
                 user: data.user.email,
                 PollTable: data.user.table,
-                PollAttention: attention,
+                PollAttention: onChangeSliderValue,
                 PollPrice: price,
-                PollTasteFood: onChangeSliderValue,
-                PollCleaning: cleaning,
-                PollVarietyOfFood: VarietyOfFood,
-                PollDeliverySpeed: deliverySpeed,
+                PollTasteFood: foodQuality,
+                PollCreditOrDebit: creditOrDebit,
+                PollOther: other,
+                PollCash: cash,
                 creationDate: new Date(),
                 images: imagesRef,
                 ...values
@@ -154,12 +154,12 @@ const AddPollScreen = ({ navigation }: any) => {
                             bold={true}
                             textAlign="left"
                         >
-                            •  ¿Que te ha parecido la atención?
+                            •  ¿Que te ha parecido la comida?
                         </StyledParagraph>
                     </StyledMargin>
 
                     <StyledMargin>
-                        <Select value={attention} onChange={handleSelectAttention} placeholder="Tu respuesta nos ayuda a mejorar" data={dataAttention} />
+                        <Select value={foodQuality} onChange={handleSelectAttention} placeholder="Tu respuesta nos ayuda a mejorar" data={dataAttention} />
                     </StyledMargin>
 
                     <StyledMargin>
@@ -199,7 +199,7 @@ const AddPollScreen = ({ navigation }: any) => {
                             bold={true}
                             textAlign="left"
                         >
-                            •  ¿Que te ha parecido la comida?
+                            •  ¿Que te ha parecido la atencion?
                         </StyledParagraph>
                     </StyledMargin>
 
@@ -228,37 +228,37 @@ const AddPollScreen = ({ navigation }: any) => {
                             bold={true}
                             textAlign="left"
                         >
-                            •  ¿Que crees que deberiamos mejorar?
+                            •  ¿Metodo favorito de pago?
                         </StyledParagraph>
                     </StyledMargin>
 
                     <Checkbox
-                        value={"cleaning"}
+                        value={"creditOrDebit"}
                         onChange={() => {
-                          setCleaning(!cleaning);
+                          setcreditOrDebit(!creditOrDebit);
                         }} 
-                        isChecked={cleaning} 
-                    > 
-                        Limpieza
+                        isChecked={creditOrDebit} 
+                    >  
+                        Tarjeta de crédito o débito
                     </Checkbox> 
 
                     <Checkbox 
-                        value={"deliverySpeed"}
+                        value={"cash"}
                         onChange={() => { 
-                            setDeliverySpeed(!deliverySpeed);
+                            setcash(!cash);
                         }}
-                        isChecked={deliverySpeed}
+                        isChecked={cash}
                     >
-                        Velocidad de entrega 
+                        Efectivo 
                     </Checkbox> 
                     <Checkbox
-                        value={"VarietyOfFood"} 
+                        value={"other"} 
                         onChange={() => {
-                            setVarietyOfFood(!VarietyOfFood);
+                            setother(!other);
                         }}
-                        isChecked={VarietyOfFood}
+                        isChecked={other}
                     >
-                        Variedad de comida
+                        Otro
                     </Checkbox>
   
                     <StyledMargin>

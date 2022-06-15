@@ -13,4 +13,5 @@ export enum Screens{
     CLIENT_HOME="Principal Clientes",
     WAITING_CLIENT_LIST="Lista de espera",
     ADD_POLL = "Agregar encuesta",
+    GRAPHIC_SCREEN="Graficos",
 }
