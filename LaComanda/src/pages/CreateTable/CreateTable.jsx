@@ -16,7 +16,6 @@ export default function CreateTable() {
     createBlob( newTable.photo ).then(( blob ) => {
       saveImageInStorage( newTable.number, blob ).then(( uri ) => {
         newTable.photo = uri;
-        newTable.qrId = 'qr';
         saveItemInCollection( 'tables', newTable.number, newTable ).then(() => {
           navigation.navigate( 'Home' );
         }).catch(() => {

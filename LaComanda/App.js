@@ -15,12 +15,15 @@ export default function App() {
   });
   const [isLoaded, setIsloaded] = useState( false );
   const [user, setUser] = useState({});
+  const [client, setClient] = useState({});
   const memo = useMemo(
     () => ({
       user,
-      setUser
+      setUser,
+      client,
+      setClient
     }),
-    [user]
+    [user, client]
   );
 
   useEffect(() => {

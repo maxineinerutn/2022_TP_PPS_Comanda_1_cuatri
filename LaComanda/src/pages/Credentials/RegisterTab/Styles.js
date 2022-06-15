@@ -9,6 +9,13 @@ const Styles = StyleSheet.create({
     height: Dimensions.get( 'screen' ).height,
     justifyContent: 'flex-start'
   },
+  containerSpinner: {
+    flex: 1,
+    alignItems: 'center',
+    width: Dimensions.get( 'screen' ).width,
+    height: Dimensions.get( 'screen' ).height,
+    justifyContent: 'center'
+  },
   containerChoose: {
     flex: 1,
     alignItems: 'center',
@@ -41,6 +48,10 @@ const Styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: 'center',
     justifyContent: 'center'
+  },
+  spinner: {
+    width: '100%',
+    height: '100%'
   }
 });
 export default Styles;

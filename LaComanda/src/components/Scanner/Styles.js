@@ -11,7 +11,10 @@ const Styles = StyleSheet.create({
   },
   containerScanner: {
     // backgroundColor: "black",
-    width: Dimensions.get( 'screen' ).width
+    width: Dimensions.get( 'screen' ).width,
+    height: Dimensions.get( 'screen' ).height * 0.75,
+    justifyContent: 'center',
+    alignItems: 'center'
     // height: Dimensions.get( 'screen' ).height * 0.8
   },
   wrapper: {

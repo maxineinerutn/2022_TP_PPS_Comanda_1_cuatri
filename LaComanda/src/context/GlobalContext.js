@@ -4,7 +4,11 @@ const GlobalContext = createContext({
   user: {
     name: '', surname: '', role: '', cuil: '', approved: false, email: '', dni: '', photo: '', password: ''
   },
-  setUser: () => {}
+  setUser: () => {},
+  client: {
+    name: '', surname: '', role: '', email: '', orderState: '', assignedTable: ''
+  },
+  setClient: () => {}
 });
 
 export default GlobalContext;

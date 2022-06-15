@@ -148,7 +148,7 @@ function LoginTab() {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
-              setEmail( 'guido@clas.com.ar' );
+              setEmail( 'Barbosalucasroberto@gmail.com' );
               setPassword( '12345678' );
             }}
             style={{}}

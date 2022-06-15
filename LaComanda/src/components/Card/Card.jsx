@@ -8,7 +8,7 @@ export default function Card( props ) {
 
   return (
     <View style={styles.card}>
-      <Text style={styles.title}>{text}</Text>
+      <Text style={[styles.title, text.length >= 15 && styles.smallTitle]}>{text}</Text>
     </View>
   );
 }
