@@ -63,6 +63,38 @@ export default function Fab( props ) {
             </ActionButton.Item>
           </ActionButton>
         );
+      case 'Metre':
+        return (
+          <ActionButton
+            offsetY={10}
+            offsetX={10}
+            verticalOrientation='down'
+            buttonColor={theme.colors.icons}
+            position='left'
+            degrees={0}
+            onPress={() => {}}
+            renderIcon={renderIcon}
+            style={{ zIndex: 9999, width: 120, height: 100 }}
+          >
+            <ActionButton.Item
+              spaceBetween={2}
+              buttonColor={theme.colors.icons}
+              useNativeFeedback
+              title='Aceptar Clientes'
+              textStyle={{
+                fontSize: 14,
+                width: 105,
+                height: 100
+              }}
+              style={{ zIndex: 9999 }}
+              onPress={() => {
+                navigation.navigate( 'ClientsOnHold' );
+              }}
+            >
+              <MaterialCommunityIcons name='check-decagram' size={40} color='white' />
+            </ActionButton.Item>
+          </ActionButton>
+        );
       default:
         return null;
     }
