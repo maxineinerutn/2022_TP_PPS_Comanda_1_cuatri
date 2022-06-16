@@ -45,6 +45,11 @@ export const errorHandler = (error:any) => {
         case 'invalid-qr':
             message="QR inválido"
         break;
+        case 'havent-guessed':
+            message="No has adivinado el número"
+        break;
+        
+
         default:
             message="Ha ocurrido un error, por favor reintente nuevamente"
         break;

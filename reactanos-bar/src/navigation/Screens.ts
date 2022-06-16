@@ -14,4 +14,5 @@ export enum Screens{
     WAITING_CLIENT_LIST="Lista de espera",
     ADD_POLL = "Agregar encuesta",
     GRAPHIC_SCREEN="Graficos",
+    GUESS_THE_NUMBER="Adivina el numero",
 }
