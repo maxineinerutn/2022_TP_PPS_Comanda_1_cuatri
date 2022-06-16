@@ -18,6 +18,7 @@ export default function Home() {
   const [scanner, setScanner] = useState( false );
   const [btnScannerText, setBtnScannerText] = useState( 'Ingresar' );
   const navigation = useNavigation();
+
   useEffect(() => {
     switch ( user.role ) {
       case 'Dueño':
@@ -47,6 +48,7 @@ export default function Home() {
         break;
     }
   }, []);
+
   useEffect(() => {
     getUserByEmail( 'clients', user.email, ( data ) => {
       const response = data.docs.map(( doc ) => doc.data())[0];
@@ -72,6 +74,7 @@ export default function Home() {
   const handleNotificationResponseMetre = () => {
     // navigation.navigate( 'Approvals' );
   };
+
   const renderButtonScanner = () => {
     if ( user.role === 'Cliente' || user.role === 'Invitado' ) {
       return (
@@ -85,6 +88,7 @@ export default function Home() {
     }
     return null;
   };
+
   const handleScannerResult = ( scannerResult ) => {
     if ( scannerResult === 'ingreso' ) {
       setScanner( false );
@@ -110,6 +114,7 @@ export default function Home() {
       }, 2000 );
     }
   };
+
   return (
     <View style={Styles.container}>
       <Fab
