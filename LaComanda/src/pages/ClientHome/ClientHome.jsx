@@ -7,6 +7,7 @@ import GlobalContext from '../../context/GlobalContext.js';
 import { OrderStatus } from '../../util/Enums.js';
 import Scanner from '../../components/Scanner/Scanner.js';
 import theme from '../../config/theme.js';
+import { updateItem } from '../../services/FirestoreServices.js';
 
 export default function ClientHome() {
   const [waiting, setWaiting] = useState( null );
@@ -28,12 +29,13 @@ export default function ClientHome() {
   const handleScan = ( _scanResult ) => {
     setSpinner( true );
     if ( _scanResult === client.assignedTable ) {
-      navigation.navigate( 'TableMenu' ); // aca deberia redireccionar al menu de la mesa donde puede hacer el pedido,juegos, encuesta etc
+      updateItem( 'clients', client.email, { orderState: OrderStatus.ScannedAssignedTable });
+      navigation.navigate( 'TableMenu' );
     } else {
       console.log( 'No es la mesa asignada' );
       setTimeout(() => {
         setSpinner( false );
-      }, 1000 ); // aca se deberia mostrar un mensaje de error
+      }, 1000 ); // TODO: aca se deberia mostrar un mensaje de error
     }
   };
   return (

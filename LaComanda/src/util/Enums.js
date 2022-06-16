@@ -10,5 +10,6 @@ export const UserTypes = {
 export const OrderStatus = {
   WaitingList: '1',
   WaitingForScanTable: '2',
+  ScannedAssignedTable: '3',
   None: '0'
 };

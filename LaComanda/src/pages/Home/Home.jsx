@@ -61,10 +61,17 @@ export default function Home() {
   }, [btnScannerText]);
 
   const mainAction = () => {
-    if ( btnScannerText === 'Volver' ) {
-      navigation.navigate( 'ClientsHome' );
-    } else {
-      setScanner( true );
+    switch ( client.orderState ) {
+      case OrderStatus.WaitingList:
+      case OrderStatus.WaitingForScanTable:
+        navigation.navigate( 'ClientsHome' );
+        break;
+      case OrderStatus.ScannedAssignedTable:
+        navigation.navigate( 'TableMenu' );
+        break;
+      default:
+        setScanner( true );
+        break;
     }
   };
 

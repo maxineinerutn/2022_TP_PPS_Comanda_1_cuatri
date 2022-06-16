@@ -13,6 +13,7 @@ import { signOutUser } from '../../services/AuthService';
 import { navigationRef, navigate } from '../../config/RootNavigation';
 import ClientsOnHold from '../../pages/ClientsOnHold/ClientsOnHold';
 import ClientHome from '../../pages/ClientHome/ClientHome';
+import TableMenu from '../../pages/TableMenu/TableMenu';
 
 const Stack = createNativeStackNavigator();
 
@@ -159,6 +160,26 @@ export default function Main() {
             }}
             name='ClientsHome'
             component={ClientHome}
+          />
+          <Stack.Screen
+            options={{
+              headerLeft: () => renderHeaderProfileIcon(),
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: theme.colors.primary,
+                borderBottomWidth: 2,
+                borderBottomColor: theme.colors.neutral
+              },
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                color: theme.colors.secondary,
+                fontSize: 25,
+                fontWeight: '400'
+              },
+              headerTitle: 'Menú'
+            }}
+            name='TableMenu'
+            component={TableMenu}
           />
         </Stack.Navigator>
       </NavigationContainer>
