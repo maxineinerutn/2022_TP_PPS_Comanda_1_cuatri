@@ -26,7 +26,7 @@ export default function Home() {
         Notifications.addNotificationResponseReceivedListener( handleNotificationResponseOwnerSupervisor );
         break;
       case 'Mozo':
-        Notifications.addNotificationResponseReceivedListener( handleNotificationResponse );
+        Notifications.addNotificationResponseReceivedListener( handleNotificationResponseWaiter );
         break;
       case 'Cocinero':
       case 'Bartender':
@@ -67,6 +67,7 @@ export default function Home() {
         navigation.navigate( 'ClientsHome' );
         break;
       case OrderStatus.ScannedAssignedTable:
+      case OrderStatus.OrderSended:
         navigation.navigate( 'TableMenu' );
         break;
       default:
@@ -79,7 +80,10 @@ export default function Home() {
     navigation.navigate( 'Approvals' );
   };
   const handleNotificationResponseMetre = () => {
-    // navigation.navigate( 'Approvals' );
+    navigation.navigate( 'ClientsOnHold' );
+  };
+  const handleNotificationResponseWaiter = () => {
+    // navigation.navigate( 'Confirmations' );
   };
 
   const renderButtonScanner = () => {

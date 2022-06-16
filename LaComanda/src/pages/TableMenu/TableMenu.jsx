@@ -1,6 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../../config/theme';
 import { UserTypes } from '../../util/Enums';
 import GameTab from './GameTab/GameTab';
@@ -14,35 +15,43 @@ function renderTabBarIcon( route, size ) {
   let iconColor;
 
   switch ( route.name ) {
-    case 'Ingresar':
+    case 'Juegos':
       iconColor = theme.colors.icons;
-      iconName = 'login';
+      iconName = 'gamepad';
       break;
-    case 'Registrarse':
+    case 'Pedido':
       iconColor = theme.colors.icons;
-      iconName = 'account-plus';
+      iconName = 'concierge-bell';
+      break;
+    case 'Encuestas':
+      iconColor = theme.colors.icons;
+      iconName = 'message-star';
       break;
     default:
       break;
   }
 
-  return (
-    <MaterialCommunityIcons name={iconName} size={size} color={iconColor} />
+  return ( iconName === 'message-star'
+    ? <IconMaterial name={iconName} size={size} color={iconColor} />
+    : <Icon name={iconName} size={size} color={iconColor} />
   );
 }
 export default function TableMenu() {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ size }) => renderTabBarIcon( route, size ),
-        headerStyle: {
-          backgroundColor: theme.colors.primary,
-          borderBottomWidth: 2
-        },
-        headerShown: false,
-        tabBarActiveTintColor: theme.colors.primary,
-        tabBarInactiveTintColor: theme.colors.neutral
-      })}
+      initialRouteName='Pedido'
+      screenOptions={
+        ({ route }) => ({
+          tabBarIcon: ({ size }) => renderTabBarIcon( route, size ),
+          headerStyle: {
+            backgroundColor: theme.colors.primary,
+            borderBottomWidth: 2
+          },
+          headerShown: false,
+          tabBarActiveTintColor: theme.colors.primary,
+          tabBarInactiveTintColor: theme.colors.neutral
+        })
+      }
     >
       <Tab.Screen
         name='Juegos'
@@ -70,11 +79,7 @@ export default function TableMenu() {
           },
           headerShown: false,
           tabBarActiveTintColor: theme.colors.text,
-          tabBarInactiveTintColor: theme.colors.neutral,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            color: theme.colors.secondary
-          }
+          tabBarInactiveTintColor: theme.colors.neutral
         }}
       />
       <Tab.Screen
@@ -88,11 +93,7 @@ export default function TableMenu() {
             borderBottomColor: theme.colors.neutral
           },
           tabBarActiveTintColor: theme.colors.text,
-          tabBarInactiveTintColor: theme.colors.neutral,
-          headerTitleAlign: 'center',
-          headerTitleStyle: {
-            color: theme.colors.secondary
-          }
+          tabBarInactiveTintColor: theme.colors.neutral
         }}
       />
     </Tab.Navigator>

@@ -11,5 +11,7 @@ export const OrderStatus = {
   WaitingList: '1',
   WaitingForScanTable: '2',
   ScannedAssignedTable: '3',
+  OrderSended: '4',
+  OrderConfirmed: '5',
   None: '0'
 };

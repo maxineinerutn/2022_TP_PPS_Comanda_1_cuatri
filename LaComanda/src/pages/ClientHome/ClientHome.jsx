@@ -41,7 +41,7 @@ export default function ClientHome() {
   return (
     <View>
       { waiting
-        ? <View style={styles.containerWaitingScreen}><StandbyScreen /></View> : (
+        ? <View style={styles.containerWaitingScreen}><StandbyScreen text='Se encuentra en lista de espera para ingresar' /></View> : (
           <View style={styles.containerScannerTable}>
             <Text style={styles.textScanTable}>Debe Scannear la mesa que se le fue asignada</Text>
             {
