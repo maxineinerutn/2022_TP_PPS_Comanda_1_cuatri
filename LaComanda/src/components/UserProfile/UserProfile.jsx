@@ -9,7 +9,7 @@ import Card from '../Card/Card';
 export default function UserProfile() {
   const { user } = useContext( GlobalContext );
   return (
-    <View style={styles.container}>
+    <View style={[( user.role === 'Cliente' || user.role === 'Invitado' ) ? styles.containerClient : styles.container]}>
       <View style={styles.formControlPhoto}>
         <Image
           style={styles.formControlPhotoWithPhoto}

@@ -5,7 +5,8 @@ import {
   TouchableOpacity,
   View,
   Image,
-  ActivityIndicator
+  ActivityIndicator,
+  Keyboard
 } from 'react-native';
 import React, {
   useContext, useState, useEffect
@@ -63,6 +64,7 @@ function LoginTab() {
   }, [getData]);
 
   const handleLogin = async () => {
+    Keyboard.dismiss();
     if ( email.length === 0 || password.length === 0 ) {
       setError( true );
       setErrorMessage( 'Todos los campos son obligatorios' );
@@ -127,6 +129,7 @@ function LoginTab() {
             style={styles.input}
             value={email}
             onChangeText={( text ) => setEmail( text )}
+            keyboardType='email-address'
           />
           <TextInput
             placeholder='Contraseña'

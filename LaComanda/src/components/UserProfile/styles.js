@@ -2,10 +2,16 @@ import { StyleSheet, Dimensions } from 'react-native';
 import theme from '../../config/theme';
 
 const styles = StyleSheet.create({
-  container: {
+  containerClient: {
     height: Dimensions.get( 'screen' ).height * 0.78,
     width: Dimensions.get( 'screen' ).width,
     justifyContent: 'flex-start',
+    alignItems: 'center'
+  },
+  container: {
+    height: Dimensions.get( 'screen' ).height * 0.9,
+    width: Dimensions.get( 'screen' ).width,
+    justifyContent: 'center',
     alignItems: 'center'
   },
   formControl: {

@@ -30,7 +30,7 @@ export default function Home() {
         break;
       case 'Cocinero':
       case 'Bartender':
-        Notifications.addNotificationResponseReceivedListener( handleNotificationResponse );
+        Notifications.addNotificationResponseReceivedListener( handleNotificationResponseEmployee );
         break;
       case 'Metre':
         Notifications.addNotificationResponseReceivedListener( handleNotificationResponseMetre );
@@ -68,6 +68,7 @@ export default function Home() {
         break;
       case OrderStatus.ScannedAssignedTable:
       case OrderStatus.OrderSended:
+      case OrderStatus.OrderConfirmed:
         navigation.navigate( 'TableMenu' );
         break;
       default:
@@ -83,6 +84,9 @@ export default function Home() {
     navigation.navigate( 'ClientsOnHold' );
   };
   const handleNotificationResponseWaiter = () => {
+    // navigation.navigate( 'Confirmations' );
+  };
+  const handleNotificationResponseEmployee = () => {
     // navigation.navigate( 'Confirmations' );
   };
 
@@ -127,7 +131,7 @@ export default function Home() {
   };
 
   return (
-    <View style={Styles.container}>
+    <View>
       <Fab
         style={{}}
         type={user.role}
@@ -137,10 +141,10 @@ export default function Home() {
           <Scanner onScan={( result ) => handleScannerResult( result )} />
         </View>
       ) : (
-        <>
+        <View style={Styles.container}>
           <UserProfile />
           {renderButtonScanner()}
-        </>
+        </View>
       )}
     </View>
   );
