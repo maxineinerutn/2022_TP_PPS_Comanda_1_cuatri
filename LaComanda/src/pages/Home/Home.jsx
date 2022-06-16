@@ -93,6 +93,7 @@ export default function Home() {
         email: user.email,
         role: user.role,
         surname: user.surname,
+        photo: user.photo,
         orderState: OrderStatus.WaitingList
       };
       saveItemInCollection( 'clients', user.email, newClient ).then(() => {
