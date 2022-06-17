@@ -18,6 +18,7 @@ export default function ProductsList({ navigation }) {
   const [total, setTotal] = useState( 0 );
   const [totalEstimatedTime, setTotalEstimatedTime] = useState( 0 );
   const [spinner, setSpinner] = useState( false );
+  const [newOrder, setNewOrder] = useState([]);
   const [productList, setProductList] = useState([{
     photos: ['https://firebasestorage.googleapis.com/v0/b/lacomanda-47138.appspot.com/o/3wRbuRgbkvhVGj4Ckm8MFABsn6I2%2F8460158d-8498-4cad-919e-a41593f47be3?alt=media&token=58ef4d4d-4949-4c51-86be-a1239fa0426a',
       'https://firebasestorage.googleapis.com/v0/b/lacomanda-47138.appspot.com/o/3wRbuRgbkvhVGj4Ckm8MFABsn6I2%2F8460158d-8498-4cad-919e-a41593f47be3?alt=media&token=58ef4d4d-4949-4c51-86be-a1239fa0426a',
@@ -35,7 +36,7 @@ export default function ProductsList({ navigation }) {
     description: 'el producto 2 es el segundo producto',
     elaborationTime: '5'
   }]);
-  const [newOrder, setNewOrder] = useState([]);
+
   const handlerAddproduct = ( _product ) => {
     const productsInOrder = newOrder.filter(( p ) => p.name === _product.name );
     if ( productsInOrder.length > 0 ) {
@@ -46,6 +47,7 @@ export default function ProductsList({ navigation }) {
     calculateTotal();
     calculateEstimatedTime();
   };
+
   const handlerRemoveProduct = ( _product ) => {
     const productsInOrder = newOrder.filter(( p ) => p.name === _product.name );
     if ( productsInOrder.length > 0 ) {
@@ -58,10 +60,12 @@ export default function ProductsList({ navigation }) {
     calculateTotal();
     calculateEstimatedTime();
   };
+
   const handlerQuantityInOrder = ( _product ) => {
     const productsInOrder = newOrder.filter(( p ) => p.name === _product.name );
     return productsInOrder.length > 0 ? productsInOrder[0].quantity : 0;
   };
+
   const calculateTotal = () => {
     if ( newOrder.length > 0 ) {
       const t = newOrder.reduce(( _total, p ) => _total + ( p.price * p.quantity ), 0 );
@@ -70,6 +74,7 @@ export default function ProductsList({ navigation }) {
       setTotal( newOrder.length );
     }
   };
+
   const calculateEstimatedTime = () => {
     if ( newOrder.length > 0 ) {
       const t = newOrder.reduce(( _total, p ) => _total + ( parseInt( p.elaborationTime, 10 ) * p.quantity ), 0 );
@@ -78,6 +83,7 @@ export default function ProductsList({ navigation }) {
       setTotalEstimatedTime( 0 );
     }
   };
+
   const createOrder = () => {
     setSpinner( true );
     updateItem( 'clients', client.email, {
@@ -92,6 +98,11 @@ export default function ProductsList({ navigation }) {
       navigation.navigate( 'WaitingOrder' );
     });
   };
+
+  const handleChat = () => {
+    navigation.navigate( 'ClientChat' );
+  };
+
   return (
     <View>
       {
@@ -134,9 +145,9 @@ export default function ProductsList({ navigation }) {
             </View>
           )
       }
-      <TouchableOpacity>
+      <TouchableOpacity onPress={handleChat}>
         <View style={styles.containerChatIcon}>
-          <ChatIcon name='chatbubbles-outline' style={styles.chatIcon} size={40} />
+          <ChatIcon name='chatbubbles-outline' style={styles.chatIcon} size={40} color='white' />
         </View>
       </TouchableOpacity>
     </View>

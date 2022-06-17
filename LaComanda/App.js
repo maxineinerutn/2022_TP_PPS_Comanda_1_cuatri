@@ -16,12 +16,16 @@ export default function App() {
   const [isLoaded, setIsloaded] = useState( false );
   const [user, setUser] = useState({});
   const [client, setClient] = useState({});
+  const [clients, setClients] = useState([]);
+
   const memo = useMemo(
     () => ({
       user,
       setUser,
       client,
-      setClient
+      setClient,
+      clients,
+      setClients
     }),
     [user, client]
   );

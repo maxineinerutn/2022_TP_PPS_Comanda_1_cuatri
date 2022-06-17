@@ -3,6 +3,7 @@ import { View } from 'react-native';
 import React from 'react';
 import ActionButton from 'react-native-action-button';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import ChatIcon from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import theme from '../../config/theme';
 
@@ -92,6 +93,38 @@ export default function Fab( props ) {
               }}
             >
               <MaterialCommunityIcons name='check-decagram' size={40} color='white' />
+            </ActionButton.Item>
+          </ActionButton>
+        );
+      case 'Mozo':
+        return (
+          <ActionButton
+            offsetY={10}
+            offsetX={10}
+            verticalOrientation='down'
+            buttonColor={theme.colors.icons}
+            position='left'
+            degrees={0}
+            onPress={() => {}}
+            renderIcon={renderIcon}
+            style={{ zIndex: 9999, width: 120, height: 100 }}
+          >
+            <ActionButton.Item
+              spaceBetween={2}
+              buttonColor={theme.colors.icons}
+              useNativeFeedback
+              title='Chat'
+              textStyle={{
+                fontSize: 14,
+                width: 105,
+                height: 100
+              }}
+              style={{ zIndex: 9999 }}
+              onPress={() => {
+                navigation.navigate( 'WaiterChat' );
+              }}
+            >
+              <ChatIcon name='chatbubbles-outline' size={40} color='white' />
             </ActionButton.Item>
           </ActionButton>
         );

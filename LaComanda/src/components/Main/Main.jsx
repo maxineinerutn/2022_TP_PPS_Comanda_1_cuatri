@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { View, TouchableOpacity } from 'react-native';
 import { React } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
@@ -14,6 +15,7 @@ import { navigationRef, navigate } from '../../config/RootNavigation';
 import ClientsOnHold from '../../pages/ClientsOnHold/ClientsOnHold';
 import ClientHome from '../../pages/ClientHome/ClientHome';
 import TableMenu from '../../pages/TableMenu/TableMenu';
+import WaiterChat from '../../pages/WaiterChat/WaiterChat';
 
 const Stack = createNativeStackNavigator();
 
@@ -180,6 +182,26 @@ export default function Main() {
             }}
             name='TableMenu'
             component={TableMenu}
+          />
+          <Stack.Screen
+            options={{
+              headerLeft: () => renderHeaderProfileIcon(),
+              headerShown: true,
+              headerStyle: {
+                backgroundColor: theme.colors.primary,
+                borderBottomWidth: 2,
+                borderBottomColor: theme.colors.neutral
+              },
+              headerTitleAlign: 'center',
+              headerTitleStyle: {
+                color: theme.colors.secondary,
+                fontSize: 25,
+                fontWeight: '400'
+              },
+              headerTitle: 'Chat'
+            }}
+            name='WaiterChat'
+            component={WaiterChat}
           />
         </Stack.Navigator>
       </NavigationContainer>
