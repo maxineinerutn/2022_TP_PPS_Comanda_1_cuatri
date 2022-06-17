@@ -17,7 +17,8 @@ const Styles = StyleSheet.create({
   containerPhotos: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-evenly'
+    justifyContent: 'space-evenly',
+    marginTop: 5
   },
   formControl: {
     borderColor: theme.colors.primary,
@@ -114,7 +115,7 @@ const Styles = StyleSheet.create({
   button: {
     backgroundColor: theme.colors.primary,
     width: Dimensions.get( 'screen' ).width * 0.5,
-    height: Dimensions.get( 'screen' ).height * 0.08,
+    height: Dimensions.get( 'screen' ).height * 0.1,
     borderRadius: 15,
     justifyContent: 'space-evenly'
   },

@@ -17,7 +17,7 @@ export default function SurveysTab() {
   }, [client.surveysDone]);
   const handlesubmit = ( _newSurvey ) => {
     setSpinner( true );
-    saveProduct( _newSurvey ).then(() => { setSpinner( false ); });
+    saveProduct( _newSurvey );
   };
   const saveProduct = async ( newSurvey ) => {
     const blobs = [];
@@ -36,6 +36,7 @@ export default function SurveysTab() {
                 if ( uri3 ) { uris.push( uri3 ); }
                 saveItemInCollection( 'surveys', newSurvey.name, newSurvey ).then(() => {
                   updateItem( 'clients', client.email, { surveysDone: true });
+                  setSpinner( false );
                 }).catch(( e ) => {
                   console.log( e );// mostrar el error
                 });
