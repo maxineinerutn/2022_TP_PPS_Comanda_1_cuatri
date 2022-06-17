@@ -13,6 +13,13 @@ import AddEmployeeScreen from '../components/screens/AddEmployee/AddEmployeeScre
 import ClientListScreen from '../components/screens/ClientListScreen/ClientListScreen.component';
 import ChatScreen from '../components/screens/ChatScreen/ChatScreen.component';
 import QRStack from './stacks/QRStack';
+import ClientHomeScreen from '../components/screens/ClientHomeScreen/ClientHomeScreen.component';
+import ClientHomeStack from './stacks/ClientHomeStack';
+import WaitingClientListScreen from '../components/screens/WaitingClientListScreen/WaitingClientListScreen.component';
+import WaitingClientListStack from './stacks/WaitingClientListStack';
+import AddPollScreen from '../components/screens/AddPollScreen/AddPollScreen';
+import GraphicScreen from '../components/screens/GraphicScreen/GraphicScreen';
+import GuessTheNumberScreen from '../components/screens/GuessTheNumberScreen/GuesstheNumberScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -31,23 +38,27 @@ function CustomDrawerContent(props:any) {
 
 const DrawerStack = () => {
     return (
-        <Drawer.Navigator initialRouteName={Screens.ADD_PRODUCTS} drawerContent={props => <CustomDrawerContent {...props} />} 
-        screenOptions={({navigation}) => ({
-          headerLeft:()=><TouchableOpacity style={{marginHorizontal:14}}
-            onPress={() => navigation.openDrawer()}>
-              <Feather name="menu" size={24} color="black" />
-            </TouchableOpacity>
-        })}>
+        //  <Drawer.Navigator initialRouteName={Screens.ADD_PRODUCTS} drawerContent={props => <CustomDrawerContent {...props} />}>  
+         <Drawer.Navigator initialRouteName={Screens.GUESS_THE_NUMBER} drawerContent={props => <CustomDrawerContent {...props} />}>  
+
+         <Drawer.Screen name={Screens.GRAPHIC_SCREEN} component={GraphicScreen} />
           <Drawer.Screen name={Screens.ADD_PRODUCTS} component={AddProductStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.ADD_ADMINS} component={AddAdminsScreen} />
           <Drawer.Screen name={Screens.ADD_TABLE} component={AddTableStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.ADD_CLIENT} component={AddClientScreen} />
           <Drawer.Screen name={Screens.ADD_EMPLOYEE} component={AddEmployeeScreen} />
           <Drawer.Screen name={Screens.CLIENT_LIST} component={ClientListScreen} />
+<<<<<<< HEAD
           <Drawer.Screen name={Screens.CHAT} component={ChatScreen} />
           <Drawer.Screen name={Screens.QR_BUTTON} component={QRStack} options={{headerShown:false}} />
+=======
+          <Drawer.Screen name={Screens.CLIENT_HOME} component={ClientHomeStack} options={{headerShown:false}} />
+          <Drawer.Screen name={Screens.WAITING_CLIENT_LIST} component={WaitingClientListStack} options={{headerShown:false}} />
+          <Drawer.Screen name={Screens.ADD_POLL} component={AddPollScreen} />
+          <Drawer.Screen name={Screens.GUESS_THE_NUMBER} component={GuessTheNumberScreen} />
+>>>>>>> development
         </Drawer.Navigator>
     );
-}
+} 
 
 export default DrawerStack

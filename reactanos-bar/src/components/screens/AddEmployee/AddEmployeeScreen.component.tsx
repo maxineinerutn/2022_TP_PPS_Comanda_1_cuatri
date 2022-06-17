@@ -49,16 +49,16 @@ const AddEmployeeScreen = () => {
 
 
 
-    //HARDCODEO
-    useEffect(() => {
-        setValue("lastName", "rojas");
-        setValue("name", "luchoE");
-        setValue("dni", "37933047");
-        setValue("cuil", "24379330479");
-        setValue("email", "rojas" + Math.floor(Math.random() * 100) + 1 + "@gmail.com");
-        setValue("password", "roja$1");
-        setValue("passwordRepeat", "roja$1");
-    }, []);
+    // //HARDCODEO
+    // useEffect(() => {
+    //     setValue("lastName", "rojas");
+    //     setValue("name", "luchoE");
+    //     setValue("dni", "37933047");
+    //     setValue("cuil", "24379330479");
+    //     setValue("email", "rojas" + Math.floor(Math.random() * 100) + 1 + "@gmail.com");
+    //     setValue("password", "roja$1");
+    //     setValue("passwordRepeat", "roja$1");
+    // }, []);
 
     const handleBarCodeScanned = ({ data }) => {
         setScanned(true);

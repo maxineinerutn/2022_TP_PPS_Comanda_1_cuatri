@@ -7,6 +7,7 @@ import { FormData } from "../models/login/formData.types";
 import { fetchLoadingStart, fetchLoadingFinish } from './loaderReducer';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { authHandler } from "../utils/AuthHandler";
+import { IStore } from './store';
 
 const initialState = {
     user:{},
@@ -69,16 +70,38 @@ export const handleLogin = (data:FormData) =>  async (dispatch:any) => {
     try {
         dispatch(fetchInit());
         dispatch(fetchLoadingStart());
-        const res = await signInWithEmailAndPassword(auth,data.email,data.password);
+        await signInWithEmailAndPassword(auth,data.email,data.password);
         const querySnapshot = await getDocs(
             query(collection(db, "users"), where("email", "==", data.email))
         );
         querySnapshot.forEach((user) => {
             const data = user.data();
             authHandler(data);
+            dispatch(fetchSuccess({...data, id:user.id}));
         })
         await sleep(1000);
-        dispatch(fetchSuccess(res.user));
+    } catch (error:any) {
+        errorHandler(error.code);
+        handleLogout();
+        dispatch(fetchError(error.code));
+    } finally{
+        dispatch(fetchLoadingFinish());
+    }
+}
+
+export const refreshUserData = () =>  async (dispatch:any, getState:()=>IStore) => {
+    try {
+        dispatch(fetchLoadingStart());
+        const {user} = getState().auth;
+        const querySnapshot = await getDocs(
+            query(collection(db, "users"), where("email", "==", user.email))
+        );
+        querySnapshot.forEach((user) => {
+            const data = user.data();
+            authHandler(data);
+            dispatch(fetchSuccess({...data, id:user.id}));
+        })
+        await sleep(1000);
     } catch (error:any) {
         errorHandler(error.code);
         handleLogout();

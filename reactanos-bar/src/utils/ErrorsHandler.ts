@@ -30,9 +30,26 @@ export const errorHandler = (error:any) => {
         case 'table-exists':
             message="El número de la tabla ya existe"
         break;
+        case 'table-not-exists':
+            message="El código QR no está asociado a alguna de nuestras mesas"
+        break;
+        case 'table-doesnt-match':
+            message="El código QR de esa mesa no es el mismo que la que te asignaron"
+        break;
+        case 'table-taken':
+            message="La mesa ya está ocupada"
+        break;
         case 'unauthorized':
             message="Usuario no autorizado"
         break;
+        case 'invalid-qr':
+            message="QR inválido"
+        break;
+        case 'havent-guessed':
+            message="No has adivinado el número"
+        break;
+        
+
         default:
             message="Ha ocurrido un error, por favor reintente nuevamente"
         break;
