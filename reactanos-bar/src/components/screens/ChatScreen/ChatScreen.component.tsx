@@ -4,6 +4,7 @@
     import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
     import { db } from "../../../InitApp";
     import { useSelector } from 'react-redux'
+
     
     const ChatScreen = ({ navigation }: any) => {
 
@@ -54,7 +55,7 @@
                 user={{
                     _id: userData?.currentUser?.email || 1,
                     //name: userData?.currentUser?.displayName || '',
-                    name: userData?.currentUser?.email || '',
+                    name: userData?.user?.name || '',
                 }}
                 textInputProps={{                      
                     borderColor: '#222', 
