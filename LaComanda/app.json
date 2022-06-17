@@ -1,0 +1,43 @@
+{
+  "expo": {
+    "name": "LaComanda",
+    "slug": "LaComanda",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/iconCoffee.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/iconCoffee.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "softwareKeyboardLayoutMode": "pan"
+    },
+    "web": {
+      "favicon": "./assets/iconCoffee.png"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icono.png",
+          "color": "#ffffff"          
+        }
+      ]
+    ]
+  }
+}
