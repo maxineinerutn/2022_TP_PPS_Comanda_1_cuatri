@@ -40,7 +40,6 @@ const DrawerStack = () => {
     return (
         //  <Drawer.Navigator initialRouteName={Screens.ADD_PRODUCTS} drawerContent={props => <CustomDrawerContent {...props} />}>  
          <Drawer.Navigator initialRouteName={Screens.GUESS_THE_NUMBER} drawerContent={props => <CustomDrawerContent {...props} />}>  
-
          <Drawer.Screen name={Screens.GRAPHIC_SCREEN} component={GraphicScreen} />
           <Drawer.Screen name={Screens.ADD_PRODUCTS} component={AddProductStack} options={{headerShown:false}} />
           <Drawer.Screen name={Screens.ADD_ADMINS} component={AddAdminsScreen} />

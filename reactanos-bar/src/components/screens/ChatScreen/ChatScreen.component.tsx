@@ -1,11 +1,9 @@
     import React, { useCallback, useLayoutEffect, useState } from 'react';
-    import { Text, TouchableOpacity, View, Image } from 'react-native';
-    import { FontAwesome } from '@expo/vector-icons';
+    import { View, Image } from 'react-native';
     import { Day, GiftedChat, Send  } from 'react-native-gifted-chat'
     import { addDoc, collection, onSnapshot, orderBy, query } from 'firebase/firestore';
     import { db } from "../../../InitApp";
     import { useSelector } from 'react-redux'
-import { StyledLinearGradient } from './ChatScreen.styled';
     
     const ChatScreen = ({ navigation }: any) => {
 
