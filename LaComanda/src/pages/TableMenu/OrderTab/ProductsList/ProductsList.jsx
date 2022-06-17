@@ -4,12 +4,12 @@
 import {
   FlatList, Text, View, TouchableOpacity, ActivityIndicator
 } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ChatIcon from 'react-native-vector-icons/Ionicons';
 import styles from './styles';
 import ProductItem from '../ProductItem/ProductItem';
 import GlobalContext from '../../../../context/GlobalContext';
-import { updateItem } from '../../../../services/FirestoreServices';
+import { getAllCollection, updateItem } from '../../../../services/FirestoreServices';
 import { OrderStatus } from '../../../../util/Enums';
 import theme from '../../../../config/theme';
 
@@ -18,24 +18,15 @@ export default function ProductsList({ navigation }) {
   const [total, setTotal] = useState( 0 );
   const [totalEstimatedTime, setTotalEstimatedTime] = useState( 0 );
   const [spinner, setSpinner] = useState( false );
+  const [productList, setProductList] = useState([]);
   const [newOrder, setNewOrder] = useState([]);
-  const [productList, setProductList] = useState([{
-    photos: ['https://firebasestorage.googleapis.com/v0/b/lacomanda-47138.appspot.com/o/3wRbuRgbkvhVGj4Ckm8MFABsn6I2%2F8460158d-8498-4cad-919e-a41593f47be3?alt=media&token=58ef4d4d-4949-4c51-86be-a1239fa0426a',
-      'https://firebasestorage.googleapis.com/v0/b/lacomanda-47138.appspot.com/o/3wRbuRgbkvhVGj4Ckm8MFABsn6I2%2F8460158d-8498-4cad-919e-a41593f47be3?alt=media&token=58ef4d4d-4949-4c51-86be-a1239fa0426a',
-      'https://firebasestorage.googleapis.com/v0/b/lacomanda-47138.appspot.com/o/3wRbuRgbkvhVGj4Ckm8MFABsn6I2%2F8460158d-8498-4cad-919e-a41593f47be3?alt=media&token=58ef4d4d-4949-4c51-86be-a1239fa0426a'],
-    name: 'product 1',
-    price: '10',
-    description: 'el producto 1 es el primer producto',
-    elaborationTime: '15'
-  }, {
-    photos: ['https://firebasestorage.googleapis.com/v0/b/lacomanda-47138.appspot.com/o/U5V4xOgOrKS0IcXKOIp1V3TnEtj1%2Faa650e09-65b1-4f44-bf38-9f924fdb9931?alt=media&token=da4cbcb4-9c98-4129-a5c9-b1a89b20d82f',
-      'https://firebasestorage.googleapis.com/v0/b/lacomanda-47138.appspot.com/o/U5V4xOgOrKS0IcXKOIp1V3TnEtj1%2Faa650e09-65b1-4f44-bf38-9f924fdb9931?alt=media&token=da4cbcb4-9c98-4129-a5c9-b1a89b20d82f',
-      'https://firebasestorage.googleapis.com/v0/b/lacomanda-47138.appspot.com/o/U5V4xOgOrKS0IcXKOIp1V3TnEtj1%2Faa650e09-65b1-4f44-bf38-9f924fdb9931?alt=media&token=da4cbcb4-9c98-4129-a5c9-b1a89b20d82f'],
-    name: 'product 2',
-    price: '15',
-    description: 'el producto 2 es el segundo producto',
-    elaborationTime: '5'
-  }]);
+  useEffect(() => {
+    getAllCollection( 'products', ( data ) => {
+      const response = data.docs.map(( doc ) => doc.data());
+      console.log( response );
+      setProductList( response );
+    }, ( error ) => { console.log( error ); });
+  }, []);
 
   const handlerAddproduct = ( _product ) => {
     const productsInOrder = newOrder.filter(( p ) => p.name === _product.name );
@@ -104,7 +95,7 @@ export default function ProductsList({ navigation }) {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       {
         spinner ? (
           <View style={styles.container}>
@@ -113,7 +104,7 @@ export default function ProductsList({ navigation }) {
         )
           : (
 
-            <View style={styles.container}>
+            <View style={styles.containerList}>
               <Text style={styles.estimatedTimeText}>
                 Tiempo Estimado:
                 {' '}
@@ -132,19 +123,20 @@ export default function ProductsList({ navigation }) {
                   />
                 )}
               />
-              <TouchableOpacity style={styles.containerOrderButton} onPress={createOrder}>
-                <View style={styles.orderButton}>
-                  <Text style={styles.orderButtonText}>Hacer Pedido </Text>
-                  <Text style={styles.orderTotalPriceButtonText}>
-                    $
-                    {' '}
-                    {total}
-                  </Text>
-                </View>
-              </TouchableOpacity>
+
             </View>
           )
       }
+      <TouchableOpacity style={styles.containerOrderButton} onPress={createOrder}>
+        <View style={styles.orderButton}>
+          <Text style={styles.orderButtonText}>Hacer Pedido </Text>
+          <Text style={styles.orderTotalPriceButtonText}>
+            $
+            {' '}
+            {total}
+          </Text>
+        </View>
+      </TouchableOpacity>
       <TouchableOpacity onPress={handleChat}>
         <View style={styles.containerChatIcon}>
           <ChatIcon name='chatbubbles-outline' style={styles.chatIcon} size={40} color='white' />

@@ -1,9 +1,12 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import theme from '../../../../config/theme';
 
 const styles = StyleSheet.create({
   container: {
-    height: '100%'
+    height: Dimensions.get( 'screen' ).height * 0.63
+  },
+  containerList: {
+    height: Dimensions.get( 'screen' ).height * 0.7
   },
   estimatedTimeText: {
     textAlign: 'center',
@@ -11,9 +14,11 @@ const styles = StyleSheet.create({
   },
   containerOrderButton: {
     width: '70%',
-    height: '10%',
+    height: '20%',
     position: 'absolute',
-    bottom: 0
+    bottom: 0,
+    justifyContent: 'flex-end',
+    marginBottom: -Dimensions.get( 'screen' ).height * 0.16
   },
   orderButton: {
     paddingVertical: 15,
@@ -41,7 +46,7 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.primary,
     borderRadius: 50,
     padding: 10,
-    marginBottom: 10,
+    marginBottom: -70,
     marginRight: 10
   }
 });

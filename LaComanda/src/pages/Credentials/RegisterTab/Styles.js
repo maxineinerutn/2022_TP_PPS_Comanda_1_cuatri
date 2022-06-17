@@ -3,11 +3,10 @@ import theme from '../../../config/theme';
 
 const Styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     width: Dimensions.get( 'screen' ).width,
-    height: Dimensions.get( 'screen' ).height,
-    justifyContent: 'flex-start'
+    height: Dimensions.get( 'screen' ).height * 0.75,
+    justifyContent: 'center'
   },
   containerSpinner: {
     flex: 1,

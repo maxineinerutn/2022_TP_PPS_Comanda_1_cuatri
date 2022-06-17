@@ -1,15 +1,28 @@
 /* eslint-disable no-param-reassign */
 import { View } from 'react-native';
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import Styles from './Styles';
 import ProductForm from '../../components/ProductForm/ProductForm';
 import { saveItemInCollection } from '../../services/FirestoreServices';
 import { saveImageInStorage } from '../../services/StorageServices';
+import GlobalContext from '../../context/GlobalContext';
 
 export default function CreateProduct() {
+  const { user } = useContext( GlobalContext );
+  const [sector, setSector] = useState( '' );
   const navigation = useNavigation();
   const handlesubmit = ( formData ) => {
+    switch ( user.role ) {
+      case 'Cocinero':
+        setSector( 'Cocina' );
+        break;
+      case 'Bartender':
+        setSector( 'Bar' );
+        break;
+      default:
+        break;
+    }
     saveProduct( formData );
   };
   const saveProduct = async ( newProduct ) => {
@@ -32,7 +45,8 @@ export default function CreateProduct() {
                   elaborationTime: newProduct.elaborationTime,
                   name: newProduct.name,
                   price: newProduct.price,
-                  photos: uris
+                  photos: uris,
+                  sector
                 };
                 saveItemInCollection( 'products', newProduct.name, newProduct ).then(() => {
                   navigation.navigate( 'Home' );
@@ -53,9 +67,11 @@ export default function CreateProduct() {
     // redireccionar cancel
   };
   return (
+
     <View style={Styles.container}>
       <ProductForm onSubmit={handlesubmit} onCancel={handleCancel} />
     </View>
+
   );
 }
 

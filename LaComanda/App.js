@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import AnimatedSplash from 'react-native-animated-splash-screen';
 import * as Notifications from 'expo-notifications';
+import { SelectProvider } from '@mobile-reality/react-native-select-pro';
 import SplashScreen from './src/components/SplashScreen/SplashScreen';
 import Main from './src/components/Main/Main';
 import GlobalContext from './src/context/GlobalContext';
@@ -44,7 +45,9 @@ export default function App() {
       customComponent={<SplashScreen />}
     >
       <GlobalContext.Provider value={memo}>
-        <Main />
+        <SelectProvider>
+          <Main />
+        </SelectProvider>
       </GlobalContext.Provider>
     </AnimatedSplash>
   );
