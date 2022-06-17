@@ -8,7 +8,9 @@ const GlobalContext = createContext({
   client: {
     name: '', surname: '', role: '', email: '', orderState: '', assignedTable: '', photo: '', order: {}
   },
-  setClient: () => {}
+  setClient: () => {},
+  clients: [],
+  setClients: () => {}
 });
 
 export default GlobalContext;

@@ -8,13 +8,16 @@ import GlobalContext from '../../context/GlobalContext';
 import Scanner from '../../components/Scanner/Scanner';
 import Styles from './styles';
 import {
+  getAllClients,
   getAllMetres, getClientByEmail, getUserByEmail, saveItemInCollection
 } from '../../services/FirestoreServices';
 import { OrderStatus } from '../../util/Enums';
 import { sendPushNotification } from '../../services/PushNotificationService';
 
 export default function Home() {
-  const { user, client, setClient } = useContext( GlobalContext );
+  const {
+    user, client, setClient, setClients
+  } = useContext( GlobalContext );
   const [scanner, setScanner] = useState( false );
   const [btnScannerText, setBtnScannerText] = useState( 'Ingresar' );
   const navigation = useNavigation();
@@ -26,6 +29,12 @@ export default function Home() {
         Notifications.addNotificationResponseReceivedListener( handleNotificationResponseOwnerSupervisor );
         break;
       case 'Mozo':
+        getAllClients(( data ) => {
+          const response = data.docs.map(( doc ) => doc.data());
+          if ( response ) {
+            setClients( response );
+          }
+        }, ( error ) => console.log( error ));
         Notifications.addNotificationResponseReceivedListener( handleNotificationResponseWaiter );
         break;
       case 'Cocinero':
@@ -84,7 +93,7 @@ export default function Home() {
     navigation.navigate( 'ClientsOnHold' );
   };
   const handleNotificationResponseWaiter = () => {
-    // navigation.navigate( 'Confirmations' );
+    navigation.navigate( 'WaiterChat' );
   };
   const handleNotificationResponseEmployee = () => {
     // navigation.navigate( 'Confirmations' );

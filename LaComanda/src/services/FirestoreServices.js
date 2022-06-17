@@ -60,7 +60,19 @@ export const getAllMetres = async ( onResult, onError ) => {
 export const getAllWaiter = async ( onResult, onError ) => {
   await firestore.collection( 'users' ).where( 'rol', '==', 'Mozo' ).where( 'approved', '==', true ).onSnapshot( onResult, onError );
 };
+
+export const getAllClients = async ( onResult, onError ) => {
+  await firestore.collection( 'clients' ).onSnapshot( onResult, onError );
+};
+
 export const getClientByEmail = async ( email, onResult, onError ) => {
   await firestore.collection( 'clients' ).where( 'email', '==', email ).onSnapshot( onResult, onError );
 };
+
+export const addMessage = async ( collection, message ) => await firestore.collection( collection ).add( message );
+
+export const getAllMessages = async ( collection, onResult, onError ) => await firestore
+  .collection( collection )
+  .orderBy( 'createdAt', 'desc' )
+  .onSnapshot( onResult, onError );
 

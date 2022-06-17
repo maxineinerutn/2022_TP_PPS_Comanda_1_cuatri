@@ -1,18 +1,27 @@
+/* eslint-disable react/prop-types */
 import { View } from 'react-native';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useLayoutEffect, useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useNavigation } from '@react-navigation/native';
+import { getFocusedRouteNameFromRoute } from '@react-navigation/native';
 import ProductsList from './ProductsList/ProductsList';
 import WaitingConfirmedOrder from './WaitingConfirmedOrder/WaitingConfirmedOrder';
 import GlobalContext from '../../../context/GlobalContext';
 import { OrderStatus } from '../../../util/Enums';
 import WaitingConfirmation from './WaitingConfirmation/WaitingConfirmation';
+import ClientChat from './ClientChat/ClientChat';
 
 const Stack = createNativeStackNavigator();
 
-export default function OrderTab() {
+export default function OrderTab({ navigation, route }) {
   const { client } = useContext( GlobalContext );
-  const navigation = useNavigation();
+
+  useLayoutEffect(() => {
+    const routeName = getFocusedRouteNameFromRoute( route );
+    if ( routeName === 'ClientChat' ) {
+      navigation.setOptions({ tabBarStyle: { display: 'none' }});
+    }
+  }, [navigation, route]);
+
   useEffect(() => {
     switch ( client.orderState ) {
       case OrderStatus.ScannedAssignedTable:
@@ -79,6 +88,21 @@ export default function OrderTab() {
           }}
           name='WaitingConfirmation'
           component={WaitingConfirmation}
+        />
+        <Stack.Screen
+          options={{
+            headerStyle: {
+              backgroundColor: 'white'
+            },
+            headerShown: false,
+            headerTintColor: 'black',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontFamily: 'Roboto'
+            }
+          }}
+          name='ClientChat'
+          component={ClientChat}
         />
       </Stack.Navigator>
     </View>
