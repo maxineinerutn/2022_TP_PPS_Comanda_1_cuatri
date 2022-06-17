@@ -53,7 +53,7 @@ export default function Home() {
     getUserByEmail( 'clients', user.email, ( data ) => {
       const response = data.docs.map(( doc ) => doc.data())[0];
       if ( response && response.email === user.email ) {
-        setBtnScannerText( 'Volver' );
+        setBtnScannerText( 'Volver al Menú' );
       } else {
         setBtnScannerText( 'Ingresar' );
       }
@@ -113,7 +113,8 @@ export default function Home() {
         role: user.role,
         surname: user.surname,
         photo: user.photo,
-        orderState: OrderStatus.WaitingList
+        orderState: OrderStatus.WaitingList,
+        surveysDone: false
       };
       saveItemInCollection( 'clients', user.email, newClient ).then(() => {
         setClient( newClient );

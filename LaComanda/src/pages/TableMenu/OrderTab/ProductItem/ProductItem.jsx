@@ -25,7 +25,7 @@ export default function ProductItem( props ) {
       <View style={styles.containerPhoto}>
         <Image
           style={styles.photo}
-          source={{ uri: product.photos[0] }}
+          source={{ uri: product.photos[0].uri }}
           resizeMode='cover'
         />
       </View>

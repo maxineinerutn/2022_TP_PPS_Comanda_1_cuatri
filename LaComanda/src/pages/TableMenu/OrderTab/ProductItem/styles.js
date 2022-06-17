@@ -47,7 +47,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   textCounter: {
-    fontSize: 28
+    fontSize: 28,
+    marginTop: -4
   },
   textAdd: {
     fontSize: 28,

@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import IconMaterial from 'react-native-vector-icons/MaterialCommunityIcons';
 import theme from '../../config/theme';
-import { UserTypes } from '../../util/Enums';
+import { OrderStatus, UserTypes } from '../../util/Enums';
 import GameTab from './GameTab/GameTab';
 import OrderTab from './OrderTab/OrderTab';
 import SurveysTab from './SurveysTab/SurveysTab';
+import GlobalContext from '../../context/GlobalContext';
+import WaitingConfirmation from './OrderTab/WaitingConfirmation/WaitingConfirmation';
+import WaitingConfirmedOrder from './OrderTab/WaitingConfirmedOrder/WaitingConfirmedOrder';
 
 const Tab = createBottomTabNavigator();
 
@@ -37,6 +40,19 @@ function renderTabBarIcon( route, size ) {
   );
 }
 export default function TableMenu() {
+  const { client } = useContext( GlobalContext );
+  const renderTabPedidos = () => {
+    switch ( client.orderState ) {
+      case OrderStatus.ScannedAssignedTable:
+        return OrderTab;
+      case OrderStatus.OrderSended:
+        return WaitingConfirmation;
+      case OrderStatus.OrderConfirmed:
+        return WaitingConfirmedOrder;
+      default:
+        return OrderTab;
+    }
+  };
   return (
     <Tab.Navigator
       initialRouteName='Pedido'
@@ -69,7 +85,7 @@ export default function TableMenu() {
       />
       <Tab.Screen
         name='Pedido'
-        component={OrderTab}
+        component={renderTabPedidos()}
         initialParams={{ displayFormOnType: UserTypes.None }}
         options={{
           headerStyle: {
